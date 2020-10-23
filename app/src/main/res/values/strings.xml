@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">FirstTry</string>
+    <string name="title_string">Corona Fitness: \n No Pain No Gain!</string>
+    <string name="subtitle_string">Non ci prendiamo in giro,\nse non lavori in quarantena,\nquando mai ti metterai in forma?</string>
+    <string name="butt_exercise">START NOW</string>
+    <string name="type_1_desc">Exercise have to be executed in the time given. Try to work at the max in the seconds you have! The work is followed by a pause. The exercises below
+    have specified the seconds of work first, and then the pause</string>
+    <string name="type_2_desc">Repetition based exercises. Try to complete all repetitions given within the total time limit! You decide when to pause and how to split the workout. If you cannot finish it, best luck next time</string>
+    <string name="type_3_desc">Complete the exercises given below in the time frame given. If you cannot, means you have to train harder! Remember, no pause in between exercises, only in between sets!</string>
+    <string name="type_1">time based workout (TIME)</string>
+    <string name="type_2">repetition based workout (REPS)</string>
+    <string name="type_3">repetions in time workout (REPTIME)</string>
+</resources>

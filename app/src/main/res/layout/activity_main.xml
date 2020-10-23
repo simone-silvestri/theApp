@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id='@+id/picstatistics'
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:src="@drawable/home_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlepage" />
+
+    <TextView
+        android:id='@+id/titlepage'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/vidaloka"
+        android:gravity="center"
+        android:lineSpacingExtra="8dp"
+        android:text="@string/title_string"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="38sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id='@+id/subtitlepage'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="260dp"
+        android:fontFamily="@font/mlight"
+        android:gravity="center"
+        android:lineSpacingExtra="8dp"
+        android:text="@string/subtitle_string"
+        android:textAlignment="center"
+        android:textColor="#C0C0C0"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/picstatistics" />
+
+   <!--170dp-->
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/btexercise"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:background="@color/white"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:onClick="openLibrary"
+            android:text="LIBRARY"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btrandom"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/btrandom"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/white"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:onClick="openRandom"
+            android:text="RANDOM"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnloaddatabase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/trans"
+        android:onClick="populateDatabase"
+        android:src="@drawable/ic_menu_upload"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
+
+    <ImageButton
+        android:id="@+id/buttonreset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/trans"
+        android:src="@drawable/ic_menu_delete"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnloaddatabase"
+        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
+
+    <ImageButton
+        android:id="@+id/buttonaddworkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@color/trans"
+        android:src="@drawable/ic_menu_add"
+        app:layout_constraintEnd_toStartOf="@+id/btnloaddatabase"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
