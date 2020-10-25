@@ -10,7 +10,7 @@ on:
 
 jobs:
   Build:
-    name: Run Unit Tests
+    name: Build, Test and Upload
     runs-on: ubuntu-18.04
 
     steps:
@@ -22,7 +22,7 @@ jobs:
       - name: Create wrapper
         run: gradle wrapper
       - name: Build app
-        run: gradle build
+        run: gradle build --stacktrace
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
       - name: Build debug APK
