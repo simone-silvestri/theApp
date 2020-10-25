@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 29
 
@@ -20,7 +21,9 @@ android {
         }
     }
 }
-
+//task wrapper(type: Wrapper) {
+//    gradleVersion = '5.1.1'
+//}
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
