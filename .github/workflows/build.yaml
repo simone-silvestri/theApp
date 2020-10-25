@@ -20,9 +20,9 @@ jobs:
         with:
           java-version: 1.8
       - name: Create wrapper
-        run: bash ./gradlew test --stacktrace
+        run: gradle wrapper
       - name: Build app
-        run:
+        run: gradle build
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
       - name: Build debug APK
