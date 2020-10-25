@@ -1,10 +1,12 @@
 package com.example.firsttry;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.ArrayList;
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        populateDatabase(v);
+                        populateFireStoreDatabase(v);
                         puWindow.dismiss();
                     }
                 });
@@ -257,6 +266,58 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void populateFireStoreDatabase(View view) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        ArrayList<Workout> wodList = new ArrayList<>();
+        wodList = addEntryLevel(wodList);
+        wodList = addNoEffort(wodList);
+        wodList = addFirstAttempt(wodList);
+        wodList = addWholeBody(wodList);
+        wodList = addMondayDetox(wodList);
+        wodList = addMondayDetoxAli(wodList);
+        wodList = addCardio(wodList);
+        wodList = addPushups(wodList);
+        wodList = addLegDay(wodList);
+        wodList = addGreekTraining(wodList);
+        wodList = addDoubleProg1(wodList);
+        wodList = addDoubleProg2(wodList);
+        wodList = addPlankPushups(wodList);
+        wodList = addAbsChillax(wodList);
+        wodList = addJordanYeoh(wodList);
+        wodList = addMorningPushups(wodList);
+        wodList = addWarmupPreTabata(wodList);
+        wodList = addPureTabata(wodList);
+        wodList = addFridayClassic(wodList);
+        wodList = addWholeBodyIntermediate(wodList);
+        wodList = addBurpeesMattanza(wodList);
+        wodList = addBalanced(wodList);
+        wodList = addPureHIIT(wodList);
+
+
+        Map<String, Object> exercise = new HashMap<>();
+        exercise.put("name", "Pushups");
+        exercise.put("reps", "10");
+        exercise.put("timeInSeconds", 40);
+        exercise.put("pauseInSeconds", 20);
+
+        db.collection("exercises")
+                .add(exercise)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("test", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("test", "Error adding document", e);
+                    }
+                });
+
+    }
 
 
     public ArrayList<Workout> addEntryLevel(ArrayList<Workout> wodList) {
