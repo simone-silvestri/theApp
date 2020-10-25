@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        populateFireStoreDatabase(v);
+                        populateDatabase(v);
                         puWindow.dismiss();
                     }
                 });
