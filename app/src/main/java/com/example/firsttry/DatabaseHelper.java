@@ -327,14 +327,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exeId;
     }
 
-    public ExerciseDetail loadOneExercise(int ID) {
+    public ExerciseDetail loadOneExercise(String name) {
         ExerciseDetail exe = new ExerciseDetail();
         SQLiteDatabase db = getReadableDatabase();
         db.beginTransaction();
         try {
             String workoutSelectQuery = "SELECT * FROM " + TABLE_EXE
-                    + " WHERE " + KEY_EXE_ID + " = ?";
-            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(ID)});
+                    + " WHERE " + KEY_EXE_NAME + " = ?";
+            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{name});
             if (cursor.moveToFirst()) {
                 exe.setName(cursor.getString(cursor.getColumnIndex(KEY_EXE_NAME)));
                 exe.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_EXE_DIFF)));

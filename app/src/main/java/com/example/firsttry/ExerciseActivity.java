@@ -25,35 +25,19 @@ public class ExerciseActivity extends AppCompatActivity {
 
         Bundle extra = getIntent().getExtras();
         String name = "";
-        int id = -1000;
 
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
 
-//        if (extra != null) {
+        if (extra != null) {
             name = extra.getString("EXTRA_NAME");
-            ExerciseDetail exe1 = new ExerciseDetail(name,3);
-            exe1.setMuscle("Chest");
-            exe1.setDescription("Let's see");
-            dbhandler.addOneExercise(exe1);
-//
-//            id = (int) dbhandler.addOrUpdateExercise(exe1);
-//            if (id != -1) {
-//                exe = dbhandler.loadOneExercise(id);
-//            } else {
-//                exe = new ExerciseDetail(name, -1);
-//                exe.setDescription("Sorry no exercise with that name, if you want you can go back to the homepage and add it to the exercise library");
-//                exe.setMuscle("Not found");
-//            }
-//        }
 
-        ArrayList<ExerciseDetail> exeList = dbhandler.loadAllExercises();
-        if(exeList.isEmpty()) {
-            exe = new ExerciseDetail(name, -1);
-            exe.setDescription("Sorry no exercise with that name, if you want you can go back to the homepage and add it to the exercise library");
-            exe.setMuscle("Not found");
-        } else {
-            exe = exeList.get(0);
+            exe = dbhandler.loadOneExercise(name);
+            if (exe.getName()==null) {
+                exe = new ExerciseDetail(name, -1);
+                exe.setDescription("Sorry no exercise with that name, if you want you can go back to the homepage and add it to the exercise library");
+                exe.setMuscle("Not found");
+            }
         }
 
         title.setText(exe.getName());
