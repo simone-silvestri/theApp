@@ -187,6 +187,10 @@ public class AddWorkoutActivity extends AppCompatActivity {
         workoutToBeAdded.setTitle(textname.getText().toString());
         if(workoutToBeAdded.getTitle()==null) {
             textname.setText("Insert Title!");
+        } else if (new String("Insert Title!").equals(workoutToBeAdded.getTitle())) {
+            textname.setText("Insert Title!");
+        } else if (new String("Title already existent, choose other").equals(workoutToBeAdded.getTitle())) {
+            textname.setText("Title already existent, choose other");
         } else {
             int check = dbhandler.loadWorkoutId(workoutToBeAdded.getTitle());
             if (check != -1) {
