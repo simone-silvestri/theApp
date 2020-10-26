@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/txtname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:fontFamily="@font/mlight"
+        android:background="@color/colorPrimaryDark"
+        android:textColorHint="@color/gray"
+        android:hint="Exercise Name"
+        android:autofillHints="Exercise Name"
+        android:textColor="@color/gray"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btnaddwork"
+        android:fontFamily="@font/mmedium"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="17sp"
+        android:text="Work:" />
+
+    <EditText
+        android:id="@+id/btnaddwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/txtpause"
+        android:fontFamily="@font/mmedium"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="17sp"
+        android:textColorHint="@color/white"
+        android:hint="sec"
+        android:autofillHints="sec"
+        android:textColor="@color/gray"/>
+
+    <TextView
+        android:id="@+id/txtpause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btnaddpause"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/mmedium"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="17sp"
+        android:text="Pause:"/>
+
+    <EditText
+        android:id="@+id/btnaddpause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/mmedium"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="17sp"
+        android:textColorHint="@color/white"
+        android:hint="sec"
+        android:autofillHints="sec"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/gray"/>
+
+</RelativeLayout>
