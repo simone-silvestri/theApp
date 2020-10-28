@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         resetDatabase(v);
                         puWindow.dismiss();
+                        Toast.makeText(MainActivity.this, "Database erased", Toast.LENGTH_SHORT).show();
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         populateDatabase(v);
                         puWindow.dismiss();
+                        Toast.makeText(MainActivity.this, "Original database loaded", Toast.LENGTH_SHORT).show();
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
@@ -228,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         wodList = addWarmupPreTabata(wodList);
         wodList = addPureTabata(wodList);
         wodList = addFridayClassic(wodList);
+        wodList = addFrasFridayClassic(wodList);
         wodList = addWholeBodyIntermediate(wodList);
         wodList = addBurpeesMattanza(wodList);
         wodList = addBalanced(wodList);
@@ -929,6 +933,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public ArrayList<Workout> addFrasFridayClassic(ArrayList<Workout> wodList) {
+
+        Exercise e1,e2,e3,e4,e5,e6,e7;
+        ArrayList<Exercise> eList = new ArrayList<>();
+
+        e1 = new Exercise("Jump Squats",10,40,0);
+        e2 = new Exercise("Shoulder taps",20,40,0);
+        e3 = new Exercise("Lower abs",20,50,0);
+        e4 = new Exercise("Knee up run",35,40,0);
+        e5 = new Exercise("Sit ups",20,50,0);
+        e6 = new Exercise("Knee pushups",20,50,0);
+        e7 = new Exercise("Plank",1,50,0);
+
+        eList.add(e1); eList.add(e2); eList.add(e3); eList.add(e4); eList.add(e5);
+        eList.add(e6); eList.add(e7);
+
+        Workout wd = new Workout();
+        wd.setDifficulty(3); wd.setNumberOfSets(7); wd.setSetPause(60);
+        wd.setExercises(eList); wd.setTotalTime(); wd.setType("REPSINTIME");
+        wd.setWod("your favourite description"); wd.setTitle("Fra's Friday Classic");
+
+        wodList.add(wd);
+
+        return wodList;
+
+    }
 
     public ArrayList<Workout> addFridayClassic(ArrayList<Workout> wodList) {
 

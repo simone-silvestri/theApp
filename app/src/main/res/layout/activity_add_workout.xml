@@ -171,12 +171,13 @@
             android:fontFamily="@font/mlight"
             android:gravity="start"
             android:hint="insert number"
-            android:autofillHints="insert number"
+            android:autofillHints="number"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:textSize="15sp"/>
 
         <TextView
+            android:id="@+id/pauseOrTotalTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -202,8 +203,8 @@
             android:fontFamily="@font/mlight"
             android:gravity="start"
             android:textColorHint="@color/white"
-            android:hint="insert seconds"
-            android:autofillHints="insert sec"
+            android:hint="seconds"
+            android:autofillHints="seconds"
             android:textColor="@color/white"
             android:textSize="15sp"/>
 

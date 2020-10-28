@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,9 +14,12 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +34,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
     private Button btn20min, btn40min, btn60min, btn80min, btnallmin;
     private View bgprogress;
 
+    private int deletePosition;
     private ListView lv;
     private ArrayList<Workout> wodList;
     private Adapter adapter;
@@ -71,21 +77,21 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         wodList = dbhandler.loadDatabase();
 
         Collections.sort(wodList);
-        List<RowData> rowData;
+        final List<RowData> rowData;
         rowData = new ArrayList<RowData>();
         for (int i = 0; i < wodList.size(); i++) {
             RowData data = new RowData();
             String str = wodList.get(i).getTitle();
             data.setTitle(str);
             String type;
-            if(new String("TIME").equals(wodList.get(i).getType())) {
+            if (new String("TIME").equals(wodList.get(i).getType())) {
                 type = "TIME";
-            } else if(new String("REPS").equals(wodList.get(i).getType())) {
+            } else if (new String("REPS").equals(wodList.get(i).getType())) {
                 type = "REPS";
             } else {
                 type = "REPTIME";
             }
-            str = "Total time: " + wodList.get(i).getTotalTime()/60 + " mins;   Type: " + type;
+            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins;   Type: " + type;
             data.setSubtitle(str);
             if (wodList.get(i).getDifficulty() == 1) {
                 data.setImageId(R.drawable.beginner);
@@ -102,15 +108,61 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
         lv = findViewById(R.id.lv);
 
-        MyAdapter adapter = new MyAdapter(this, rowData);
+        final MyAdapter adapter = new MyAdapter(this, rowData);
         lv.setAdapter(adapter);
         lv.startAnimation(bttthree);
         lv.setOnItemClickListener(this);
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                deletePosition = position;
+                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
+                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+                final TextView text = (TextView) puView.findViewById(R.id.text_id);
+                text.setText("Delete the workout from database?");
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+                puWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                puWindow.setAnimationStyle(R.style.Animation);
+
+                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
+                        Workout work = wodList.get(deletePosition);
+                        int id = dbhandler.deleteWorkout(work);
+                        rowData.remove(deletePosition);
+                        adapter.notifyDataSetChanged();
+                          // TODO Auto-generated method stub
+                        Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
+                        puWindow.dismiss();
+                    }
+                });
+                Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        puWindow.dismiss();
+                    }
+                });
+//                puWindow.showAsDropDown(pubtnadd, 0, 0);
+                return true;
+            }
+        });
+
 
         currentTime = -1;
         currentDiff = -1;
 
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -157,7 +209,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
             wodList = dbhandler.loadDatabaseDiff(currentDiff);
         }
 
-        List<RowData> rowData;
+        final List<RowData> rowData;
         rowData = new ArrayList<RowData>();
         for (int i = 0; i < wodList.size(); i++) {
             RowData data = new RowData();
@@ -187,8 +239,51 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
         lv = findViewById(R.id.lv);
 
-        MyAdapter adapter = new MyAdapter(this, rowData);
+        final MyAdapter adapter = new MyAdapter(this, rowData);
         lv.setAdapter(adapter);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                deletePosition = position;
+                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
+                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+                TextView text = (TextView) puView.findViewById(R.id.text_id);
+                text.setText("Delete the workout from database?");
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+                puWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                puWindow.setAnimationStyle(R.style.Animation);
+
+                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
+                        Workout work = wodList.get(deletePosition);
+                        dbhandler.deleteWorkout(work);
+                        rowData.remove(deletePosition);
+                        adapter.notifyDataSetChanged();
+                        // TODO Auto-generated method stub
+                        Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
+                        puWindow.dismiss();
+                    }
+                });
+                Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        puWindow.dismiss();
+                    }
+                });
+//                puWindow.showAsDropDown(pubtnadd, 0, 0);
+                return true;
+            }
+        });
     }
 
 

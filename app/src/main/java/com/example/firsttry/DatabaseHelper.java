@@ -563,7 +563,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void deleteWorkout(Workout work) {
+    public int deleteWorkout(Workout work) {
         int workoutId = -1;
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
@@ -572,16 +572,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
                 workoutId = cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID));
-                db.delete(TABLE_REL, TABLE_REL + "= ?", new String[]{String.valueOf(workoutId)});
+                db.delete(TABLE_REL, KEY_REL_WORK_ID + "= ?", new String[]{String.valueOf(workoutId)});
             }
             cursor.close();
-            db.delete(TABLE_WORK, TABLE_WORK + "= ?", new String[]{String.valueOf(workoutId)});
+            db.delete(TABLE_WORK, KEY_WORK_ID + "= ?", new String[]{String.valueOf(workoutId)});
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(msg, "Error when trying to delete one workout");
         } finally {
             db.endTransaction();
         }
+        return workoutId;
     }
 
 }
