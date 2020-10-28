@@ -60,13 +60,10 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         ltr = AnimationUtils.loadAnimation(this, R.anim.ltr);
 
         workoutSearch = findViewById(R.id.workout_search);
-        // Get textview id of search widget
         int id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) workoutSearch.findViewById(id);
 
         textView.setTextColor(getResources().getColor(R.color.gray));
-//        Typeface face = Typeface.createFromAsset(getAssets(),"font/mmedium.ttf");
-//        textView.setTypeface(face);
         textView.setHintTextColor(getResources().getColor(R.color.gray));
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
@@ -172,6 +169,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 return false;
             }
         });

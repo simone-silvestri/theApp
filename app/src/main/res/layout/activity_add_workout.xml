@@ -12,25 +12,48 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".AddWorkoutActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp">
 
 
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="0dp"
             android:fontFamily="@font/mmedium"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:text="Create workout"
-            android:textColor="#FFFFFF"
-            android:textSize="28sp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttoninfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@color/trans"
+            android:src="@drawable/ic_outline_info_24"
+            android:layout_marginTop="0dp"/>
+
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp">
 
@@ -71,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp">
 
@@ -177,7 +200,8 @@
             android:autofillHints="number"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:inputType="number"/>
 
         <TextView
             android:id="@+id/pauseOrTotalTime"
@@ -209,24 +233,10 @@
             android:hint="seconds"
             android:autofillHints="seconds"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:inputType="number"/>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/mmedium"
-        android:gravity="start"
-        android:text="Exercises:"
-        android:textColor="@color/white"
-        android:textSize="15sp"/>
 
     <View
         android:layout_width="match_parent"
@@ -257,15 +267,37 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="130dp"
+                android:layout_marginLeft="130dp"
+                android:gravity="center"
+                android:text="Add"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
             <ImageButton
                 android:id="@+id/buttonaddexercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:onClick="addExerciseToList"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:background="@color/trans"
                 android:src="@drawable/ic_menu_add"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="0dp"/>
+        </LinearLayout>
 
         </LinearLayout>
 

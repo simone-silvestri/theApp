@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,6 +26,8 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
     private ArrayList<EditText> exename,exework,exepause;
     private ArrayList<TextView> worksec,pausesec;
+    private ArrayList<RelativeLayout> layoutlist;
+    private ArrayList<ImageButton> btndelete;
     private EditText textname, textset, textpause;
     private Workout work;
     private int currentDiff;
@@ -43,6 +46,8 @@ public class AddWorkoutActivity extends AppCompatActivity {
         exepause = new ArrayList<>();
         worksec = new ArrayList<>();
         pausesec = new ArrayList<>();
+        layoutlist = new ArrayList<>();
+        btndelete = new ArrayList<>();
 
         textname = findViewById(R.id.text_name);
         textset = findViewById(R.id.text_sets);
@@ -194,12 +199,37 @@ public class AddWorkoutActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public void deleteExerciseFromList(View v) {
+        int idx = -1;
+        for(int i=0; i<layoutlist.size(); i++) {
+            if(v.getId()==btndelete.get(i).getId()) {
+                idx = i;
+            }
+        }
+        if(idx!=-1) {
+            LinearLayout linear =  findViewById(R.id.exercise_list_layout);
+            RelativeLayout layout = layoutlist.get(idx);
+            linear.removeView(layout);
+            exename.remove(idx);
+            exepause.remove(idx);
+            exework.remove(idx);
+            worksec.remove(idx);
+            pausesec.remove(idx);
+            btndelete.remove(idx);
+            layoutlist.remove(idx);
+        }
+
+    }
+
+
     public void addExerciseToList(View v) {
         LinearLayout linear =  findViewById(R.id.exercise_list_layout);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
 
+        layoutlist.add(layout);
+        btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
         exename.add((EditText) layout.findViewById(R.id.txtname));
         exename.get(exename.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

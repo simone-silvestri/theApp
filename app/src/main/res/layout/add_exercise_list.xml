@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddWorkoutActivity">
 
     <EditText
         android:id="@+id/txtname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="11dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:gravity="center"
         android:fontFamily="@font/mlight"
         android:background="@color/colorPrimaryDark"
@@ -20,7 +22,7 @@
         android:hint="Exercise Name"
         android:autofillHints="Exercise Name"
         android:textColor="@color/gray"
-        android:textSize="18sp" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/txttime"
@@ -28,15 +30,16 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/btnaddwork"
         android:fontFamily="@font/mmedium"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="13dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:gravity="center"
-        android:textColor="@color/gray"
+        android:textColor="@color/white"
         android:background="@color/colorPrimaryDark"
-        android:textSize="17sp"
-        android:text="Work:" />
+        android:textSize="15sp"
+        android:text="Work:"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/btnaddwork"
@@ -44,14 +47,14 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/txtpause"
         android:fontFamily="@font/mmedium"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="13dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:gravity="center"
         android:background="@color/colorPrimaryDark"
-        android:textSize="17sp"
-        android:textColorHint="@color/white"
+        android:textSize="15sp"
+        android:textColorHint="@color/gray"
         android:hint="sec"
         android:autofillHints="sec"
         android:textColor="@color/gray"/>
@@ -61,15 +64,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/btnaddpause"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:fontFamily="@font/mmedium"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="13dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:textColor="@color/gray"
+        android:textColor="@color/white"
         android:background="@color/colorPrimaryDark"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:text="Pause:"/>
 
     <EditText
@@ -77,17 +80,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/mmedium"
-        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/btndeleteexercise"
+        android:layout_marginTop="13dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:gravity="center"
         android:background="@color/colorPrimaryDark"
-        android:textSize="17sp"
-        android:textColorHint="@color/white"
+        android:textSize="15sp"
+        android:textColorHint="@color/gray"
         android:hint="sec"
         android:autofillHints="sec"
+        android:textColor="@color/gray"
+        android:inputType="number"/>
+
+    <ImageButton
+        android:id="@+id/btndeleteexercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:src="@drawable/ic_baseline_remove_circle_outline_24"
+        android:layout_marginTop="8dp"
+        android:onClick="deleteExerciseFromList"
         android:layout_alignParentRight="true"
-        android:textColor="@color/gray"/>
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"/>
 
 </RelativeLayout>
