@@ -6,30 +6,13 @@
     android:background="@color/colorPrimaryDark"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
 
     <TextView
         android:id="@+id/title_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:text="Workout Library"
         android:textSize="30sp"
@@ -37,19 +20,19 @@
         android:gravity="center"
         android:fontFamily="@font/mmedium"/>
 
-    <TextView
-        android:id="@+id/subtitle_list"
+    <SearchView
+        android:id="@+id/workout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Let's work!"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"
+        android:queryHint="Search workout"
+        android:queryBackground="@color/colorPrimaryDark"
+        android:searchHintIcon="@drawable/ic_baseline_search_24"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/white"
         android:gravity="center"
         android:fontFamily="@font/mlight"/>
 

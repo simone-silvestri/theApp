@@ -2,7 +2,9 @@ package com.example.firsttry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +35,11 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
     private TextView titlepage, subtitlepage, btexercise;
     private Animation bttone, btttwo, bttthree, ltr;
     private Button btn1, btn2, btn3, btn4, btn5, btnall;
-    private Button btn20min, btn40min, btn60min, btn80min, btnallmin;
-    private View bgprogress;
+    private SearchView workoutSearch;
 
     private int deletePosition;
     private ListView lv;
     private ArrayList<Workout> wodList;
-    private Adapter adapter;
     private int currentTime, currentDiff;
 
     @Override
@@ -52,28 +54,22 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         btn5 = (Button) findViewById(R.id.btn5);
         btnall = (Button) findViewById(R.id.btnall);
 
-//        btn20min = (Button) findViewById(R.id.btn20min);
-//        btn40min = (Button) findViewById(R.id.btn40min);
-//        btn60min = (Button) findViewById(R.id.btn60min);
-//        btn80min = (Button) findViewById(R.id.btn80min);
-//        btnallmin = (Button) findViewById(R.id.btnallmin);
-
         bttone = AnimationUtils.loadAnimation(this, R.anim.bttone);
         btttwo = AnimationUtils.loadAnimation(this, R.anim.btttwo);
         bttthree = AnimationUtils.loadAnimation(this, R.anim.bttfour);
         ltr = AnimationUtils.loadAnimation(this, R.anim.ltr);
 
-        //import font
-//        titlepage = (TextView) findViewById(R.id.titlepage);
-//        subtitlepage = (TextView) findViewById(R.id.subtitlepage);
-//        btexercise = (TextView) findViewById(R.id.btexercise);
-//        bgprogress = (View) findViewById(R.id.bgprogress);
+        workoutSearch = findViewById(R.id.workout_search);
+        // Get textview id of search widget
+        int id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) workoutSearch.findViewById(id);
 
-//        titlepage.startAnimation(bttone);
-//        subtitlepage.startAnimation(bttone);
+        textView.setTextColor(getResources().getColor(R.color.gray));
+//        Typeface face = Typeface.createFromAsset(getAssets(),"font/mmedium.ttf");
+//        textView.setTypeface(face);
+        textView.setHintTextColor(getResources().getColor(R.color.gray));
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-
         wodList = dbhandler.loadDatabase();
 
         Collections.sort(wodList);
@@ -140,7 +136,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                         int id = dbhandler.deleteWorkout(work);
                         rowData.remove(deletePosition);
                         adapter.notifyDataSetChanged();
-                          // TODO Auto-generated method stub
+                        // TODO Auto-generated method stub
                         Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
                         puWindow.dismiss();
                     }
@@ -152,7 +148,6 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                         puWindow.dismiss();
                     }
                 });
-//                puWindow.showAsDropDown(pubtnadd, 0, 0);
                 return true;
             }
         });
@@ -160,6 +155,26 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
 
         currentTime = -1;
         currentDiff = -1;
+
+        workoutSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                workoutSearch.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        workoutSearch.clearFocus();
+                    }
+                });
+
+                filterByName(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
     }
 
@@ -178,36 +193,22 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         startActivity(intent);
     }
 
-    public void filterWorkout(View view) {
-        btn1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn5.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btnall.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn1.setTextColor(getResources().getColor(R.color.gray));
-        btn2.setTextColor(getResources().getColor(R.color.gray));
-        btn3.setTextColor(getResources().getColor(R.color.gray));
-        btn4.setTextColor(getResources().getColor(R.color.gray));
-        btn5.setTextColor(getResources().getColor(R.color.gray));
-        btnall.setTextColor(getResources().getColor(R.color.gray));
-
-        Button bthere = (Button) view;
-        bthere.setBackgroundColor(getResources().getColor(R.color.white));
-        bthere.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+    public void filterByName(String query) {
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
 
-        String btntxt = bthere.getText().toString();
-        if (new String("ALL").equals(btntxt)) {
-            currentDiff = -1;
-            wodList = dbhandler.loadDatabase();
-            Collections.sort(wodList);
-        } else {
-            int diff = Integer.parseInt(bthere.getText().toString());
-            currentDiff = diff;
-            wodList = dbhandler.loadDatabaseDiff(currentDiff);
+        ArrayList<Workout> wdtemp = new ArrayList<>();
+        wdtemp = dbhandler.loadDatabase();
+        wodList.clear();
+
+        if (!wdtemp.isEmpty()) {
+            for (int i = 0; i < wdtemp.size(); i++) {
+                if (containsIgnoreCase(wdtemp.get(i).getTitle(),query)) {
+                    wodList.add(wdtemp.get(i));
+                }
+            }
         }
+
 
         final List<RowData> rowData;
         rowData = new ArrayList<RowData>();
@@ -216,14 +217,15 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
             String str = wodList.get(i).getTitle();
             data.setTitle(str);
             String type;
-            if(new String("TIME").equals(wodList.get(i).getType())) {
+            if (new String("TIME").equals(wodList.get(i).getType())) {
                 type = "TIME";
-            } else if(new String("REPS").equals(wodList.get(i).getType())) {
+            } else if (new String("REPS").equals(wodList.get(i).getType())) {
                 type = "REPS";
             } else {
                 type = "REPTIME";
             }
-            str = "Total time: " + wodList.get(i).getTotalTime()/60 + " mins;   Type: " + type;            data.setSubtitle(str);
+            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins;   Type: " + type;
+            data.setSubtitle(str);
             if (wodList.get(i).getDifficulty() == 1) {
                 data.setImageId(R.drawable.beginner);
             } else if (wodList.get(i).getDifficulty() == 2) {
@@ -280,9 +282,140 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                         puWindow.dismiss();
                     }
                 });
-//                puWindow.showAsDropDown(pubtnadd, 0, 0);
                 return true;
             }
         });
     }
+
+
+    public void filterWorkout(View view) {
+        btn1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn5.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btnall.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        btn1.setTextColor(getResources().getColor(R.color.gray));
+        btn2.setTextColor(getResources().getColor(R.color.gray));
+        btn3.setTextColor(getResources().getColor(R.color.gray));
+        btn4.setTextColor(getResources().getColor(R.color.gray));
+        btn5.setTextColor(getResources().getColor(R.color.gray));
+        btnall.setTextColor(getResources().getColor(R.color.gray));
+
+        Button bthere = (Button) view;
+        bthere.setBackgroundColor(getResources().getColor(R.color.white));
+        bthere.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+
+        String btntxt = bthere.getText().toString();
+        if (new String("ALL").equals(btntxt)) {
+            currentDiff = -1;
+            wodList = dbhandler.loadDatabase();
+            Collections.sort(wodList);
+        } else {
+            int diff = Integer.parseInt(bthere.getText().toString());
+            currentDiff = diff;
+            wodList = dbhandler.loadDatabaseDiff(currentDiff);
+        }
+
+        final List<RowData> rowData;
+        rowData = new ArrayList<RowData>();
+        for (int i = 0; i < wodList.size(); i++) {
+            RowData data = new RowData();
+            String str = wodList.get(i).getTitle();
+            data.setTitle(str);
+            String type;
+            if (new String("TIME").equals(wodList.get(i).getType())) {
+                type = "TIME";
+            } else if (new String("REPS").equals(wodList.get(i).getType())) {
+                type = "REPS";
+            } else {
+                type = "REPTIME";
+            }
+            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins;   Type: " + type;
+            data.setSubtitle(str);
+            if (wodList.get(i).getDifficulty() == 1) {
+                data.setImageId(R.drawable.beginner);
+            } else if (wodList.get(i).getDifficulty() == 2) {
+                data.setImageId(R.drawable.average);
+            } else if (wodList.get(i).getDifficulty() == 3) {
+                data.setImageId(R.drawable.skilled);
+            } else if (wodList.get(i).getDifficulty() == 4) {
+                data.setImageId(R.drawable.expert);
+            } else {
+                data.setImageId(R.drawable.spartan);
+            }
+            rowData.add(data);
+        }
+        lv = findViewById(R.id.lv);
+
+        final MyAdapter adapter = new MyAdapter(this, rowData);
+        lv.setAdapter(adapter);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                deletePosition = position;
+                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
+                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+                TextView text = (TextView) puView.findViewById(R.id.text_id);
+                text.setText("Delete the workout from database?");
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+                puWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                puWindow.setAnimationStyle(R.style.Animation);
+
+                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
+                        Workout work = wodList.get(deletePosition);
+                        dbhandler.deleteWorkout(work);
+                        rowData.remove(deletePosition);
+                        adapter.notifyDataSetChanged();
+                        // TODO Auto-generated method stub
+                        Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
+                        puWindow.dismiss();
+                    }
+                });
+                Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        puWindow.dismiss();
+                    }
+                });
+                return true;
+            }
+        });
+    }
+
+    public static boolean containsIgnoreCase(String src, String what) {
+        final int length = what.length();
+        if (length == 0)
+            return true; // Empty string is contained
+
+        final char firstLo = Character.toLowerCase(what.charAt(0));
+        final char firstUp = Character.toUpperCase(what.charAt(0));
+
+        for (int i = src.length() - length; i >= 0; i--) {
+            // Quick check before calling the more expensive regionMatches() method:
+            final char ch = src.charAt(i);
+            if (ch != firstLo && ch != firstUp)
+                continue;
+
+            if (src.regionMatches(true, i, what, 0, length))
+                return true;
+        }
+
+        return false;
+    }
+
+
 }
