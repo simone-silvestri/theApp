@@ -2,10 +2,12 @@ package com.example.firsttry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,6 +53,30 @@ public class AddWorkoutActivity extends AppCompatActivity {
         currentDiff = 1;
         currentType = "TIME";
 
+        textname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        textset.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        textpause.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
         dropdownType = findViewById(R.id.spinnertype);
         String[] items = new String[]{"TIME", "REPS", "REPTIME"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -163,6 +189,11 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
     }
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     public void addExerciseToList(View v) {
         LinearLayout linear =  findViewById(R.id.exercise_list_layout);
 
@@ -170,8 +201,33 @@ public class AddWorkoutActivity extends AppCompatActivity {
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
 
         exename.add((EditText) layout.findViewById(R.id.txtname));
+        exename.get(exename.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
         exepause.add((EditText) layout.findViewById(R.id.btnaddpause));
+        exepause.get(exepause.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
         exework.add((EditText) layout.findViewById(R.id.btnaddwork));
+        exework.get(exework.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
         worksec.add((TextView) layout.findViewById(R.id.txttime));
         pausesec.add((TextView) layout.findViewById(R.id.txtpause));
         if (new String("REPS").equals(currentType)) {
