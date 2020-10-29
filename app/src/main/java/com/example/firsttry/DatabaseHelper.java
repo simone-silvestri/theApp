@@ -568,10 +568,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
-            String query = "Select * FROM " + TABLE_WORK + " WHERE " + KEY_WORK_NAME + "=" + "'" + work.getTitle() + "'";
-            Cursor cursor = db.rawQuery(query, null);
+            String workoutSelectQuery = "SELECT " + KEY_WORK_ID + " FROM " + TABLE_WORK
+                   + " WHERE " + KEY_WORK_NAME + " = ?";
+            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(work.getTitle())});
             if (cursor.moveToFirst()) {
-                workoutId = cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID));
+                workoutId = cursor.getInt(0);
                 db.delete(TABLE_REL, KEY_REL_WORK_ID + "= ?", new String[]{String.valueOf(workoutId)});
             }
             cursor.close();
