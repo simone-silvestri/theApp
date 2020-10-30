@@ -34,7 +34,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
     private String currentType;
     private TextView btnexercise, pauseOrTotalTime;
     private Spinner dropdownType, dropdownDifficulty;
-
+    private LinearLayout linear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         pausesec = new ArrayList<>();
         layoutlist = new ArrayList<>();
         btndelete = new ArrayList<>();
+        linear =  findViewById(R.id.exercise_list_layout);
 
         textname = findViewById(R.id.text_name);
         textset = findViewById(R.id.text_sets);
@@ -206,10 +207,16 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 idx = i;
             }
         }
+        ArrayList<String> nm = new ArrayList<>();
+        ArrayList<String> wk = new ArrayList<>();
+        ArrayList<String> ps = new ArrayList<>();
+        for(int i=0; i<exename.size(); i++) {
+            nm.add(exename.get(i).getText().toString());
+            wk.add(exework.get(i).getText().toString());
+            ps.add(exepause.get(i).getText().toString());
+        }
+
         if(idx!=-1) {
-            LinearLayout linear =  findViewById(R.id.exercise_list_layout);
-            RelativeLayout layout = layoutlist.get(idx);
-            linear.removeView(layout);
             exename.remove(idx);
             exepause.remove(idx);
             exework.remove(idx);
@@ -217,13 +224,22 @@ public class AddWorkoutActivity extends AppCompatActivity {
             pausesec.remove(idx);
             btndelete.remove(idx);
             layoutlist.remove(idx);
+            nm.remove(idx); wk.remove(idx); ps.remove(idx);
         }
+
+        linear.removeView((View) v.getParent());
+
+        for(int i=0; i<exename.size(); i++) {
+            exename.get(i).setText(nm.get(i));
+            exework.get(i).setText(wk.get(i));
+            exepause.get(i).setText(ps.get(i));
+        }
+
 
     }
 
 
     public void addExerciseToList(View v) {
-        LinearLayout linear =  findViewById(R.id.exercise_list_layout);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
@@ -299,7 +315,6 @@ public class AddWorkoutActivity extends AppCompatActivity {
                             textpause.setHint("Fill field");
                             textpause.setText(null);
                         } else {
-
                             workoutToBeAdded.setType(currentType);
                             workoutToBeAdded.setDifficulty(currentDiff);
                             workoutToBeAdded.setWod("");

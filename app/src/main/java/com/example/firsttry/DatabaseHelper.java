@@ -569,7 +569,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             String workoutSelectQuery = "SELECT " + KEY_WORK_ID + " FROM " + TABLE_WORK
-                   + " WHERE " + KEY_WORK_NAME + " = ?";
+                    + " WHERE " + KEY_WORK_NAME + " = ?";
             Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(work.getTitle())});
             if (cursor.moveToFirst()) {
                 workoutId = cursor.getInt(0);
