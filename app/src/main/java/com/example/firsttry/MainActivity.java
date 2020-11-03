@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
 
                 TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Create a new workout?");
+                text.setText("Create a new workout from:");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 puWindow.setAnimationStyle(R.style.Animation);
 
                 Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setText("scratch");
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,15 +159,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setText("string");
                 btnNo.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        openStringEditor(v);
                         puWindow.dismiss();
                     }
                 });
                 puWindow.showAsDropDown(pubtnadd, 0, 0);
             }
         });
+    }
+
+    public void openStringEditor(View view) {
+        Intent intent = new Intent(this, StringActivity.class);
+        startActivity(intent);
     }
 
     public void openLibrary(View view) {

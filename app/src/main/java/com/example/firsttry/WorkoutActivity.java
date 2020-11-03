@@ -188,6 +188,8 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         intent.putExtra("EXTRA_TITLE", title);
         intent.putExtra("EXTRA_WOD", wod);
         intent.putExtra("EXTRA_WORKOUT", work);
+        intent.putExtra("EXTRA_WORK_OR_ADD", 0);
+
         startActivity(intent);
     }
 

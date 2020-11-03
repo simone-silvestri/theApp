@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.List;
 public class DetailActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private TextView title;
+    private int workoradd;
     private TextView btnexercise;
     private TextView textime, texttype, description, textsets, textpause;
     private ListView lvexe;
@@ -60,6 +64,12 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         exer = work.getExercises();
 
         Bundle extra = getIntent().getExtras();
+        workoradd = getIntent().getIntExtra("EXTRA_WORK_OR_ADD",0);
+
+        if(workoradd==1) {
+            btnexercise.setText("Add to Library");
+        }
+
 
         title.setText(work.getTitle());
         if (new String("TIME").equals(work.getType())) {
@@ -168,58 +178,64 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void openTimer(View view) {
-        if (!work.getExercises().isEmpty()) {
-            if (new String("TIME").equals(work.getType())) {
-                Intent intent = new Intent(this, TimerActivity.class);
-                intent.putExtra("EXTRA_WORKOUT", work);
-                startActivity(intent);
-            } else if (new String("REPS").equals(work.getType())) {
-                Intent intent = new Intent(this, RepsActivity.class);
-                intent.putExtra("EXTRA_WORKOUT", work);
-                startActivity(intent);
+        if(workoradd==0) {
+            if (!work.getExercises().isEmpty()) {
+                if (new String("TIME").equals(work.getType())) {
+                    Intent intent = new Intent(this, TimerActivity.class);
+                    intent.putExtra("EXTRA_WORKOUT", work);
+                    startActivity(intent);
+                } else if (new String("REPS").equals(work.getType())) {
+                    Intent intent = new Intent(this, RepsActivity.class);
+                    intent.putExtra("EXTRA_WORKOUT", work);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(this, RepsInTimeActivity.class);
+                    intent.putExtra("EXTRA_WORKOUT", work);
+                    startActivity(intent);
+                }
             } else {
-                Intent intent = new Intent(this, RepsInTimeActivity.class);
-                intent.putExtra("EXTRA_WORKOUT", work);
-                startActivity(intent);
+                btnexercise.setText("no exercises in workout");
             }
         } else {
-            btnexercise.setText("no exercises in workout");
+            DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+
+            ArrayList<Exercise> exeList = new ArrayList<>();
+            int id = dbhandler.loadWorkoutId(work.getTitle());
+            if(id==-1) {
+                id = (int) dbhandler.addOrUpdateWorkout(work);
+                work.setID(id);
+                dbhandler.removeExercises(work);
+                exeList = work.getExercises();
+                for (int j = 0; j < exeList.size(); j++) {
+                    dbhandler.addExerciseInWorkout(exeList.get(j), work);
+                }
+            } else {
+                btnexercise.setText("Workout already exists");
+            }
         }
     }
 
     public void sendWorkout(View view) {
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringFormatter stringFormatter = new StringFormatter();
+        stringFormatter.setContent(work);
+        PackageManager pm=getPackageManager();
+        try {
 
-        stringBuilder.append(work.getTitle() + " | ");
-        stringBuilder.append(work.getType() + " | ");
-        stringBuilder.append(work.getDifficulty() + " | ");
-        stringBuilder.append(work.getNumberOfSets() + " | ");
-        stringBuilder.append(work.getSetPause() + " | ");
-        stringBuilder.append(work.getTotalTime() + " | ");
-        stringBuilder.append(" exercises: | ");
-        for(int i=0; i<work.getExercises().size(); i++) {
-            if(new String("TIME").equals(work.getType())) {
-                stringBuilder.append(work.getExercises().get(i).getName() + " | ");
-                stringBuilder.append(work.getExercises().get(i).getTimeInSeconds() + " | ");
-                stringBuilder.append(work.getExercises().get(i).getPauseInSeconds() + " | ");
-            } else if(new String("REPS").equals(work.getType())) {
-                stringBuilder.append(work.getExercises().get(i).getName() + " | ");
-                stringBuilder.append(work.getExercises().get(i).getReps() + " | ");
-            } else {
-                stringBuilder.append(work.getExercises().get(i).getName() + " | ");
-                stringBuilder.append(work.getExercises().get(i).getReps() + " | ");
-                stringBuilder.append(work.getExercises().get(i).getTimeInSeconds() + " | ");
-            }
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+
+            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            waIntent.setPackage("com.whatsapp");
+
+            waIntent.putExtra(Intent.EXTRA_TEXT,  stringFormatter.getContent());
+            startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    .show();
         }
 
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("message/rfc822");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"recipent@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Logs for ");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, stringBuilder.toString()); //id + "\n" + date + "\n" + destination + "\n" + purpose + "\n" + mileage);
-        startActivity(Intent.createChooser(emailIntent, "Select App"));
     }
 
 }
