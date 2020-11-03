@@ -9,55 +9,64 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".DetailActivity">
 
-
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/mlight"
-        android:gravity="center"
-        android:text="Insert String"
-        android:textColor="@color/white"
-        android:textSize="25sp"/>
+        android:orientation="horizontal">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:text="Workout from code"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"/>
+
+
+        <ImageButton
+            android:id="@+id/buttoninfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/trans"
+            android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_outline_info_24" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
 
     <EditText
         android:id="@+id/workout_string_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:fontFamily="@font/mlight"
         android:gravity="center"
         android:layout_gravity="center"
-        android:hint="Paste string"
+        android:hint="Insert workout code string here"
         android:autofillHints="insert name"
         android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textSize="15sp"/>
-
-    <TextView
-        android:id="@+id/test_string"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/mlight"
-        android:gravity="center"
-        android:text="Insert String"
         android:textColor="@color/white"
         android:textSize="15sp"/>
 
