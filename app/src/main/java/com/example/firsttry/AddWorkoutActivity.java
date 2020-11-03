@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 
 public class AddWorkoutActivity extends AppCompatActivity {
 
-    private ArrayList<EditText> exename,exework,exepause;
-    private ArrayList<TextView> worksec,pausesec;
+    private ArrayList<EditText> exename, exework, exepause;
+    private ArrayList<TextView> worksec, pausesec;
     private ArrayList<RelativeLayout> layoutlist;
     private ArrayList<ImageButton> btndelete;
     private EditText textname, textset, textpause;
@@ -48,7 +49,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         pausesec = new ArrayList<>();
         layoutlist = new ArrayList<>();
         btndelete = new ArrayList<>();
-        linear =  findViewById(R.id.exercise_list_layout);
+        linear = findViewById(R.id.exercise_list_layout);
 
         textname = findViewById(R.id.text_name);
         textset = findViewById(R.id.text_sets);
@@ -170,6 +171,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                         break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
@@ -178,15 +180,16 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
 
         dropdownDifficulty = findViewById(R.id.spinnerdifficulty);
-        items = new String[]{"Beginner","Average","Skilled","Expert","Spartan"};
+        items = new String[]{"Beginner", "Average", "Skilled", "Expert", "Spartan"};
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdownDifficulty.setAdapter(adapter);
         dropdownDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                currentDiff = position+1;
+                currentDiff = position + 1;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
@@ -196,27 +199,24 @@ public class AddWorkoutActivity extends AppCompatActivity {
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public void deleteExerciseFromList(View v) {
-        int idx = -1;
-        for(int i=0; i<layoutlist.size(); i++) {
-            if(v.getId()==btndelete.get(i).getId()) {
-                idx = i;
-            }
-        }
+        RelativeLayout r = (RelativeLayout) v.getParent();
+        int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
+
         ArrayList<String> nm = new ArrayList<>();
         ArrayList<String> wk = new ArrayList<>();
         ArrayList<String> ps = new ArrayList<>();
-        for(int i=0; i<exename.size(); i++) {
+        for (int i = 0; i < exename.size(); i++) {
             nm.add(exename.get(i).getText().toString());
             wk.add(exework.get(i).getText().toString());
             ps.add(exepause.get(i).getText().toString());
         }
 
-        if(idx!=-1) {
+        if (idx != -1) {
             exename.remove(idx);
             exepause.remove(idx);
             exework.remove(idx);
@@ -224,12 +224,14 @@ public class AddWorkoutActivity extends AppCompatActivity {
             pausesec.remove(idx);
             btndelete.remove(idx);
             layoutlist.remove(idx);
-            nm.remove(idx); wk.remove(idx); ps.remove(idx);
+            nm.remove(idx);
+            wk.remove(idx);
+            ps.remove(idx);
         }
 
         linear.removeView((View) v.getParent());
 
-        for(int i=0; i<exename.size(); i++) {
+        for (int i = 0; i < exename.size(); i++) {
             exename.get(i).setText(nm.get(i));
             exework.get(i).setText(wk.get(i));
             exepause.get(i).setText(ps.get(i));
@@ -247,7 +249,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
         exename.add((EditText) layout.findViewById(R.id.txtname));
-        exename.get(exename.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        exename.get(exename.size() - 1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -256,7 +258,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
             }
         });
         exepause.add((EditText) layout.findViewById(R.id.btnaddpause));
-        exepause.get(exepause.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        exepause.get(exepause.size() - 1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -265,7 +267,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
             }
         });
         exework.add((EditText) layout.findViewById(R.id.btnaddwork));
-        exework.get(exework.size()-1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        exework.get(exework.size() - 1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -277,13 +279,13 @@ public class AddWorkoutActivity extends AppCompatActivity {
         worksec.add((TextView) layout.findViewById(R.id.txttime));
         pausesec.add((TextView) layout.findViewById(R.id.txtpause));
         if (new String("REPS").equals(currentType)) {
-            exepause.get(exepause.size()-1).setHint("num");
-            pausesec.get(pausesec.size()-1).setText("Reps:");
-            exework.get(exework.size()-1).setHint("");
-            worksec.get(worksec.size()-1).setText("");
+            exepause.get(exepause.size() - 1).setHint("num");
+            pausesec.get(pausesec.size() - 1).setText("Reps:");
+            exework.get(exework.size() - 1).setHint("");
+            worksec.get(worksec.size() - 1).setText("");
         } else if (new String("REPTIME").equals(currentType)) {
-            exepause.get(exepause.size()-1).setHint("num");
-            pausesec.get(pausesec.size()-1).setText("Reps:");
+            exepause.get(exepause.size() - 1).setHint("num");
+            pausesec.get(pausesec.size() - 1).setText("Reps:");
         }
 
         btnexercise.setText("Add to Library");
@@ -296,7 +298,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         ArrayList<Exercise> exercises = new ArrayList<>();
 
         workoutToBeAdded.setTitle(textname.getText().toString());
-        if(workoutToBeAdded.getTitle().isEmpty()) {
+        if (workoutToBeAdded.getTitle().isEmpty()) {
             textname.setHint("Insert Title!");
         } else {
             int check = dbhandler.loadWorkoutId(workoutToBeAdded.getTitle());
@@ -343,7 +345,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                             if (new String("REPS").equals(workoutToBeAdded.getType())) {
                                 workoutToBeAdded.setSetPause(0);
                                 workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
-                                workoutToBeAdded.setTotalTime(Integer.parseInt(textpause.getText().toString())*60);
+                                workoutToBeAdded.setTotalTime(Integer.parseInt(textpause.getText().toString()) * 60);
                             } else {
                                 workoutToBeAdded.setSetPause(Integer.parseInt(textpause.getText().toString()));
                                 workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
