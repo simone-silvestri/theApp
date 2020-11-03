@@ -65,9 +65,10 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
         Bundle extra = getIntent().getExtras();
         workoradd = getIntent().getIntExtra("EXTRA_WORK_OR_ADD",0);
-
         if(workoradd==1) {
             btnexercise.setText("Add to Library");
+            ImageView sendbutton = findViewById(R.id.sendbutton);
+            sendbutton.setVisibility(View.INVISIBLE);
         }
 
 
@@ -209,6 +210,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 for (int j = 0; j < exeList.size(); j++) {
                     dbhandler.addExerciseInWorkout(exeList.get(j), work);
                 }
+                btnexercise.setText("Added!");
             } else {
                 btnexercise.setText("Workout already exists");
             }
