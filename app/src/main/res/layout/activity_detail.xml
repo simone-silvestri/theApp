@@ -13,7 +13,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="3">
 
     <ImageView
         android:id="@+id/difficultyicon"
@@ -26,35 +27,38 @@
 
         <TextView
         android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="2.8"
         android:layout_height="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:fontFamily="@font/mmedium"
-        android:gravity="start|center"
+        android:gravity="center|center"
         android:layout_gravity="start|top"
         android:text="Title"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/white"
+        android:textSize="24sp"/>
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.1" />
 
         <ImageView
             android:id="@+id/sendbutton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:onClick="sendWorkout"
-            android:src="@drawable/ic_baseline_send_24" />
+            android:gravity="start|center"
+            android:layout_gravity="right|center"
+            android:layout_weight="0.1"
+            android:src="@drawable/ic_baseline_share_24" />
 
     </LinearLayout>
 

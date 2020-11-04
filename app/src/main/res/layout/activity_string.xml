@@ -55,19 +55,20 @@
 
     <EditText
         android:id="@+id/workout_string_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:fontFamily="@font/mlight"
         android:gravity="center"
         android:layout_gravity="center"
         android:hint="Insert workout code string here"
         android:autofillHints="insert name"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
+        android:background="@color/white"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"/>
 
     <View

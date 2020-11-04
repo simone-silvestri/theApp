@@ -116,7 +116,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
 
                 final TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Delete the workout from database?");
+                text.setText("Do you want to delete of modify the workout?");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -125,6 +125,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puWindow.setAnimationStyle(R.style.Animation);
 
                 Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setText("Delete");
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -139,9 +140,14 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setText("Modify");
                 btnNo.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Workout work = wodList.get(deletePosition);
+                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
+                        intent.putExtra("EXTRA_WORKOUT", work);
+                        startActivity(intent);
                         puWindow.dismiss();
                     }
                 });
@@ -253,7 +259,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
 
                 TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Delete the workout from database?");
+                text.setText("Do you want to delete of modify the workout?");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -262,12 +268,13 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puWindow.setAnimationStyle(R.style.Animation);
 
                 Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setText("Delete");
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
                         Workout work = wodList.get(deletePosition);
-                        dbhandler.deleteWorkout(work);
+                        int id = dbhandler.deleteWorkout(work);
                         rowData.remove(deletePosition);
                         adapter.notifyDataSetChanged();
                         // TODO Auto-generated method stub
@@ -276,9 +283,14 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setText("Modify");
                 btnNo.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Workout work = wodList.get(deletePosition);
+                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
+                        intent.putExtra("EXTRA_WORKOUT", work);
+                        startActivity(intent);
                         puWindow.dismiss();
                     }
                 });
@@ -362,7 +374,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
 
                 TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Delete the workout from database?");
+                text.setText("Do you want to delete of modify the workout?");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -371,12 +383,13 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puWindow.setAnimationStyle(R.style.Animation);
 
                 Button btnYes = (Button) puView.findViewById(R.id.button_yes);
+                btnYes.setText("Delete");
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
                         Workout work = wodList.get(deletePosition);
-                        dbhandler.deleteWorkout(work);
+                        int id = dbhandler.deleteWorkout(work);
                         rowData.remove(deletePosition);
                         adapter.notifyDataSetChanged();
                         // TODO Auto-generated method stub
@@ -385,9 +398,14 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
+                btnNo.setText("Modify");
                 btnNo.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Workout work = wodList.get(deletePosition);
+                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
+                        intent.putExtra("EXTRA_WORKOUT", work);
+                        startActivity(intent);
                         puWindow.dismiss();
                     }
                 });

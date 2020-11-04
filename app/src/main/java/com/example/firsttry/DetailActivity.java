@@ -221,22 +221,21 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
         StringFormatter stringFormatter = new StringFormatter();
         stringFormatter.setContent(work);
-        PackageManager pm=getPackageManager();
-        try {
+//        PackageManager pm=getPackageManager();
+//        try {
 
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
 
-            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-            waIntent.setPackage("com.whatsapp");
+//            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            //waIntent.setPackage("com.whatsapp");
 
             waIntent.putExtra(Intent.EXTRA_TEXT,  stringFormatter.getContent());
             startActivity(Intent.createChooser(waIntent, "Share with"));
 
-        } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                    .show();
-        }
+//        } catch (PackageManager.NameNotFoundException e) {
+//            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
