@@ -200,14 +200,13 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             textpause.setText(Integer.toString(work.getSetPause()));
         } else if (new String("REPS").equals(work.getType())) {
             dropdownType.setSelection(1);
-            textpause.setText(Integer.toString(work.getTotalTime() / 60));
+            textpause.setText(Integer.toString(work.getTotalTime()/60));
         } else {
             dropdownType.setSelection(2);
             textpause.setText(Integer.toString(work.getSetPause()));
         }
         dropdownDifficulty.setSelection(work.getDifficulty() - 1);
         textset.setText(Integer.toString(work.getNumberOfSets()));
-        textpause.setText(Integer.toString(work.getSetPause()));
 
         for (int i = 0; i < work.getExercises().size(); i++) {
             addExerciseToList((View) textname);
