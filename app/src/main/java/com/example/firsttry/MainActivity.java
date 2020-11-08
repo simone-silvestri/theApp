@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void openEditor(View view) {
-        Intent intent = new Intent(this, AddWorkoutActivity.class);
+        Intent intent = new Intent(this, AddWorkout2.class);
         startActivity(intent);
     }
 
