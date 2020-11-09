@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -111,15 +112,15 @@ public class AddWorkout2 extends AppCompatActivity {
                 ImageView img = (ImageView) puView.findViewById(R.id.imgexe);
                 if(new String("TIME").equals(currentType)) {
                     text.setText(R.string.type_1_desc);
-                    exer.setText("H.I.I.T. type workout");
+                    exer.setText("H.I.I.T. workout");
                     img.setImageResource(R.drawable.time);
                 } else if (new String("REPS").equals(currentType)) {
                     text.setText(R.string.type_2_desc);
-                    exer.setText("Repetition based workout");
+                    exer.setText("Reps based");
                     img.setImageResource(R.drawable.reps);
                 } else {
                     text.setText(R.string.type_3_desc);
-                    exer.setText("Repetitions in time");
+                    exer.setText("Reps in time");
                     img.setImageResource(R.drawable.reptime);
                 }
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -140,6 +141,7 @@ public class AddWorkout2 extends AppCompatActivity {
     public void setCurrentDiff(View v) {
         LinearLayout r = (LinearLayout) v.getParent();
         int idx = r.indexOfChild(v);
+        TextView diffname = (TextView) findViewById(R.id.diffname);
         currentDiff = idx + 1;
         LinearLayout.LayoutParams small = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.small_image), getResources().getDimensionPixelSize(R.dimen.small_image),1.0f);
         LinearLayout.LayoutParams large = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.large_image), getResources().getDimensionPixelSize(R.dimen.large_image),1.0f);
@@ -151,12 +153,32 @@ public class AddWorkout2 extends AppCompatActivity {
         skilled.setLayoutParams(small);
         spartan.setLayoutParams(small);
         v.setLayoutParams(large);
+//        Typeface face = Typeface.createFromAsset(getAssets(),
+//                "font/mmedium.ttf");
+
+        if(currentDiff==1) {
+            diffname.setText("Beginner");
+            diffname.setTextColor(getResources().getColor(R.color.beginner));
+        } else if (currentDiff==2) {
+            diffname.setText("Average");
+            diffname.setTextColor(getResources().getColor(R.color.average));
+        } else if (currentDiff==3) {
+            diffname.setText("Skilled");
+            diffname.setTextColor(getResources().getColor(R.color.skilled));
+        } else if (currentDiff==4) {
+            diffname.setText("Expert");
+            diffname.setTextColor(getResources().getColor(R.color.expert));
+        } else {
+            diffname.setText("Spartan");
+            diffname.setTextColor(getResources().getColor(R.color.spartan));
+        }
+
     }
 
     public void setCurrentType(View v) {
         LinearLayout r = (LinearLayout) v.getParent();
         int idx = r.indexOfChild(v);
-
+        TextView type = (TextView) findViewById(R.id.typename);
         if(idx == 0) {
             currentType = "TIME";
             if (!worksec.isEmpty()) {
@@ -166,7 +188,7 @@ public class AddWorkout2 extends AppCompatActivity {
             }
             if (!exework.isEmpty()) {
                 for (int i = 0; i < exework.size(); i++) {
-                    exework.get(i).setHint("sec");
+                    exework.get(i).setHint("work");
                 }
             }
             if (!pausesec.isEmpty()) {
@@ -176,11 +198,12 @@ public class AddWorkout2 extends AppCompatActivity {
             }
             if (!exepause.isEmpty()) {
                 for (int i = 0; i < exepause.size(); i++) {
-                    exepause.get(i).setHint("sec");
+                    exepause.get(i).setHint("pause");
                 }
             }
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
+            type.setText("H.I.I.T. workout");
         } else if (idx == 1) {
             currentType = "REPS";
             if (!worksec.isEmpty()) {
@@ -201,35 +224,37 @@ public class AddWorkout2 extends AppCompatActivity {
             }
             if (!exepause.isEmpty()) {
                 for (int i = 0; i < exepause.size(); i++) {
-                    exepause.get(i).setHint("num");
+                    exepause.get(i).setHint("reps");
                 }
             }
             pauseOrTotalTime.setText("Time:");
             textpause.setHint("minutes");
+            type.setText("Reps workout");
         } else {
             currentType = "REPTIME";
             if (!worksec.isEmpty()) {
                 for (int i = 0; i < worksec.size(); i++) {
-                    worksec.get(i).setText("\"");
+                    worksec.get(i).setText("X, in");
                 }
             }
             if (!exework.isEmpty()) {
                 for (int i = 0; i < exework.size(); i++) {
-                    exework.get(i).setHint("sec");
+                    exework.get(i).setHint("reps");
                 }
             }
             if (!pausesec.isEmpty()) {
                 for (int i = 0; i < pausesec.size(); i++) {
-                    pausesec.get(i).setText("X");
+                    pausesec.get(i).setText("\"");
                 }
             }
             if (!exepause.isEmpty()) {
                 for (int i = 0; i < exepause.size(); i++) {
-                    exepause.get(i).setHint("num");
+                    exepause.get(i).setHint("sec");
                 }
             }
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
+            type.setText("Reps in time");
         }
         LinearLayout.LayoutParams small = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.small_image), getResources().getDimensionPixelSize(R.dimen.small_image),1.0f);
         LinearLayout.LayoutParams large = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.large_image), getResources().getDimensionPixelSize(R.dimen.large_image),1.0f);
@@ -316,15 +341,18 @@ public class AddWorkout2 extends AppCompatActivity {
         worksec.add((TextView) layout.findViewById(R.id.txttime));
         pausesec.add((TextView) layout.findViewById(R.id.txtpause));
         if (new String("REPS").equals(currentType)) {
-            exepause.get(exepause.size() - 1).setHint("num");
+            exepause.get(exepause.size() - 1).setHint("reps");
             pausesec.get(pausesec.size() - 1).setText("X");
             exework.get(exework.size() - 1).setHint("");
             worksec.get(worksec.size() - 1).setText("");
         } else if (new String("REPTIME").equals(currentType)) {
-            exepause.get(exepause.size() - 1).setHint("num");
-            pausesec.get(pausesec.size() - 1).setText("X");
-            worksec.get(pausesec.size() - 1).setText("\"");
+            exepause.get(exepause.size() - 1).setHint("sec");
+            exework.get(exework.size() - 1).setHint("reps");
+            pausesec.get(pausesec.size() - 1).setText("\"");
+            worksec.get(pausesec.size() - 1).setText("X, in");
         } else {
+            exepause.get(exepause.size() - 1).setHint("pause");
+            exework.get(exework.size() - 1).setHint("work");
             worksec.get(pausesec.size() - 1).setText("\"");
             pausesec.get(pausesec.size() - 1).setText("\"");
         }
@@ -374,8 +402,8 @@ public class AddWorkout2 extends AppCompatActivity {
                                     reps = Integer.parseInt(exepause.get(i).getText().toString());
                                     pause = 0;
                                 } else {
-                                    time = Integer.parseInt(exework.get(i).getText().toString());
-                                    reps = Integer.parseInt(exepause.get(i).getText().toString());
+                                    reps = Integer.parseInt(exework.get(i).getText().toString());
+                                    time = Integer.parseInt(exepause.get(i).getText().toString());
                                     pause = 0;
                                 }
                                 Exercise exe = new Exercise(nm, reps, time, pause);

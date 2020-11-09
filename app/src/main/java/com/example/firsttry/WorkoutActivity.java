@@ -70,22 +70,26 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         wodList = dbhandler.loadDatabase();
 
         Collections.sort(wodList);
-        final List<RowData> rowData;
-        rowData = new ArrayList<RowData>();
+        final List<RowDataComplete> rowData;
+        rowData = new ArrayList<RowDataComplete>();
         for (int i = 0; i < wodList.size(); i++) {
-            RowData data = new RowData();
+            RowDataComplete data = new RowDataComplete();
             String str = wodList.get(i).getTitle();
             data.setTitle(str);
             String type;
             if (new String("TIME").equals(wodList.get(i).getType())) {
-                type = "TIME";
+                type = "H.I.I.T. workout";
+                data.setImageType(R.drawable.time);
             } else if (new String("REPS").equals(wodList.get(i).getType())) {
-                type = "REPS";
+                type = "Reps workout";
+                data.setImageType(R.drawable.reps);
             } else {
-                type = "REPTIME";
+                type = "Reps in time";
+                data.setImageType(R.drawable.reptime);
             }
-            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins;   Type: " + type;
+            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins";
             data.setSubtitle(str);
+            data.setType(type);
             if (wodList.get(i).getDifficulty() == 1) {
                 data.setImageId(R.drawable.beginner);
             } else if (wodList.get(i).getDifficulty() == 2) {
@@ -101,7 +105,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
         lv = findViewById(R.id.lv);
 
-        final MyAdapter adapter = new MyAdapter(this, rowData);
+        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
         lv.setAdapter(adapter);
         lv.startAnimation(bttthree);
         lv.setOnItemClickListener(this);
@@ -216,22 +220,26 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
 
 
-        final List<RowData> rowData;
-        rowData = new ArrayList<RowData>();
+        final List<RowDataComplete> rowData;
+        rowData = new ArrayList<RowDataComplete>();
         for (int i = 0; i < wodList.size(); i++) {
-            RowData data = new RowData();
+            RowDataComplete data = new RowDataComplete();
             String str = wodList.get(i).getTitle();
             data.setTitle(str);
             String type;
             if (new String("TIME").equals(wodList.get(i).getType())) {
-                type = "TIME";
+                type = "H.I.I.T. workout";
+                data.setImageType(R.drawable.time);
             } else if (new String("REPS").equals(wodList.get(i).getType())) {
-                type = "REPS";
+                type = "Reps workout";
+                data.setImageType(R.drawable.reps);
             } else {
-                type = "REPTIME";
+                type = "Reps in time";
+                data.setImageType(R.drawable.reptime);
             }
-            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins;   Type: " + type;
+            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins";
             data.setSubtitle(str);
+            data.setType(type);
             if (wodList.get(i).getDifficulty() == 1) {
                 data.setImageId(R.drawable.beginner);
             } else if (wodList.get(i).getDifficulty() == 2) {
@@ -247,7 +255,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
         lv = findViewById(R.id.lv);
 
-        final MyAdapter adapter = new MyAdapter(this, rowData);
+        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
         lv.setAdapter(adapter);
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -331,22 +339,26 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
             wodList = dbhandler.loadDatabaseDiff(currentDiff);
         }
 
-        final List<RowData> rowData;
-        rowData = new ArrayList<RowData>();
+        final List<RowDataComplete> rowData;
+        rowData = new ArrayList<RowDataComplete>();
         for (int i = 0; i < wodList.size(); i++) {
-            RowData data = new RowData();
+            RowDataComplete data = new RowDataComplete();
             String str = wodList.get(i).getTitle();
             data.setTitle(str);
             String type;
             if (new String("TIME").equals(wodList.get(i).getType())) {
-                type = "TIME";
+                type = "H.I.I.T. workout";
+                data.setImageType(R.drawable.time);
             } else if (new String("REPS").equals(wodList.get(i).getType())) {
-                type = "REPS";
+                type = "Reps workout";
+                data.setImageType(R.drawable.reps);
             } else {
-                type = "REPTIME";
+                type = "Reps in time";
+                data.setImageType(R.drawable.reptime);
             }
-            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins;   Type: " + type;
+            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins";
             data.setSubtitle(str);
+            data.setType(type);
             if (wodList.get(i).getDifficulty() == 1) {
                 data.setImageId(R.drawable.beginner);
             } else if (wodList.get(i).getDifficulty() == 2) {
@@ -362,7 +374,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
         lv = findViewById(R.id.lv);
 
-        final MyAdapter adapter = new MyAdapter(this, rowData);
+        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
         lv.setAdapter(adapter);
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

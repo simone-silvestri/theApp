@@ -70,36 +70,32 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/mmedium"
-        android:gravity="start"
-        android:text="Type:"
-        android:textColor="@color/white"
-        android:textSize="15sp"/>
+        <ImageView
+            android:id="@+id/type"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/time"
+            android:paddingTop="3dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/colorPrimaryDark"/>
 
         <TextView
             android:id="@+id/text_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:fontFamily="@font/mlight"
-            android:gravity="start"
+            android:gravity="start|center"
+            android:layout_gravity="start|center"
             android:text="Type"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textColor="@color/type"
+            android:textSize="15sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -110,7 +106,7 @@
         android:layout_marginLeft="21dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/mlight"
         android:gravity="start"

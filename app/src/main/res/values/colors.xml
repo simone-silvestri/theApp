@@ -9,5 +9,11 @@
     <color name="lightpink">#FAD9C1</color>
     <color name="work">#03C04A</color>
     <color name="pause">#ADD3E6</color>
+    <color name="type">#E94B4B</color>
+    <color name="beginner">#71B62C</color>
+    <color name="average">#4EB795</color>
+    <color name="skilled">#D3D91A</color>
+    <color name="expert">#E5842B</color>
+    <color name="spartan">#E20814</color>
     <color name="trans">#00000000 </color>.
 </resources>

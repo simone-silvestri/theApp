@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     private TextView btnexercise;
     private TextView textime, texttype, description, textsets, textpause;
     private ListView lvexe;
-    private ImageView diffIcon;
+    private ImageView diffIcon, typeIcon;
     private Adapter adapter;
     private Workout work;
     private ArrayList<Exercise> exer;
@@ -51,6 +51,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
         title = findViewById(R.id.title_tv);
         diffIcon = findViewById(R.id.difficultyicon);
+        typeIcon = findViewById(R.id.type);
         description = findViewById(R.id.Description);
         texttype = findViewById(R.id.text_type);
         textime = findViewById(R.id.text_time);
@@ -77,14 +78,17 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             texttype.setText(R.string.type_1);
             description.setText(R.string.type_1_desc);
             type = 1;
+            typeIcon.setImageResource(R.drawable.time);
         } else if (new String("REPS").equals(work.getType())) {
             texttype.setText(R.string.type_2);
             description.setText(R.string.type_2_desc);
             type = 2;
+            typeIcon.setImageResource(R.drawable.reps);
         } else {
             texttype.setText(R.string.type_3);
             description.setText(R.string.type_3_desc);
             type = 3;
+            typeIcon.setImageResource(R.drawable.reptime);
         }
 
         textime.setText(String.valueOf(exer.size()));
