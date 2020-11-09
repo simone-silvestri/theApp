@@ -17,6 +17,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -34,7 +35,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
 
     private TextView titlepage, subtitlepage, btexercise;
     private Animation bttone, btttwo, bttthree, ltr;
-    private Button btn1, btn2, btn3, btn4, btn5, btnall;
+    private ImageView btn1, btn2, btn3, btn4, btn5, btnall;
     private SearchView workoutSearch;
 
     private int deletePosition;
@@ -47,12 +48,12 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        btn1 = (Button) findViewById(R.id.btn1);
-        btn2 = (Button) findViewById(R.id.btn2);
-        btn3 = (Button) findViewById(R.id.btn3);
-        btn4 = (Button) findViewById(R.id.btn4);
-        btn5 = (Button) findViewById(R.id.btn5);
-        btnall = (Button) findViewById(R.id.btnall);
+        btn1 = (ImageView) findViewById(R.id.btn1);
+        btn2 = (ImageView) findViewById(R.id.btn2);
+        btn3 = (ImageView) findViewById(R.id.btn3);
+        btn4 = (ImageView) findViewById(R.id.btn4);
+        btn5 = (ImageView) findViewById(R.id.btn5);
+        btnall = (ImageView) findViewById(R.id.btnall);
 
         bttone = AnimationUtils.loadAnimation(this, R.anim.bttone);
         btttwo = AnimationUtils.loadAnimation(this, R.anim.btttwo);
@@ -87,7 +88,17 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 type = "Reps in time";
                 data.setImageType(R.drawable.reptime);
             }
-            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins";
+            String timeLeftText;
+            int minutes = (int) wodList.get(i).getTotalTime() / 60;
+            int seconds = (int) wodList.get(i).getTotalTime() % 60;
+            if (minutes > 0) {
+                timeLeftText = "" + minutes + "'";
+                if (seconds < 10) timeLeftText += "0";
+                timeLeftText += seconds + "\"";
+            } else {
+                timeLeftText = "" + seconds + "\"";
+            }
+            str = "Time: " + timeLeftText;
             data.setSubtitle(str);
             data.setType(type);
             if (wodList.get(i).getDifficulty() == 1) {
@@ -237,7 +248,17 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 type = "Reps in time";
                 data.setImageType(R.drawable.reptime);
             }
-            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins";
+            String timeLeftText;
+            int minutes = (int) wodList.get(i).getTotalTime() / 60;
+            int seconds = (int) wodList.get(i).getTotalTime() % 60;
+            if (minutes > 0) {
+                timeLeftText = "" + minutes + "'";
+                if (seconds < 10) timeLeftText += "0";
+                timeLeftText += seconds + "\"";
+            } else {
+                timeLeftText = "" + seconds + "\"";
+            }
+            str = "Time: " + timeLeftText;
             data.setSubtitle(str);
             data.setType(type);
             if (wodList.get(i).getDifficulty() == 1) {
@@ -309,33 +330,46 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
 
 
     public void filterWorkout(View view) {
-        btn1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn5.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btnall.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        btn1.setTextColor(getResources().getColor(R.color.gray));
-        btn2.setTextColor(getResources().getColor(R.color.gray));
-        btn3.setTextColor(getResources().getColor(R.color.gray));
-        btn4.setTextColor(getResources().getColor(R.color.gray));
-        btn5.setTextColor(getResources().getColor(R.color.gray));
-        btnall.setTextColor(getResources().getColor(R.color.gray));
+        btn1.setImageResource(R.drawable.star_white);
+        btn2.setImageResource(R.drawable.star_white);
+        btn3.setImageResource(R.drawable.star_white);
+        btn4.setImageResource(R.drawable.star_white);
+        btn5.setImageResource(R.drawable.star_white);
 
-        Button bthere = (Button) view;
-        bthere.setBackgroundColor(getResources().getColor(R.color.white));
-        bthere.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        LinearLayout r = (LinearLayout) view.getParent();
+        int idx = r.indexOfChild(view);
+
+        currentDiff = idx;
+        if(currentDiff==1) {
+            btn1.setImageResource(R.drawable.star_beginner);
+        } else if (currentDiff==2) {
+            btn1.setImageResource(R.drawable.star_average);
+            btn2.setImageResource(R.drawable.star_average);
+        } else if (currentDiff==3) {
+            btn1.setImageResource(R.drawable.star_skilled);
+            btn2.setImageResource(R.drawable.star_skilled);
+            btn3.setImageResource(R.drawable.star_skilled);
+        } else if (currentDiff==4) {
+            btn1.setImageResource(R.drawable.star_expert);
+            btn2.setImageResource(R.drawable.star_expert);
+            btn3.setImageResource(R.drawable.star_expert);
+            btn4.setImageResource(R.drawable.star_expert);
+        } else if (currentDiff==5) {
+            btn1.setImageResource(R.drawable.star_spartan);
+            btn2.setImageResource(R.drawable.star_spartan);
+            btn3.setImageResource(R.drawable.star_spartan);
+            btn4.setImageResource(R.drawable.star_spartan);
+            btn5.setImageResource(R.drawable.star_spartan);
+        } else {
+            currentDiff = -1;
+        }
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
 
-        String btntxt = bthere.getText().toString();
-        if (new String("ALL").equals(btntxt)) {
-            currentDiff = -1;
+        if (currentDiff==-1) {
             wodList = dbhandler.loadDatabase();
             Collections.sort(wodList);
         } else {
-            int diff = Integer.parseInt(bthere.getText().toString());
-            currentDiff = diff;
             wodList = dbhandler.loadDatabaseDiff(currentDiff);
         }
 
@@ -356,7 +390,17 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 type = "Reps in time";
                 data.setImageType(R.drawable.reptime);
             }
-            str = "Total time: " + wodList.get(i).getTotalTime() / 60 + " mins";
+            String timeLeftText;
+            int minutes = (int) wodList.get(i).getTotalTime() / 60;
+            int seconds = (int) wodList.get(i).getTotalTime() % 60;
+            if (minutes > 0) {
+                timeLeftText = "" + minutes + "'";
+                if (seconds < 10) timeLeftText += "0";
+                timeLeftText += seconds + "\"";
+            } else {
+                timeLeftText = "" + seconds + "\"";
+            }
+            str = "Time: " + timeLeftText;
             data.setSubtitle(str);
             data.setType(type);
             if (wodList.get(i).getDifficulty() == 1) {
