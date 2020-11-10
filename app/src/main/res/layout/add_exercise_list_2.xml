@@ -17,7 +17,7 @@
         android:gravity="start|bottom"
         android:layout_gravity="bottom"
         android:fontFamily="@font/mlight"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:textColorHint="@color/gray"
         android:hint="Exercise Name"
         android:autofillHints="Exercise Name"
@@ -35,7 +35,7 @@
         android:layout_marginRight="5dp"
         android:gravity="center|bottom"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:textSize="15sp"
         android:textColorHint="@color/gray"
         android:hint="sec"
@@ -55,7 +55,7 @@
         android:gravity="center|bottom"
         android:layout_gravity="bottom"
         android:textColor="@color/white"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:textSize="15sp"
         android:text="s" />
 
@@ -70,7 +70,7 @@
         android:layout_marginRight="5dp"
         android:gravity="center|bottom"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:textSize="15sp"
         android:textColorHint="@color/gray"
         android:hint="sec"
@@ -91,7 +91,7 @@
         android:gravity="center|bottom"
         android:layout_gravity="bottom"
         android:textColor="@color/white"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:textSize="15sp"
         android:text="s"/>
 
@@ -99,7 +99,7 @@
         android:id="@+id/btndeleteexercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:src="@drawable/ic_baseline_remove_circle_outline_24"
         android:gravity="center|bottom"
         android:layout_gravity="bottom"

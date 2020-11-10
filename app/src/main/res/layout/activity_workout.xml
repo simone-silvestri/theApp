@@ -3,7 +3,7 @@
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/gradient1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:queryHint="Search workout"
-        android:queryBackground="@color/colorPrimaryDark"
+        android:background="@color/trans"
         android:searchHintIcon="@drawable/ic_baseline_search_24"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="15dp"
@@ -136,7 +136,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/star_white"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
             android:layout_weight="1.1"
             android:gravity="center"/>
@@ -147,7 +147,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/star_white"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
             android:layout_weight="1.1"
             android:gravity="center"/>
@@ -158,7 +158,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/star_white"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
             android:layout_weight="1.1"
             android:gravity="center"/>
@@ -169,7 +169,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/star_white"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
             android:layout_weight="1.1"
             android:gravity="center"/>
@@ -180,7 +180,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/star_white"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
             android:layout_weight="1.1"
             android:gravity="center"/>
@@ -192,7 +192,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_clear_24"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
             android:layout_weight="1.1"
             android:layout_marginRight="10dp"

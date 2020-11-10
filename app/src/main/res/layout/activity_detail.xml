@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/gradient1"
     tools:context=".DetailActivity">
 
 
@@ -77,8 +77,7 @@
             android:src="@drawable/time"
             android:paddingTop="3dp"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/colorPrimaryDark"/>
+            android:layout_marginLeft="15dp"/>
 
         <TextView
             android:id="@+id/text_type"

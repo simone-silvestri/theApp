@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/gradient1"
     tools:context=".AddWorkoutActivity">
 
     <LinearLayout

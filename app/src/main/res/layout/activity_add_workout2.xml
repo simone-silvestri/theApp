@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/gradient1"
     tools:context=".AddWorkout2">
 
     <LinearLayout
@@ -93,7 +93,7 @@
                     android:id="@+id/titlename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Choose your name:"
+                    android:hint="Choose the workout name"
                     android:textStyle="bold"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
@@ -106,19 +106,6 @@
 
 
             </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"/>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -221,16 +208,6 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"/>
 
 
             <LinearLayout
@@ -334,18 +311,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"/>
 
 
             <LinearLayout
