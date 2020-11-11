@@ -61,7 +61,12 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         ltr = AnimationUtils.loadAnimation(this, R.anim.ltr);
 
         workoutSearch = findViewById(R.id.workout_search);
-        int id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+
+        int id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView searchIcon = (ImageView) workoutSearch.findViewById(id);
+        searchIcon.setImageResource(R.drawable.ic_baseline_search_24);
+
+        id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) workoutSearch.findViewById(id);
 
         textView.setTextColor(getResources().getColor(R.color.gray));
