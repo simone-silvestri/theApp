@@ -492,7 +492,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginStart="0dp"
         android:fontFamily="@font/mmedium"
-        android:text="Add to Library"
+        android:text="Add to List"
         android:background="@color/white"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"

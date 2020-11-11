@@ -76,17 +76,17 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         title.setText(work.getTitle());
         if (new String("TIME").equals(work.getType())) {
             texttype.setText(R.string.type_1);
-            description.setText(R.string.type_1_desc);
+            description.setText(R.string.type_1_desc_2);
             type = 1;
             typeIcon.setImageResource(R.drawable.time);
         } else if (new String("REPS").equals(work.getType())) {
             texttype.setText(R.string.type_2);
-            description.setText(R.string.type_2_desc);
+            description.setText(R.string.type_2_desc_2);
             type = 2;
             typeIcon.setImageResource(R.drawable.reps);
         } else {
             texttype.setText(R.string.type_3);
-            description.setText(R.string.type_3_desc);
+            description.setText(R.string.type_3_desc_2);
             type = 3;
             typeIcon.setImageResource(R.drawable.reptime);
         }
@@ -151,7 +151,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 //Do different stuff based on the workout type
                 if (new String("TIME").equals(work.getType())) {
                     data.setTime("");
-                    data.setPause(String.valueOf(exer.get(i).getTimeInSeconds() + "\"," + exer.get(i).getPauseInSeconds()) + "\"");
+                    data.setPause(String.valueOf(exer.get(i).getTimeInSeconds() + "\", " + exer.get(i).getPauseInSeconds()) + "\"");
                 } else if (new String("REPS").equals(work.getType())) {
                     data.setTime(String.valueOf("X" + exer.get(i).getReps()));
                     data.setPause("");
@@ -174,12 +174,11 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-        Intent intent = new Intent(DetailActivity.this, ExerciseActivity.class);
-        String exeName = exer.get(pos).getName();
-
-        intent.putExtra("EXTRA_NAME", exeName);
-        startActivity(intent);
-
+//        Intent intent = new Intent(DetailActivity.this, ExerciseActivity.class);
+//        String exeName = exer.get(pos).getName();
+//
+//        intent.putExtra("EXTRA_NAME", exeName);
+//        startActivity(intent);
     }
 
     public void openTimer(View view) {

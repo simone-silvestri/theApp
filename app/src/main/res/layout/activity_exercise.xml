@@ -9,35 +9,18 @@
     tools:context=".ExerciseActivity">
 
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/difficultyicon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:contentDescription="@drawable/expert"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"/>
-
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/mmedium"
             android:gravity="center"
+            android:layout_gravity="center"
             android:text="Title"
             android:textColor="#FFFFFF"
             android:textSize="28sp"
             app:layout_constraintTop_toTopOf="parent" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,20 +61,30 @@
             android:textColor="@color/white"
             android:textSize="15sp"/>
 
-        <TextView
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
+        android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/mmedium"
-        android:gravity="start"
-        android:text="Works:"
-        android:textColor="@color/white"
-        android:textSize="15sp"/>
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
+            android:text="Works:"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/text_muscle"
@@ -108,6 +101,7 @@
             android:text="Area"
             android:textColor="@color/white"
             android:textSize="15sp"/>
+
     </LinearLayout>
 
     <TextView
@@ -118,19 +112,12 @@
         android:layout_marginLeft="21dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/mlight"
         android:gravity="start"
         android:text="Type"
         android:textColor="@color/white"
         android:textSize="12sp"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_menu_add"/>
 
 </LinearLayout>

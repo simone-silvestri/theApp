@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
 
                 TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Create a new workout from:");
+                text.setText("Add workout to list");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 puWindow.setAnimationStyle(R.style.Animation);
 
                 Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setText("scratch");
+                btnYes.setText("new");
                 btnYes.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setText("string");
+                btnNo.setText("copy");
                 btnNo.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -256,17 +256,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        for (int i=0; i<wodList.size(); i++) {
-            for (int j=0; j<wodList.get(i).getExercises().size(); j++) {
-                ExerciseDetail exe = new ExerciseDetail();
-                exe.setName(wodList.get(i).getExercises().get(j).getName());
-                exe.setDifficulty(1);
-                exe.setDescription("Ciao");
-                exe.setMuscle("Chest");
-                int exeID = (int) dbhandler.addOrUpdateExercise(exe);
-            }
-        }
-
     }
 
 
@@ -276,15 +265,46 @@ public class MainActivity extends AppCompatActivity {
         Exercise e1,e2,e3,e4,e5,e6,e7,e8,e9,e10;
         ArrayList<Exercise> eList = new ArrayList<>();
 
+        DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+        ExerciseDetail exe = new ExerciseDetail();
+
         e1 = new Exercise("Shoulder taps",10,40,20);
+        exe.setName(e1.getName()); exe.setDifficulty(2); exe.setMuscle("Chest");
+        exe.setDescription("Set yourself in a full arm position. While keeping the body as still as possible touch your right shoulder with your left hand." +
+                " Then touch your left shoulder with your right hand. Repeat");
+        int exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e2 = new Exercise("Bicycle crunches",10,40,20);
+        exe.setName(e2.getName()); exe.setDifficulty(2); exe.setMuscle("Abs");
+        exe.setDescription("Laying on your back do a cycling motion with your legs. While cycling try to touch your knee with the opposite elbow.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e3 = new Exercise("Burpees",10,40,20);
+        exe.setName(e3.getName()); exe.setDifficulty(3); exe.setMuscle("Cardio");
+        exe.setDescription("A pushup, followed by a jump! Easier variation: just stand up without jumping.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e4 = new Exercise("Crunches",10,40,20);
+        exe.setName(e4.getName()); exe.setDifficulty(2); exe.setMuscle("Abs");
+        exe.setDescription("Classical abdominal exercise.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e5 = new Exercise("Dips",10,40,20);
+        exe.setName(e5.getName()); exe.setDifficulty(2); exe.setMuscle("Arms");
+        exe.setDescription("Classical abdominal exercise.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e6 = new Exercise("Mountain climbers",10,40,20);
+        exe.setName(e6.getName()); exe.setDifficulty(1); exe.setMuscle("Cardio");
+        exe.setDescription("Classical abdominal exercise.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e7 = new Exercise("Hip thrusts",10,40,20);
+        exe.setName(e7.getName()); exe.setDifficulty(1); exe.setMuscle("Glutes");
+        exe.setDescription("Classical abdominal exercise.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e8 = new Exercise("Side plank left",10,40,20);
+        exe.setName(e8.getName()); exe.setDifficulty(2); exe.setMuscle("Abs");
+        exe.setDescription("Classical abdominal exercise.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
         e9 = new Exercise("Side plank right",10,40,20);
+        exe.setName(e9.getName()); exe.setDifficulty(2); exe.setMuscle("Abs");
+        exe.setDescription("Classical abdominal exercise.");
+        exeID = (int) dbhandler.addOrUpdateExercise(exe);
 
         eList.add(e1); eList.add(e2); eList.add(e3); eList.add(e4); eList.add(e5);
         eList.add(e6); eList.add(e7); eList.add(e8); eList.add(e9);

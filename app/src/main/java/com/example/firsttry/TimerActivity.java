@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -82,16 +83,25 @@ public class TimerActivity extends AppCompatActivity {
         ttobj=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if(status == TextToSpeech.SUCCESS){
+                    int result=ttobj.setLanguage(Locale.US);
+                    if(result==TextToSpeech.LANG_MISSING_DATA ||
+                            result==TextToSpeech.LANG_NOT_SUPPORTED){
+                        Intent installIntent = new Intent();
+                        installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                        startActivity(installIntent);
+                        Log.e("error", "This Language is not supported");
+                    }
+                    else{
+                        ttobj.speak("Starting", TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                }
+                else
+                    Log.e("error", "Initilization Failed!");
             }
+
         }, "com.google.android.tts");
-        ttobj.setLanguage(Locale.US);
-
-        Set<String> a=new HashSet<>();
-        a.add("male");
-
-//        Voice v = new Voice("en-us-x-sfg#male_1-local",new Locale("en","US"),400,200,true,a);
-//        ttobj.setVoice(v);
-
 
         countdownButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +231,7 @@ public class TimerActivity extends AppCompatActivity {
                             ttobj.speak("Finished, well done!", TextToSpeech.QUEUE_FLUSH, null);
                         }
                     } else {
-                        countdownText.setText("REST!!");
+                        countdownText.setText("REST");
                         ttobj.speak("Rest", TextToSpeech.QUEUE_FLUSH, null);
                     }
                 }

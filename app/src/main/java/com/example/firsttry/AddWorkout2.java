@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class AddWorkout2 extends AppCompatActivity {
 
     private ArrayList<EditText> exename, exework, exepause;
-    private ArrayList<TextView> worksec, pausesec;
+    private ArrayList<TextView> worksec, pausesec, additional;
     private ArrayList<RelativeLayout> layoutlist;
     private ArrayList<ImageButton> btndelete;
     private ImageView time, reps, reptime, beginner, average, skilled, expert, spartan;
@@ -53,6 +53,7 @@ public class AddWorkout2 extends AppCompatActivity {
         exepause = new ArrayList<>();
         worksec = new ArrayList<>();
         pausesec = new ArrayList<>();
+        additional = new ArrayList<>();
         layoutlist = new ArrayList<>();
         btndelete = new ArrayList<>();
         linear = findViewById(R.id.exercise_list_layout);
@@ -183,7 +184,7 @@ public class AddWorkout2 extends AppCompatActivity {
             currentType = "TIME";
             if (!worksec.isEmpty()) {
                 for (int i = 0; i < worksec.size(); i++) {
-                    worksec.get(i).setText("\"");
+                    worksec.get(i).setText("\" ,");
                 }
             }
             if (!exework.isEmpty()) {
@@ -201,6 +202,11 @@ public class AddWorkout2 extends AppCompatActivity {
                     exepause.get(i).setHint("pause");
                 }
             }
+            if (!additional.isEmpty()) {
+                for (int i = 0; i < additional.size(); i++) {
+                    additional.get(i).setText("");
+                }
+            }
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
             type.setText("H.I.I.T. workout");
@@ -208,7 +214,7 @@ public class AddWorkout2 extends AppCompatActivity {
             currentType = "REPS";
             if (!worksec.isEmpty()) {
                 for (int i = 0; i < worksec.size(); i++) {
-                    worksec.get(i).setText("");
+                    worksec.get(i).setText("X");
                 }
             }
             if (!exework.isEmpty()) {
@@ -219,7 +225,7 @@ public class AddWorkout2 extends AppCompatActivity {
             }
             if (!pausesec.isEmpty()) {
                 for (int i = 0; i < pausesec.size(); i++) {
-                    pausesec.get(i).setText("X");
+                    pausesec.get(i).setText("");
                 }
             }
             if (!exepause.isEmpty()) {
@@ -227,14 +233,19 @@ public class AddWorkout2 extends AppCompatActivity {
                     exepause.get(i).setHint("reps");
                 }
             }
-            pauseOrTotalTime.setText("Time:");
+            if (!additional.isEmpty()) {
+                for (int i = 0; i < additional.size(); i++) {
+                    additional.get(i).setText("");
+                }
+            }
+            pauseOrTotalTime.setText("Total time:");
             textpause.setHint("minutes");
             type.setText("Reps workout");
         } else {
             currentType = "REPTIME";
             if (!worksec.isEmpty()) {
                 for (int i = 0; i < worksec.size(); i++) {
-                    worksec.get(i).setText("X, in");
+                    worksec.get(i).setText(" in");
                 }
             }
             if (!exework.isEmpty()) {
@@ -250,6 +261,11 @@ public class AddWorkout2 extends AppCompatActivity {
             if (!exepause.isEmpty()) {
                 for (int i = 0; i < exepause.size(); i++) {
                     exepause.get(i).setHint("sec");
+                }
+            }
+            if (!additional.isEmpty()) {
+                for (int i = 0; i < additional.size(); i++) {
+                    additional.get(i).setText("X");
                 }
             }
             pauseOrTotalTime.setText("Pause:");
@@ -282,6 +298,7 @@ public class AddWorkout2 extends AppCompatActivity {
         if (idx != -1) {
             exename.remove(idx);
             exepause.remove(idx);
+            additional.remove(idx);
             exework.remove(idx);
             worksec.remove(idx);
             pausesec.remove(idx);
@@ -339,22 +356,26 @@ public class AddWorkout2 extends AppCompatActivity {
         });
 
         worksec.add((TextView) layout.findViewById(R.id.txttime));
+        additional.add((TextView) layout.findViewById(R.id.txtadditional));
         pausesec.add((TextView) layout.findViewById(R.id.txtpause));
         if (new String("REPS").equals(currentType)) {
             exepause.get(exepause.size() - 1).setHint("reps");
-            pausesec.get(pausesec.size() - 1).setText("X");
-            exework.get(exework.size() - 1).setHint("");
+            pausesec.get(pausesec.size() - 1).setText("");
+            exework.get(exework.size() - 1).setHint("X");
             worksec.get(worksec.size() - 1).setText("");
+            additional.get(additional.size()-1).setText("");
         } else if (new String("REPTIME").equals(currentType)) {
             exepause.get(exepause.size() - 1).setHint("sec");
             exework.get(exework.size() - 1).setHint("reps");
             pausesec.get(pausesec.size() - 1).setText("\"");
-            worksec.get(pausesec.size() - 1).setText("X, in");
+            worksec.get(pausesec.size() - 1).setText(" in");
+            additional.get(additional.size()-1).setText("X");
         } else {
             exepause.get(exepause.size() - 1).setHint("pause");
             exework.get(exework.size() - 1).setHint("work");
-            worksec.get(pausesec.size() - 1).setText("\"");
+            worksec.get(pausesec.size() - 1).setText("\" ,");
             pausesec.get(pausesec.size() - 1).setText("\"");
+            additional.get(additional.size()-1).setText("");
         }
 
         btnexercise.setText("Add to Library");

@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">FirstTry</string>
-    <string name="title_string">Corona Fitness: \n No Pain No Gain!</string>
-    <string name="subtitle_string">Non ci prendiamo in giro,\nse non lavori in quarantena,\nquando mai ti metterai in forma?</string>
+    <string name="app_name">CoronaFTS</string>
+    <string name="title_string">Corona Fitness\nNo Pain No Gain!</string>
+    <string name="subtitle_string">Non prendiamoci in giro,\nse non lavori in quarantena,\nquando mai ti metterai in forma?</string>
     <string name="butt_exercise">START NOW</string>
-    <string name="type_1_desc">Exercise have to be executed in the time given. Try to work at the max in the seconds you have! The work is followed by a pause. The exercises below
-    have specified the seconds of work first, and then the pause</string>
-    <string name="type_2_desc">Repetition based exercises. Try to complete all repetitions given within the total time limit! You decide when to pause and how to split the workout. If you cannot finish it, best luck next time</string>
-    <string name="type_3_desc">Complete the exercises given below in the time frame given. If you cannot, means you have to train harder! Remember, no pause in between exercises, only in between sets!</string>
+    <string name="type_1_desc_2">Exercise have to be executed in the time given. Try to work at the max in the seconds you have! The work is followed by a pause. The exercises below have specified the seconds of work first, and then the pause</string>
+    <string name="type_2_desc_2">Try to complete all repetitions given within the total time limit! You decide when to pause and how to split the workout. If you cannot finish it, best luck next time</string>
+    <string name="type_3_desc_2">Complete the exercises given below in the time frame given. If you cannot, means you have to train harder! Remember, no pause in between exercises, only in between sets!</string>
+    <string name="type_1_desc">Specify a work and a pause interval for each exercise. Give it all you have during the work and take your sweat break during the pause. Repeat for all sets!</string>
+    <string name="type_2_desc">Specify repetitions for each exercise and a total time for the workout. Try to finish all exercises within the limit. Manage your time to make it happen!</string>
+    <string name="type_3_desc">Specify repetitions and a work interval for each exercise. Finish the repetitions within the time frame, then pass to the next. Repeat for all sets!</string>
     <string name="type_1">H.I.I.T. workout</string>
     <string name="type_2">Reps workout</string>
     <string name="type_3">Reps in time</string>

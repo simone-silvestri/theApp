@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:layout_marginTop="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddWorkoutActivity">
+    tools:context=".AddWorkout2">
 
     <EditText
         android:id="@+id/txtname"
@@ -23,6 +23,23 @@
         android:autofillHints="Exercise Name"
         android:textColor="@color/gray"
         android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/txtadditional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btnaddwork"
+        android:fontFamily="@font/mmedium"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center|bottom"
+        android:layout_gravity="bottom"
+        android:textColor="@color/white"
+        android:background="@color/trans"
+        android:textSize="15sp"
+        android:text="text"/>
+
 
     <EditText
         android:id="@+id/btnaddwork"

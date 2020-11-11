@@ -131,7 +131,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
 
                 final TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Do you want to delete of modify the workout?");
+                text.setText("What do you want to do?");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -288,7 +288,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
 
                 TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Do you want to delete of modify the workout?");
+                text.setText("What do you want to do?");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -430,7 +430,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
 
                 TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Do you want to delete or modify the workout?");
+                text.setText("What do you want to do?");
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;

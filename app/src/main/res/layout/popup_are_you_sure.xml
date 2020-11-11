@@ -20,7 +20,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:textSize="20sp"
-        android:text="Reset the Database? \n It will cancel all your data!" />
+        android:text="Reset the List?\nIt will delete all your data!\n(you will want to cry)" />
 
 
     <LinearLayout
