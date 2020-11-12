@@ -563,6 +563,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteExercisesTables() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Order of deletions is important when foreign key relationships exist.
+            db.delete(TABLE_EXE, null, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to delete all posts and users");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     public int deleteWorkout(Workout work) {
         int workoutId = -1;
         SQLiteDatabase db = getWritableDatabase();

@@ -16,7 +16,9 @@
             android:name=".ModifyWorkoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".StringActivity" />
-        <activity android:name=".ExerciseActivity" />
+        <activity
+            android:name=".ExerciseActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".RepsInTimeActivity" />
         <activity android:name=".RepsActivity" />
         <activity

@@ -3,4 +3,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="large_image">60dip</dimen>
     <dimen name="small_image">30dip</dimen>
+    <dimen name="large_exe">40dip</dimen>
+    <dimen name="small_exe">20dip</dimen>
 </resources>
+

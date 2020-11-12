@@ -174,11 +174,11 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-//        Intent intent = new Intent(DetailActivity.this, ExerciseActivity.class);
-//        String exeName = exer.get(pos).getName();
-//
-//        intent.putExtra("EXTRA_NAME", exeName);
-//        startActivity(intent);
+        Intent intent = new Intent(DetailActivity.this, ExerciseActivity.class);
+        String exeName = exer.get(pos).getName();
+
+        intent.putExtra("EXTRA_NAME", exeName);
+        startActivity(intent);
     }
 
     public void openTimer(View view) {

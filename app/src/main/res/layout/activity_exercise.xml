@@ -31,6 +31,7 @@
         android:layout_marginLeft="5dp">
 
         <TextView
+            android:id="@+id/olddiff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -39,11 +40,22 @@
             android:layout_marginRight="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
             android:fontFamily="@font/mmedium"
-            android:gravity="start"
+            android:gravity="start|center"
             android:text="Difficulty:"
             android:textColor="@color/white"
             android:textSize="15sp"/>
+
+        <ImageView
+            android:id="@+id/imginitialdiff"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:onClick="setCurrentDifficulty"
+            android:src="@drawable/easy" />
 
         <TextView
             android:id="@+id/text_diff"
@@ -55,10 +67,11 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
             android:fontFamily="@font/mlight"
-            android:gravity="start"
+            android:gravity="start|center"
             android:text="Type"
-            android:textColor="@color/white"
+            android:textColor="@color/beginner"
             android:textSize="15sp"/>
 
     </LinearLayout>
@@ -72,6 +85,7 @@
         android:layout_marginLeft="5dp">
 
         <TextView
+            android:id="@+id/oldmuscle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -82,7 +96,7 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/mmedium"
             android:gravity="start"
-            android:text="Works:"
+            android:text="Muscle area:"
             android:textColor="@color/white"
             android:textSize="15sp"/>
 
@@ -110,14 +124,221 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
         android:layout_marginLeft="21dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/mlight"
         android:gravity="start"
         android:text="Type"
         android:textColor="@color/white"
-        android:textSize="12sp"/>
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/addorupdatebutton"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:onClick="openViews"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:text="Add or Update"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp"/>
+
+        <View
+            android:id="@+id/dividerview"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textdifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
+            android:text="New difficulty:"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/difftext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/mmedium"
+                android:gravity="start"
+                android:text="Easy"
+                android:textColor="@color/beginner"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
+            android:weightSum="3">
+
+
+            <ImageView
+                android:id="@+id/imgeasy"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="setCurrentDifficulty"
+                android:src="@drawable/easy" />
+
+
+            <ImageView
+                android:id="@+id/imgintermediate"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="setCurrentDifficulty"
+                android:src="@drawable/intermediate" />
+
+
+            <ImageView
+                android:id="@+id/imgadvanced"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="setCurrentDifficulty"
+                android:src="@drawable/advanced" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textmuscle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
+            android:text="New muscle area"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/editmuscle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mlight"
+            android:gravity="start"
+            android:hint="Insert muscle area"
+            android:autofillHints="Insert muscle area"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/gray"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/textdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
+            android:text="New description"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/editdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/mlight"
+            android:gravity="start"
+            android:hint="Insert description"
+            android:autofillHints="Insert description"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/gray"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnendofpage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
+        android:fontFamily="@font/mmedium"
+        android:text="Update"
+        android:onClick="addExerciseToDatabase"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </LinearLayout>
