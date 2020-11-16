@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 public class ExerciseActivity extends AppCompatActivity {
 
-    private TextView title, difficulty, muscle, description;
-    private TextView txtdifficulty, txtmuscle, txtdescription, btnendpage, difftext;
-    private EditText editmuscle, editdescription;
+    private TextView title, difficulty, description;
+    private TextView txtdifficulty, txtdescription, btnendpage, difftext;
+    private EditText editdescription;
     private ExerciseDetail exe;
     private LinearLayout difflayout;
     private ImageView easy,intermediate,advanced,initdiff;
@@ -34,16 +34,12 @@ public class ExerciseActivity extends AppCompatActivity {
 
         title = findViewById(R.id.title_tv);
         difficulty = findViewById(R.id.text_diff);
-        muscle = findViewById(R.id.text_muscle);
         description = findViewById(R.id.Description);
 
         initdiff = findViewById(R.id.imginitialdiff);
 
         txtdifficulty = findViewById(R.id.textdifficulty); txtdifficulty.setVisibility(View.INVISIBLE);
-        txtmuscle = findViewById(R.id.textmuscle);txtmuscle.setVisibility(View.INVISIBLE);
         txtdescription = findViewById(R.id.textdescription);txtdescription.setVisibility(View.INVISIBLE);
-
-        editmuscle = findViewById(R.id.editmuscle);editmuscle.setVisibility(View.INVISIBLE);
         editdescription = findViewById(R.id.editdescription);editdescription.setVisibility(View.INVISIBLE);
 
         easy = findViewById(R.id.imgeasy);
@@ -80,7 +76,6 @@ public class ExerciseActivity extends AppCompatActivity {
         btnaddorupdate.setText(buttontxt);
         title.setText(exe.getName());
 
-        muscle.setText(exe.getMuscle());
         if (exe.getDifficulty() == 1) {
             difficulty.setText("Easy");
             difficulty.setTextColor(getResources().getColor(R.color.beginner));
@@ -103,10 +98,8 @@ public class ExerciseActivity extends AppCompatActivity {
 
     public void openViews(View view) {
         txtdifficulty.setVisibility(View.VISIBLE);
-        txtmuscle.setVisibility(View.VISIBLE);
         txtdescription.setVisibility(View.VISIBLE);
         difftext.setVisibility(View.VISIBLE);
-        editmuscle.setVisibility(View.VISIBLE);
         editdescription.setVisibility(View.VISIBLE);
         dividerView.setVisibility(View.VISIBLE);
         btnendpage.setVisibility(View.VISIBLE);
@@ -122,22 +115,12 @@ public class ExerciseActivity extends AppCompatActivity {
             }
         });
 
-        editmuscle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
-            }
-        });
         TextView olddiff = findViewById(R.id.olddiff);
-        olddiff.setText("Old difficuty");
-        TextView oldmusc = findViewById(R.id.oldmuscle);
-        oldmusc.setText("Old muscle area");
+        olddiff.setText("Old difficuty:");
         if(exe.getDifficulty()==-1) {
-            btnendpage.setText("Update exercise");
-        } else {
             btnendpage.setText("Add exercise");
+        } else {
+            btnendpage.setText("Update exercise");
         }
         currentDiff = 1;
     }
@@ -174,17 +157,15 @@ public class ExerciseActivity extends AppCompatActivity {
 
         if (currentDiff != -1) {
             exe.setDifficulty(currentDiff);
-            if (!editmuscle.getText().toString().isEmpty()) {
-                exe.setMuscle(editmuscle.getText().toString());
-                if (!editdescription.getText().toString().isEmpty()) {
-                    exe.setDescription(editdescription.getText().toString());
-                    int exeID = (int) dbhandler.addOrUpdateExercise(exe);
-                    if(addorupdate==0) {
-                        btnendpage.setText("Updated!");
-                    } else {
-                        btnendpage.setText("Added!");
-                        addorupdate = 0;
-                    }
+            exe.setMuscle("");
+            if (!editdescription.getText().toString().isEmpty()) {
+                exe.setDescription(editdescription.getText().toString());
+                int exeID = (int) dbhandler.addOrUpdateExercise(exe);
+                if (addorupdate == 0) {
+                    btnendpage.setText("Updated!");
+                } else {
+                    btnendpage.setText("Added!");
+                    addorupdate = 0;
                 }
             }
         }

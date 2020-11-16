@@ -76,47 +76,22 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/oldmuscle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp">
-
-        <TextView
-            android:id="@+id/oldmuscle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="start"
-            android:text="Muscle area:"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/text_muscle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="start"
-            android:text="Area"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
-
-    </LinearLayout>
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/mmedium"
+        android:gravity="start"
+        android:text="Description:"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/Description"
@@ -126,7 +101,7 @@
         android:layout_marginLeft="21dp"
         android:layout_marginEnd="21dp"
         android:layout_marginRight="21dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/mlight"
         android:gravity="start"
@@ -251,40 +226,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textmuscle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="start"
-            android:text="New muscle area"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
-
-        <EditText
-            android:id="@+id/editmuscle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="start"
-            android:hint="Insert muscle area"
-            android:autofillHints="Insert muscle area"
-            android:textColorHint="@color/gray"
-            android:textColor="@color/gray"
-            android:textSize="15sp"/>
-
-        <TextView
             android:id="@+id/textdescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -296,7 +237,7 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/mmedium"
             android:gravity="start"
-            android:text="New description"
+            android:text="New description:"
             android:textColor="@color/white"
             android:textSize="15sp"/>
 

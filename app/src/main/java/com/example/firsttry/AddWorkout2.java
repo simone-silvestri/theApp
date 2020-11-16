@@ -3,9 +3,13 @@ package com.example.firsttry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +34,11 @@ import java.util.ArrayList;
 
 public class AddWorkout2 extends AppCompatActivity {
 
-    private ArrayList<EditText> exename, exework, exepause;
-    private ArrayList<TextView> worksec, pausesec, additional;
+    private ArrayList<String> arrayList;
+    private Dialog dialog;
+
+    private ArrayList<EditText> exework, exepause;
+    private ArrayList<TextView> exename, worksec, pausesec, additional;
     private ArrayList<RelativeLayout> layoutlist;
     private ArrayList<ImageButton> btndelete;
     private ImageView time, reps, reptime, beginner, average, skilled, expert, spartan;
@@ -154,8 +161,6 @@ public class AddWorkout2 extends AppCompatActivity {
         skilled.setLayoutParams(small);
         spartan.setLayoutParams(small);
         v.setLayoutParams(large);
-//        Typeface face = Typeface.createFromAsset(getAssets(),
-//                "font/mmedium.ttf");
 
         if(currentDiff==1) {
             diffname.setText("Beginner");
@@ -327,13 +332,77 @@ public class AddWorkout2 extends AppCompatActivity {
 
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
-        exename.add((EditText) layout.findViewById(R.id.txtname));
-        exename.get(exename.size() - 1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        exename.add((TextView) layout.findViewById(R.id.text_search));
+        arrayList = new ArrayList<>();
+
+        DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+        ArrayList<ExerciseDetail> exeList = dbhandler.loadAllExercises();
+
+        for (int i=0; i<exeList.size(); i++) {
+            arrayList.add(exeList.get(i).getName());
+        }
+
+        exename.get(exename.size()-1).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
+            public void onClick(View view) {
+                RelativeLayout r = (RelativeLayout) view.getParent();
+                final int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
+
+                dialog = new Dialog(AddWorkout2.this);
+                dialog.setContentView(R.layout.dialog_searchable_spinner);
+
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+
+                dialog.getWindow().setLayout((int) ((float)width*1.0/5.0*4.0),(int) ((float)height*1.0/5.0*4.0));
+
+                dialog.show();
+                dialog.setCanceledOnTouchOutside(true);
+
+                final EditText editText = dialog.findViewById(R.id.edit_search_exercise);
+                ListView listView = dialog.findViewById(R.id.list_search_exercise);
+
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWorkout2.this,
+                        android.R.layout.simple_list_item_1,arrayList);
+
+                listView.setAdapter(adapter);
+
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        adapter.getFilter().filter(charSequence);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        exename.get(idx).setText(adapter.getItem(i));
+                        exename.get(idx).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        dialog.dismiss();
+                    }
+                });
+
+                ImageButton btnadd = dialog.findViewById(R.id.btnadd);
+                btnadd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        exename.get(idx).setText(editText.getText().toString());
+                        exename.get(idx).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        dialog.dismiss();
+                    }
+                });
             }
         });
         exepause.add((EditText) layout.findViewById(R.id.btnaddpause));
@@ -361,8 +430,8 @@ public class AddWorkout2 extends AppCompatActivity {
         if (new String("REPS").equals(currentType)) {
             exepause.get(exepause.size() - 1).setHint("reps");
             pausesec.get(pausesec.size() - 1).setText("");
-            exework.get(exework.size() - 1).setHint("X");
-            worksec.get(worksec.size() - 1).setText("");
+            exework.get(exework.size() - 1).setHint("");
+            worksec.get(worksec.size() - 1).setText("X");
             additional.get(additional.size()-1).setText("");
         } else if (new String("REPTIME").equals(currentType)) {
             exepause.get(exepause.size() - 1).setHint("sec");
