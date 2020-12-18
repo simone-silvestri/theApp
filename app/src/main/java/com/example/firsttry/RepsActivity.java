@@ -35,6 +35,7 @@ public class RepsActivity extends AppCompatActivity {
         if(timerRunning) {
             stopCountDownTimer();
         }
+        stopCountDownTimer();
         super.onBackPressed();
     }
     private int currentExercise, numberOfSets, currentSet;

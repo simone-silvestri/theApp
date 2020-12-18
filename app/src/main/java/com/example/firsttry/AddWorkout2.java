@@ -510,10 +510,24 @@ public class AddWorkout2 extends AppCompatActivity {
                                 workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
                                 workoutToBeAdded.setTotalTime();
                             }
-                            int id = (int) dbhandler.addOrUpdateWorkout(workoutToBeAdded);
-                            workoutToBeAdded.setID(id);
-                            for (int i = 0; i < exercises.size(); i++) {
-                                dbhandler.addExerciseInWorkout(exercises.get(i), workoutToBeAdded);
+                            if (workoutToBeAdded.getTotalTime() == 0) {
+                                textname.setHint("Total time is smaller than zero");
+                                textname.setText(null);
+                            } else {
+                                int id = (int) dbhandler.addOrUpdateWorkout(workoutToBeAdded);
+                                workoutToBeAdded.setID(id);
+
+                                for (int i = 0; i < exercises.size(); i++) {
+                                    dbhandler.addExerciseInWorkout(exercises.get(i), workoutToBeAdded);
+                                    ExerciseDetail exe = dbhandler.loadOneExercise(exercises.get(i).getName());
+                                    if (exe.getName()==null) {
+                                        exe.setName(exercises.get(i).getName());
+                                        exe.setDifficulty(-1);
+                                        exe.setDescription("Sorry no exercise with that name, if you want you can add details for it below");
+                                        exe.setMuscle("Not found");
+                                        dbhandler.addOrUpdateExercise(exe);
+                                    }
+                                }
                             }
                             btnexercise.setText("Added!");
                         }
