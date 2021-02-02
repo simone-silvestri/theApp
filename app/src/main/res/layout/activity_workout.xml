@@ -3,53 +3,36 @@
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/gradient1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
 
     <TextView
         android:id="@+id/title_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
-        android:text="Workout Library"
+        android:text="Workouts"
         android:textSize="30sp"
         android:textColor="@color/white"
         android:gravity="center"
         android:fontFamily="@font/mmedium"/>
 
-    <TextView
-        android:id="@+id/subtitle_list"
+    <SearchView
+        android:id="@+id/workout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Let's work!"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"
+        android:queryHint="Search workout"
+        android:background="@color/trans"
+        android:searchHintIcon="@drawable/ic_baseline_search_24"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/white"
         android:gravity="center"
         android:fontFamily="@font/mlight"/>
 
@@ -132,86 +115,88 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:weightSum="10">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
             android:text="Difficulty:"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
+            android:layout_gravity="center"
             android:textSize="17sp"
             android:fontFamily="@font/mmedium"
+            android:layout_weight="3."
             android:gravity="center"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn1"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/star_white"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
-            android:textColor="@color/gray"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
-            android:textSize="15sp"
+            android:layout_weight="1.1"
             android:gravity="center"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn2"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/star_white"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
-            android:textColor="@color/gray"
-            android:textSize="15sp"
+            android:layout_weight="1.1"
             android:gravity="center"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn3"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/star_white"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
-            android:textColor="@color/gray"
-            android:textSize="15sp"
+            android:layout_weight="1.1"
             android:gravity="center"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn4"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/star_white"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
-            android:textColor="@color/gray"
-            android:textSize="15sp"
+            android:layout_weight="1.1"
             android:gravity="center"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn5"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:text="5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/star_white"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
-            android:textColor="@color/gray"
-            android:textSize="15sp"
+            android:layout_weight="1.1"
             android:gravity="center"/>
 
-        <Button
+
+        <ImageView
             android:id="@+id/btnall"
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:text="ALL"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_clear_24"
+            android:background="@color/trans"
             android:onClick="filterWorkout"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
+            android:layout_weight="1.1"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"/>
 
     </LinearLayout>
@@ -224,7 +209,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/white"/>
 
     <ListView
@@ -233,6 +218,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:scrollbarSize="3dp"
+        android:divider="@color/trans"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
         android:scrollingCache="true"

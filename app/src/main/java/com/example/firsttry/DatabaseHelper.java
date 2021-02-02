@@ -327,14 +327,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exeId;
     }
 
-    public ExerciseDetail loadOneExercise(int ID) {
+    public ExerciseDetail loadOneExercise(String name) {
         ExerciseDetail exe = new ExerciseDetail();
         SQLiteDatabase db = getReadableDatabase();
         db.beginTransaction();
         try {
             String workoutSelectQuery = "SELECT * FROM " + TABLE_EXE
-                    + " WHERE " + KEY_EXE_ID + " = ?";
-            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(ID)});
+                    + " WHERE " + KEY_EXE_NAME + " = ?";
+            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{name});
             if (cursor.moveToFirst()) {
                 exe.setName(cursor.getString(cursor.getColumnIndex(KEY_EXE_NAME)));
                 exe.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_EXE_DIFF)));
@@ -563,25 +563,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void deleteWorkout(Workout work) {
+    public void deleteExercisesTables() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Order of deletions is important when foreign key relationships exist.
+            db.delete(TABLE_EXE, null, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to delete all posts and users");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public int deleteWorkout(Workout work) {
         int workoutId = -1;
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
-            String query = "Select * FROM " + TABLE_WORK + " WHERE " + KEY_WORK_NAME + "=" + "'" + work.getTitle() + "'";
-            Cursor cursor = db.rawQuery(query, null);
+            String workoutSelectQuery = "SELECT " + KEY_WORK_ID + " FROM " + TABLE_WORK
+                    + " WHERE " + KEY_WORK_NAME + " = ?";
+            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(work.getTitle())});
             if (cursor.moveToFirst()) {
-                workoutId = cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID));
-                db.delete(TABLE_REL, TABLE_REL + "= ?", new String[]{String.valueOf(workoutId)});
+                workoutId = cursor.getInt(0);
+                db.delete(TABLE_REL, KEY_REL_WORK_ID + "= ?", new String[]{String.valueOf(workoutId)});
             }
             cursor.close();
-            db.delete(TABLE_WORK, TABLE_WORK + "= ?", new String[]{String.valueOf(workoutId)});
+            db.delete(TABLE_WORK, KEY_WORK_ID + "= ?", new String[]{String.valueOf(workoutId)});
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(msg, "Error when trying to delete one workout");
         } finally {
             db.endTransaction();
         }
+        return workoutId;
     }
 
 }

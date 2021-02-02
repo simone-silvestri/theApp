@@ -3,9 +3,11 @@ package com.example.firsttry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class RepsActivity extends AppCompatActivity {
         if(timerRunning) {
             stopCountDownTimer();
         }
+        stopCountDownTimer();
         super.onBackPressed();
     }
     private int currentExercise, numberOfSets, currentSet;
@@ -74,9 +77,26 @@ public class RepsActivity extends AppCompatActivity {
         ttobj=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if(status == TextToSpeech.SUCCESS){
+                    int result=ttobj.setLanguage(Locale.US);
+                    if(result==TextToSpeech.LANG_MISSING_DATA ||
+                            result==TextToSpeech.LANG_NOT_SUPPORTED){
+                        Intent installIntent = new Intent();
+                        installIntent.setAction(
+                                TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                        startActivity(installIntent);
+                        Log.e("error", "This Language is not supported");
+                    }
+                    else{
+                        ttobj.speak("Starting", TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                }
+                else
+                    Log.e("error", "Initilization Failed!");
             }
+
         }, "com.google.android.tts");
-        ttobj.setLanguage(Locale.US);
 
         finished = false;
         timerRunning = false;

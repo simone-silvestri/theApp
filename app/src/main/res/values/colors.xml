@@ -2,12 +2,25 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#0D122C</color>
-    <color name="colorPrimaryLight">#6678D1</color>
+    <color name="colorPrimaryDark2">#3c6382</color>
+    <color name="colorPrimaryDark3">#0c2461</color>
+    <color name="colorPrimaryDark4">#1e3799</color>
+    <color name="colorPrimaryDark6">#eb2f06</color>
+    <color name="colorPrimaryLight2">#f8c291</color>
+    <color name="colorPrimaryLight3">#e58e26</color>
+    <color name="colorPrimaryLight">#f3a683</color>
+    <color name="colorPrimaryDark5">#6678D1</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#C0C0C0</color>
     <color name="lightpink">#FAD9C1</color>
     <color name="work">#03C04A</color>
     <color name="pause">#ADD3E6</color>
+    <color name="type">#E94B4B</color>
+    <color name="beginner">#71B62C</color>
+    <color name="average">#4EB795</color>
+    <color name="skilled">#D3D91A</color>
+    <color name="expert">#E5842B</color>
+    <color name="spartan">#E20814</color>
     <color name="trans">#00000000 </color>.
 </resources>

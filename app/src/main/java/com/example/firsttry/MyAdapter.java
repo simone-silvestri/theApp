@@ -45,6 +45,11 @@ public class MyAdapter extends BaseAdapter {
         holder.imageView.setImageResource(rowItem.getImageId());
         return convertView;
     }
+
+    public List<RowData> getRowData() {
+        return rowData;
+    }
+
     @Override
     public int getCount() {
         return rowData.size();
