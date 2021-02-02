@@ -9,6 +9,7 @@
         android:roundIcon="@drawable/logo_better"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".calendar"></activity>
         <activity
             android:name=".AddWorkout2"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

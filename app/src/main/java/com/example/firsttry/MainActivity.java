@@ -177,6 +177,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openCalendar(View view) {
+        Intent intent = new Intent(this, calendar.class);
+        startActivity(intent);
+    }
+
     public void openLibrary(View view) {
         Intent intent = new Intent(this, WorkoutActivity.class);
         startActivity(intent);

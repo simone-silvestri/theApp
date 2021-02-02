@@ -158,6 +158,8 @@ public class TimerActivity extends AppCompatActivity {
                         command.setText("Finished!!");
                         nextExercise.setText("Well Done");
                         countdownText.setText("Ole!");
+                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(TimerActivity.this);
+                        dbhandler.addDateToCalendar(work.getTitle());
                     } else {
                         currentSet += 1;
                         currentExercise = -1;

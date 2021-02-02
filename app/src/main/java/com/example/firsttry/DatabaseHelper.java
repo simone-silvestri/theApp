@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,11 +22,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table Names
     private static final String TABLE_WORK = "Workouts";
-    private static final String TABLE_EXE = "Exercises";
-    private static final String TABLE_REL = "WorkoutExercises";
+    private static final String TABLE_EXE  = "Exercises";
+    private static final String TABLE_REL  = "WorkoutExercises";
+    private static final String TABLE_CAL  = "Calendar";
+
+    // Calendar Table
+    private static final String KEY_CAL_ID      = "id";
+    private static final String KEY_CAL_DAY     = "day";
+    private static final String KEY_CAL_WORK_ID = "workId";
 
     // Exercise Table
-    private static final String KEY_EXE_ID = "id";
+    private static final String KEY_EXE_ID   = "id";
     private static final String KEY_EXE_NAME = "exerciseName";
     private static final String KEY_EXE_DIFF = "exerciseDifficulty";
     private static final String KEY_EXE_DESC = "exerciseDescription";
@@ -102,9 +110,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + KEY_WORK_TIME + " INTEGER, "
                 + KEY_WORK_SET + " INTEGER, "
                 + KEY_WORK_PAUSE + " INTEGER)";
+        String CREATE_CAL_TABLE = " CREATE TABLE " + TABLE_CAL + "("
+                + KEY_CAL_ID    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_CAL_DAY   + " TEXT, "
+                + KEY_CAL_WORK_ID + " INTEGER)";
         db.execSQL(CREATE_EXE_TABLE);
         db.execSQL(CREATE_REL_TABLE);
         db.execSQL(CREATE_WORK_TABLE);
+        db.execSQL(CREATE_CAL_TABLE);
     }
 
     // Called when the database needs to be upgraded.
@@ -117,6 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_REL);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXE);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_WORK);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAL);
             onCreate(db);
         }
     }
@@ -127,6 +141,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Unfortunately, there is a bug with the insertOnConflict method
     // (https://code.google.com/p/android/issues/detail?id=13045) so we need to fall back to the more
     // verbose option of querying for the user's primary key if we did an update.
+
+
+    public ArrayList<History> loadDate(String date) {
+        ArrayList<History> dateList = new ArrayList<>();
+
+        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL+ " WHERE " + KEY_CAL_DAY + " = " + "'" + date + "'" ;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    History dateWod = new History();
+                    dateWod.setDate(cursor.getInt(cursor.getColumnIndex(KEY_CAL_DAY)));
+                    dateWod.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
+                    dateList.add(dateWod);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to get posts from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return dateList;
+    }
+
+//
+//    public ArrayList<History> loadCalendar() {
+//        ArrayList<History> dateList = new ArrayList<>();
+//
+//        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL;
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
+//        try {
+//            if (cursor.moveToFirst()) {
+//                do {
+//                    History date = new History();
+//                    date.setDate(cursor.getInt(cursor.getColumnIndex(KEY_CAL_DAY)));
+//                    date.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
+//                    dateList.add(date);
+//                } while (cursor.moveToNext());
+//            }
+//        } catch (Exception e) {
+//            Log.d(msg, "Error while trying to get posts from database");
+//        } finally {
+//            if (cursor != null && !cursor.isClosed()) {
+//                cursor.close();
+//            }
+//        }
+//        return dateList;
+//    }
+
+    public void addDateToCalendar(String workname) {
+        // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
+        SQLiteDatabase db = getWritableDatabase();
+        int workoutId = loadWorkoutId(workname);
+        db.beginTransaction();
+        try {
+            Calendar currentDay= Calendar.getInstance();
+            int currDate= currentDay.get(Calendar.DATE);
+            int currMonth= currentDay.get(Calendar.MONTH)+1;
+            int currYear= currentDay.get(Calendar.YEAR);
+            String date = new String(currDate + "-" + currMonth + "-" + currYear);
+            ContentValues values = new ContentValues();
+            values.put(KEY_CAL_DAY, date);
+            values.put(KEY_CAL_WORK_ID, workoutId);
+            // First try to update the workout in case the workout already exists in the database
+            // This assumes workoutNames are unique
+            db.insertOrThrow(TABLE_CAL, null, values);
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to add or update user");
+        } finally {
+            db.endTransaction();
+        }
+    }
 
     public ArrayList<Workout> loadDatabaseDiff(int difficulty) {
         ArrayList<Workout> wdList = new ArrayList<>();
@@ -399,6 +489,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workoutId;
     }
 
+    public Workout loadWorkoutFromId(int workId) {
+        Workout work = new Workout();
+        SQLiteDatabase db = getReadableDatabase();
+        db.beginTransaction();
+        try {
+            String workoutSelectQuery = "SELECT " + KEY_WORK_ID + " FROM " + TABLE_WORK
+                    + " WHERE " + KEY_WORK_ID + " = ?";
+            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(workId)});
+            if (cursor.moveToFirst()) {
+                work.setID(cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID)));
+                work.setTitle(cursor.getString(cursor.getColumnIndex(KEY_WORK_NAME)));
+                work.setWod(cursor.getString(cursor.getColumnIndex(KEY_WORK_WOD)));
+                work.setType(cursor.getString(cursor.getColumnIndex(KEY_WORK_TYPE)));
+                work.setTotalTime(cursor.getInt(cursor.getColumnIndex(KEY_WORK_TIME)));
+                work.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_WORK_DIFF)));
+                work.setNumberOfSets(cursor.getInt(cursor.getColumnIndex(KEY_WORK_SET)));
+                work.setSetPause(cursor.getInt(cursor.getColumnIndex(KEY_WORK_PAUSE)));
+                db.setTransactionSuccessful();
+            }
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to add or update user");
+        } finally {
+            db.endTransaction();
+        }
+        return work;
+    }
+
     public void addExerciseInWorkout(Exercise exercise, Workout work) {
         // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
         SQLiteDatabase db = getWritableDatabase();
@@ -443,8 +560,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return exerciseId;
     }
-
-
 
     public long addOrUpdateExercise(ExerciseDetail exe) {
         // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
@@ -598,6 +713,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
         return workoutId;
+    }
+
+    public static final long MAGIC=86400000L;
+
+    public int DateToDays (Date date){
+        //  convert a date to an integer and back again
+        long currentTime=date.getTime();
+        currentTime=currentTime/MAGIC;
+        return (int) currentTime;
     }
 
 }

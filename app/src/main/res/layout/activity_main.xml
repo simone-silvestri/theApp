@@ -153,4 +153,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
 
+    <ImageButton
+        android:id="@+id/buttoncalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@color/trans"
+        android:src="@drawable/ic_baseline_calendar_today_24"
+        android:onClick="openCalendar"
+        app:layout_constraintStart_toStartOf="@+id/btnloaddatabase"
+        app:layout_constraintBottom_toTopOf="@+id/btnloaddatabase"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
