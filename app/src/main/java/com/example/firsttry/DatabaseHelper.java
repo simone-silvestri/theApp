@@ -153,11 +153,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     History dateWod = new History();
-                    dateWod.setDate(cursor.getInt(cursor.getColumnIndex(KEY_CAL_DAY)));
+                    dateWod.setDate(cursor.getString(cursor.getColumnIndex(KEY_CAL_DAY)));
+                    dateWod.setDate(cursor.getString(cursor.getColumnIndex(KEY_CAL_DAY)));
                     dateWod.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
                     dateList.add(dateWod);
                 } while (cursor.moveToNext());
             }
+            db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(msg, "Error while trying to get posts from database");
         } finally {
@@ -168,31 +170,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dateList;
     }
 
-//
-//    public ArrayList<History> loadCalendar() {
-//        ArrayList<History> dateList = new ArrayList<>();
-//
-//        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL;
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
-//        try {
-//            if (cursor.moveToFirst()) {
-//                do {
-//                    History date = new History();
-//                    date.setDate(cursor.getInt(cursor.getColumnIndex(KEY_CAL_DAY)));
-//                    date.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
-//                    dateList.add(date);
-//                } while (cursor.moveToNext());
-//            }
-//        } catch (Exception e) {
-//            Log.d(msg, "Error while trying to get posts from database");
-//        } finally {
-//            if (cursor != null && !cursor.isClosed()) {
-//                cursor.close();
-//            }
-//        }
-//        return dateList;
-//    }
+
+    public ArrayList<History> loadCalendar() {
+        ArrayList<History> dateList = new ArrayList<>();
+
+        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    History date = new History();
+                    date.setDate(cursor.getString(cursor.getColumnIndex(KEY_CAL_DAY)));
+                    date.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
+                    dateList.add(date);
+                } while (cursor.moveToNext());
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to get posts from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return dateList;
+    }
 
     public void addDateToCalendar(String workname) {
         // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
@@ -211,6 +214,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // First try to update the workout in case the workout already exists in the database
             // This assumes workoutNames are unique
             db.insertOrThrow(TABLE_CAL, null, values);
+            db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(msg, "Error while trying to add or update user");
         } finally {
@@ -714,14 +718,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return workoutId;
     }
-
-    public static final long MAGIC=86400000L;
-
-    public int DateToDays (Date date){
-        //  convert a date to an integer and back again
-        long currentTime=date.getTime();
-        currentTime=currentTime/MAGIC;
-        return (int) currentTime;
-    }
-
 }

@@ -34,11 +34,11 @@ public class calendar extends AppCompatActivity {
         String day = new String(currDate + "-" + currMonth + "-" + currYear);
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-        ArrayList<History> datewod = dbhandler.loadDate(day);
+        ArrayList<History> datewod = dbhandler.loadCalendar();
         if(datewod.isEmpty()) {
             dailyWod.setText(day);
         } else {
-            Workout wod = dbhandler.loadWorkoutFromId(datewod.get(1).getWod());
+            Workout wod = dbhandler.loadWorkoutFromId(datewod.get(0).getWod());
             dailyWod.setText(wod.getTitle());
         }
 
@@ -62,23 +62,5 @@ public class calendar extends AppCompatActivity {
 
 
 
-    }
-
-    // magic number=
-    // millisec * sec * min * hours
-    // 1000 * 60 * 60 * 24 = 86400000
-    public static final long MAGIC=86400000L;
-
-    public int DateToDays (Date date){
-        //  convert a date to an integer and back again
-        long currentTime=date.getTime();
-        currentTime=currentTime/MAGIC;
-        return (int) currentTime;
-    }
-
-    public Date DaysToDate(int days) {
-        //  convert integer back again to a date
-        long currentTime=(long) days*MAGIC;
-        return new Date(currentTime);
     }
 }

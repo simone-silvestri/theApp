@@ -136,7 +136,7 @@ public class RepsActivity extends AppCompatActivity {
                 } else {
                     nextRepNumber.setText("");
                     command.setText("Finished!!");
-                    DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+                    DatabaseHelper dbhandler = DatabaseHelper.getInstance(RepsActivity.this);
                     dbhandler.addDateToCalendar(work.getTitle());
                     finished = true;
                     if (timerRunning) {

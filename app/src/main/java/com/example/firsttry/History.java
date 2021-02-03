@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class History implements Serializable {
 
-    private long date;
+    private String date;
     private int wod;
 
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
