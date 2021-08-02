@@ -143,8 +143,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // verbose option of querying for the user's primary key if we did an update.
 
 
-    public ArrayList<History> loadDate(String date) {
-        ArrayList<History> dateList = new ArrayList<>();
+    public History loadDate(String date) {
+        History dateWod = new History();
 
         String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL+ " WHERE " + KEY_CAL_DAY + " = " + "'" + date + "'" ;
         SQLiteDatabase db = getReadableDatabase();
@@ -152,10 +152,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    History dateWod = new History();
-                    dateWod.setDate(cursor.getInt(cursor.getColumnIndex(KEY_CAL_DAY)));
+                    dateWod.setDate(cursor.getString(cursor.getColumnIndex(KEY_CAL_DAY)));
                     dateWod.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
-                    dateList.add(dateWod);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -165,39 +163,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
-        return dateList;
+        return dateWod;
     }
 
-//
-//    public ArrayList<History> loadCalendar() {
-//        ArrayList<History> dateList = new ArrayList<>();
-//
-//        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL;
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
-//        try {
-//            if (cursor.moveToFirst()) {
-//                do {
-//                    History date = new History();
-//                    date.setDate(cursor.getInt(cursor.getColumnIndex(KEY_CAL_DAY)));
-//                    date.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
-//                    dateList.add(date);
-//                } while (cursor.moveToNext());
-//            }
-//        } catch (Exception e) {
-//            Log.d(msg, "Error while trying to get posts from database");
-//        } finally {
-//            if (cursor != null && !cursor.isClosed()) {
-//                cursor.close();
-//            }
-//        }
-//        return dateList;
-//    }
-
-    public void addDateToCalendar(String workname) {
+    public long addDateToCalendar(String workname) {
         // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
         SQLiteDatabase db = getWritableDatabase();
         int workoutId = loadWorkoutId(workname);
+        long calendarId = -1;
         db.beginTransaction();
         try {
             Calendar currentDay= Calendar.getInstance();
@@ -210,12 +183,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_CAL_WORK_ID, workoutId);
             // First try to update the workout in case the workout already exists in the database
             // This assumes workoutNames are unique
-            db.insertOrThrow(TABLE_CAL, null, values);
+            int rows = db.update(TABLE_CAL, values, KEY_CAL_DAY + "= ?", new String[]{date});
+            // Check if update succeeded
+            if (rows == 1) {
+                String calendarSelectQuery = "SELECT " + KEY_CAL_ID + " FROM " + TABLE_CAL
+                        + " WHERE " + KEY_CAL_DAY + " = ?";
+                Cursor cursor = db.rawQuery(calendarSelectQuery, new String[]{date});
+                try {
+                    if (cursor.moveToFirst()) {
+                        calendarId = cursor.getInt(0);
+                        db.setTransactionSuccessful();
+                    }
+                } finally {
+                    if (cursor != null && !cursor.isClosed()) {
+                        cursor.close();
+                    }
+                }
+            } else {
+                calendarId = db.insertOrThrow(TABLE_CAL, null, values);
+                db.setTransactionSuccessful();
+            }
         } catch (Exception e) {
             Log.d(msg, "Error while trying to add or update user");
         } finally {
             db.endTransaction();
         }
+        return calendarId;
     }
 
     public ArrayList<Workout> loadDatabaseDiff(int difficulty) {
@@ -489,14 +482,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workoutId;
     }
 
-    public Workout loadWorkoutFromId(int workId) {
+    public Workout loadWorkoutFromId(int wrkId) {
         Workout work = new Workout();
+        String WRK_SELECT_QUERY = "SELECT * FROM " + TABLE_WORK+ " WHERE " + KEY_WORK_ID + " = " + "'" + wrkId + "'" ;
         SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
+        Cursor cursor = db.rawQuery(WRK_SELECT_QUERY, null);
         try {
-            String workoutSelectQuery = "SELECT " + KEY_WORK_ID + " FROM " + TABLE_WORK
-                    + " WHERE " + KEY_WORK_ID + " = ?";
-            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(workId)});
             if (cursor.moveToFirst()) {
                 work.setID(cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID)));
                 work.setTitle(cursor.getString(cursor.getColumnIndex(KEY_WORK_NAME)));
@@ -506,12 +497,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 work.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_WORK_DIFF)));
                 work.setNumberOfSets(cursor.getInt(cursor.getColumnIndex(KEY_WORK_SET)));
                 work.setSetPause(cursor.getInt(cursor.getColumnIndex(KEY_WORK_PAUSE)));
-                db.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(msg, "Error while trying to get posts from database");
         } finally {
-            db.endTransaction();
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return work;
     }
@@ -684,6 +676,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             // Order of deletions is important when foreign key relationships exist.
             db.delete(TABLE_EXE, null, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(msg, "Error while trying to delete all posts and users");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void deleteCalendarTables() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Order of deletions is important when foreign key relationships exist.
+            db.delete(TABLE_CAL, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(msg, "Error while trying to delete all posts and users");

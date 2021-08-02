@@ -56,7 +56,7 @@
         android:text="@string/subtitle_string"
         android:textAlignment="center"
         android:textColor="#C0C0C0"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -157,11 +157,13 @@
         android:id="@+id/buttoncalendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/trans"
         android:src="@drawable/ic_baseline_calendar_today_24"
         android:onClick="openCalendar"
         app:layout_constraintStart_toStartOf="@+id/btnloaddatabase"
-        app:layout_constraintBottom_toTopOf="@+id/btnloaddatabase"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnloaddatabase"
+        app:layout_constraintTop_toBottomOf="@+id/subtitlepage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

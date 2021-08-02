@@ -34,13 +34,23 @@ public class calendar extends AppCompatActivity {
         String day = new String(currDate + "-" + currMonth + "-" + currYear);
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-        ArrayList<History> datewod = dbhandler.loadDate(day);
-        if(datewod.isEmpty()) {
-            dailyWod.setText(day);
+        History datewod = dbhandler.loadDate(day);
+        if(datewod.getWod()==-1) {
+            dailyWod.setText("No WoD the " + day);
         } else {
-            Workout wod = dbhandler.loadWorkoutFromId(datewod.get(1).getWod());
-            dailyWod.setText(wod.getTitle());
+            Workout wod = dbhandler.loadWorkoutFromId(datewod.getWod());
+            dailyWod.setText("WoD: " + wod.getTitle());
         }
+
+        int count = 0;
+        for (int i = 1; i <= currDate; i++) {
+            day = i + "-" + currMonth + "-" + currYear;
+            datewod = dbhandler.loadDate(day);
+            if(datewod.getWod()!=-1) {
+                count+=1;
+            }
+        }
+        monthlyGoals.setText(count +" of 22 monthly workouts");
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -49,19 +59,15 @@ public class calendar extends AppCompatActivity {
                 month=month+1;
                 DatabaseHelper dbhandler = DatabaseHelper.getInstance(calendar.this);
                 String day2 = new String(dayOfMonth + "-" + month + "-" + year);
-                ArrayList<History> datewod = dbhandler.loadDate(day2);
-                if(datewod.isEmpty()) {
-                    dailyWod.setText(day2);
+                History datewod = dbhandler.loadDate(day2);
+                if(datewod.getWod()==-1) {
+                    dailyWod.setText("No WoD the " + day2);
                 } else {
-                    Workout wod = dbhandler.loadWorkoutFromId(datewod.get(1).getWod());
-                    dailyWod.setText(wod.getTitle());
+                    Workout wod = dbhandler.loadWorkoutFromId(datewod.getWod());
+                    dailyWod.setText("WoD: " + wod.getTitle());
                 }
-
             }
         });
-
-
-
     }
 
     // magic number=

@@ -147,7 +147,7 @@ public class RepsInTimeActivity extends AppCompatActivity {
                         nextExercise.setText("Well Done");
                         countdownText.setText("Ole!");
                         DatabaseHelper dbhandler = DatabaseHelper.getInstance(RepsInTimeActivity.this);
-                        dbhandler.addDateToCalendar(work.getTitle());
+                        long calendarId = dbhandler.addDateToCalendar(work.getTitle());
                     } else {
                         currentSet += 1;
                         currentExercise = -1;

@@ -77,9 +77,6 @@ public class TimerActivity extends AppCompatActivity {
         currentSet = 1;
         setnumber.setText("set " + currentSet + " of " + numberOfSets);
 
-//        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-//        int amStreamMusicMaxVol = am.getStreamMaxVolume(am.STREAM_NOTIFICATION);
-//        am.setStreamVolume(am.STREAM_NOTIFICATION, amStreamMusicMaxVol, 0);
 
         ttobj=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -159,7 +156,7 @@ public class TimerActivity extends AppCompatActivity {
                         nextExercise.setText("Well Done");
                         countdownText.setText("Ole!");
                         DatabaseHelper dbhandler = DatabaseHelper.getInstance(TimerActivity.this);
-                        dbhandler.addDateToCalendar(work.getTitle());
+                        long calendarId = dbhandler.addDateToCalendar(work.getTitle());
                     } else {
                         currentSet += 1;
                         currentExercise = -1;
