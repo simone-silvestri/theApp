@@ -37,7 +37,7 @@
         android:text="@string/title_string"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="38sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -56,7 +56,7 @@
         android:text="@string/subtitle_string"
         android:textAlignment="center"
         android:textColor="#C0C0C0"
-        android:textSize="15sp"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:background="@color/trans"
         android:onClick="populateDatabase"
-        android:src="@drawable/ic_menu_upload"
+        android:src="@drawable/ic_baseline_dns_24"
         android:layout_marginBottom="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -154,6 +154,32 @@
         app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
 
     <ImageButton
+        android:id="@+id/buttonwrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/trans"
+        android:src="@drawable/ic_menu_upload"
+        android:onClick="writeDataBase"
+        app:layout_constraintStart_toStartOf="@+id/buttonaddworkout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonaddworkout"
+        app:layout_constraintTop_toBottomOf="@+id/subtitlepage"/>
+
+    <ImageButton
+        android:id="@+id/buttonread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/trans"
+        android:src="@drawable/ic_baseline_unarchive_24"
+        android:onClick="readDataBase"
+        app:layout_constraintStart_toStartOf="@+id/btnloaddatabase"
+        app:layout_constraintBottom_toTopOf="@+id/btnloaddatabase"
+        app:layout_constraintTop_toBottomOf="@+id/subtitlepage"/>
+
+    <ImageButton
         android:id="@+id/buttoncalendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -162,8 +188,8 @@
         android:background="@color/trans"
         android:src="@drawable/ic_baseline_calendar_today_24"
         android:onClick="openCalendar"
-        app:layout_constraintStart_toStartOf="@+id/btnloaddatabase"
-        app:layout_constraintBottom_toTopOf="@+id/btnloaddatabase"
+        app:layout_constraintStart_toStartOf="@+id/buttonreset"
+        app:layout_constraintBottom_toTopOf="@+id/buttonreset"
         app:layout_constraintTop_toBottomOf="@+id/subtitlepage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
