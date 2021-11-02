@@ -569,7 +569,7 @@ public class ModifyWorkoutBetter extends AppCompatActivity {
                         } else {
                             int id = (int) dbhandler.addOrUpdateWorkout(workoutToBeAdded);
                             workoutToBeAdded.setID(id);
-
+                            dbhandler.removeExercises(workoutToBeAdded);
                             for (int i = 0; i < exercises.size(); i++) {
                                 dbhandler.addExerciseInWorkout(exercises.get(i), workoutToBeAdded);
                                 ExerciseDetail exe = dbhandler.loadOneExercise(exercises.get(i).getName());
