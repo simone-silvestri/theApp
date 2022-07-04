@@ -5,9 +5,14 @@
       <map>
         <entry key="app/src/main/res/layout/activity_add_workout.xml" value="0.1932556152343753" />
         <entry key="app/src/main/res/layout/activity_add_workout2.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/activity_add_workout_recyclerview.xml" value="0.2105978260869565" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_exercise.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2694746376811594" />
         <entry key="app/src/main/res/layout/activity_main_2.xml" value="0.2694746376811594" />
         <entry key="app/src/main/res/layout/activity_modify_workout.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/activity_reps.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_string.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_workout.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/add_exercise_list.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/add_exercise_list_2.xml" value="0.21875" />
@@ -16,6 +21,7 @@
         <entry key="app/src/main/res/layout/list_exercises.xml" value="0.15476190476190477" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.15476190476190477" />
         <entry key="app/src/main/res/layout/list_workout_2.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/popup_are_you_sure.xml" value="0.1" />
         <entry key="app/src/main/res/layout/popup_read_write.xml" value="0.15476190476190477" />
         <entry key="app/src/main/res/layout/workout_2.xml" value="0.15476190476190477" />
       </map>

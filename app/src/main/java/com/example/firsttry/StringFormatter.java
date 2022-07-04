@@ -199,5 +199,4 @@ public class StringFormatter {
     public ArrayList<Workout> getWodList() {
         return wodList;
     }
-
 }

@@ -644,8 +644,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             // Order of deletions is important when foreign key relationships exist.
-            db.delete(TABLE_REL, null, null);
-            db.delete(TABLE_EXE, null, null);
+            db.delete(TABLE_REL,  null, null);
+            db.delete(TABLE_EXE,  null, null);
             db.delete(TABLE_WORK, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {

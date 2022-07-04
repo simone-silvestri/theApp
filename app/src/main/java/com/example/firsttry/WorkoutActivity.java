@@ -1,8 +1,10 @@
 package com.example.firsttry;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +22,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -335,7 +341,6 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         });
     }
 
-
     public void filterWorkout(View view) {
         btn1.setImageResource(R.drawable.star_white);
         btn2.setImageResource(R.drawable.star_white);
@@ -497,6 +502,4 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
 
         return false;
     }
-
-
 }

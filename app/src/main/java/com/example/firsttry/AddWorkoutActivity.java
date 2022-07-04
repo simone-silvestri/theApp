@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -31,7 +34,6 @@ import java.util.ArrayList;
 
 public class AddWorkoutActivity extends AppCompatActivity {
 
-    private ArrayList<String> arrayList;
     private Dialog dialog;
 
     private ArrayList<EditText> exework, exepause;
@@ -63,15 +65,15 @@ public class AddWorkoutActivity extends AppCompatActivity {
             }
         });
 
-        exename = new ArrayList<>();
-        exework = new ArrayList<>();
-        exepause = new ArrayList<>();
-        worksec = new ArrayList<>();
-        pausesec = new ArrayList<>();
+        exename    = new ArrayList<>();
+        exework    = new ArrayList<>();
+        exepause   = new ArrayList<>();
+        worksec    = new ArrayList<>();
+        pausesec   = new ArrayList<>();
         additional = new ArrayList<>();
         layoutlist = new ArrayList<>();
-        btndelete = new ArrayList<>();
-        linear = findViewById(R.id.exercise_list_layout);
+        btndelete  = new ArrayList<>();
+        linear     = findViewById(R.id.exercise_list_layout);
 
         textname = findViewById(R.id.titlename);
         textset = findViewById(R.id.editsets);
@@ -400,7 +402,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
         exename.add((TextView) layout.findViewById(R.id.text_search));
-        arrayList = new ArrayList<>();
+        final ArrayList<String> arrayList = new ArrayList<>();
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
         ArrayList<ExerciseDetail> exeList = dbhandler.loadAllExercises();
@@ -432,7 +434,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 ListView listView = dialog.findViewById(R.id.list_search_exercise);
 
                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWorkoutActivity.this,
-                        android.R.layout.simple_list_item_1,arrayList);
+                        android.R.layout.simple_list_item_1, arrayList);
 
                 listView.setAdapter(adapter);
 

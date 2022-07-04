@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".calendar"></activity>
+        <activity android:name=".Calendar"></activity>
         <activity
             android:name=".AddWorkoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
         android:name=".ModifyWorkoutActivity"
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".StringActivity" />
+        <activity android:name=".StringActivity"/>
         <activity
             android:name=".ExerciseActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -28,7 +28,7 @@
         <activity android:name=".RepsActivity" />
         <activity android:name=".TimerActivity" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".WorkoutActivity" />
+        <activity android:name=".WorkoutActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
