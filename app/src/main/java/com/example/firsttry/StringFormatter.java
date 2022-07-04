@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class StringFormatter {
     private String content;
     private Workout workout;
+    private ArrayList<Workout> wodList;
+
     public StringFormatter() {
     }
 
@@ -108,4 +110,94 @@ public class StringFormatter {
             this.workout = null;
         }
     }
+
+    public void setWodList(String content) {
+        wodList = new ArrayList<>();
+        int iend = content.indexOf("|"); //this finds the first occurrence of "."
+        String psswd;
+        do {
+            content = content.substring(iend + 1);
+            Workout work = new Workout();
+            ArrayList<Exercise> exeList = new ArrayList<>();
+            iend = content.indexOf("|"); //this finds the first occurrence of "."
+            if (iend != -1) {
+                work.setTitle(content.substring(0, iend));
+                content = content.substring(iend + 1);
+            }
+            iend = content.indexOf("|"); //this finds the first occurrence of "."
+            if (iend != -1) {
+                work.setType(content.substring(0, iend));
+                content = content.substring(iend + 1);
+            }
+            iend = content.indexOf("|"); //this finds the first occurrence of "."
+            if (iend != -1) {
+                work.setDifficulty(Integer.parseInt(content.substring(0, iend)));
+                content = content.substring(iend + 1);
+            }
+            iend = content.indexOf("|"); //this finds the first occurrence of "."
+            if (iend != -1) {
+                work.setNumberOfSets(Integer.parseInt(content.substring(0, iend)));
+                content = content.substring(iend + 1);
+            }
+            iend = content.indexOf("|"); //this finds the first occurrence of "."
+            if (iend != -1) {
+                work.setSetPause(Integer.parseInt(content.substring(0, iend)));
+                content = content.substring(iend + 1);
+            }
+            iend = content.indexOf("|");
+            if (iend != -1) {
+                work.setTotalTime(Integer.parseInt(content.substring(0, iend)));
+                content = content.substring(iend + 1);
+            }
+            iend = content.indexOf("|");
+            if (iend != -1) {
+                do {
+                    Exercise exe = new Exercise();
+                    exe.setName(content.substring(0, iend));
+                    content = content.substring(iend + 1);
+
+                    iend = content.indexOf("|");
+                    exe.setTimeInSeconds(Integer.parseInt(content.substring(0, iend)));
+                    content = content.substring(iend + 1);
+
+                    iend = content.indexOf("|");
+                    exe.setPauseInSeconds(Integer.parseInt(content.substring(0, iend)));
+                    content = content.substring(iend + 1);
+
+                    iend = content.indexOf("|");
+                    exe.setReps(Integer.parseInt(content.substring(0, iend)));
+                    content = content.substring(iend + 1);
+
+                    exeList.add(exe);
+                    iend = content.indexOf("|");
+                    if(content.length()>3) {
+                        if (content.substring(0, 3).equals("END")) {
+                            content = content.substring(3);
+                            iend = -1;
+                        }
+                    } else {
+                        content = null;
+                        iend = -1;
+                    }
+                } while (iend >= 0);
+            }
+            work.setExercises(exeList);
+            this.wodList.add(work);
+            if(content != null) {
+                if(content.length()>=0) {
+                    iend = content.indexOf("|");
+                    psswd = content.substring(0, iend);
+                } else {
+                    psswd = "notthepass";
+                }
+            } else {
+                psswd = "notthepass";
+            }
+        } while (new String("CFLSPASS").equals(psswd));
+    }
+
+    public ArrayList<Workout> getWodList() {
+        return wodList;
+    }
+
 }
