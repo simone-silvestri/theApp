@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         btexercise = (TextView) findViewById(R.id.btexercise);
         picstatistic = (ImageView) findViewById(R.id.picstatistics);
 
-
         TextToSpeech ttobj=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -200,12 +199,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void openEditor(View view) {
         Intent intent = new Intent(this, AddWorkout2.class);
         startActivity(intent);
     }
-
 
     public void resetDatabase(View view) {
 

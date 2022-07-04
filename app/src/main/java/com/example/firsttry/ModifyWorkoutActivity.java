@@ -193,7 +193,6 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             }
         });
 
-
         //choose here all the parameters
         if (new String("TIME").equals(work.getType())) {
             dropdownType.setSelection(0);
@@ -265,7 +264,6 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
 
 
     }
-
 
     public void addExerciseToList(View v) {
 

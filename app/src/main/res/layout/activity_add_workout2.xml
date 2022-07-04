@@ -69,7 +69,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -416,19 +415,139 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:weightSum="2">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/mlight"
-                android:gravity="start|center"
+                android:layout_marginStart="15dp"
                 android:text="Fill exercise list"
-                android:textColor="@color/white"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/mlight"
+                android:textColor="@color/white"
+                android:gravity="start|bottom"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:weightSum="5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/txt_general_time"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="15dp"
+                    android:text="all exercises: "
+                    android:textSize="15sp"
+                    android:fontFamily="@font/mlight"
+                    android:textColor="@color/white"
+                    android:gravity="start|bottom"
+                    android:layout_gravity="bottom"/>
+
+                <TextView
+                    android:id="@+id/txt_general_additional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/btn_add_general_work"
+                    android:background="@color/trans"
+                    android:fontFamily="@font/mmedium"
+                    android:gravity="center|bottom"
+                    android:text="text"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/btn_add_general_work"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/txt_general_work"
+                    android:fontFamily="@font/mmedium"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right|bottom"
+                    android:layout_gravity="bottom"
+                    android:background="@color/trans"
+                    android:textSize="15sp"
+                    android:textColorHint="@color/gray"
+                    android:hint="sec"
+                    android:autofillHints="sec"
+                    android:textColor="@color/gray"
+                    android:inputType="number"/>
+
+            <TextView
+                android:id="@+id/txt_general_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btn_add_general_pause"
+                android:fontFamily="@font/mmedium"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="right|bottom"
+                android:layout_gravity="bottom"
+                android:textColor="@color/white"
+                android:background="@color/trans"
+                android:textSize="15sp"
+                android:text="s" />
+
+            <EditText
+                android:id="@+id/btn_add_general_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mmedium"
+                android:layout_toLeftOf="@+id/txt_general_pause"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="right|bottom"
+                android:layout_gravity="bottom"
+                android:background="@color/trans"
+                android:textSize="15sp"
+                android:textColorHint="@color/gray"
+                android:hint="sec"
+                android:autofillHints="sec"
+                android:textColor="@color/gray"
+                android:inputType="number"/>
+
+
+            <TextView
+                android:id="@+id/txt_general_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="5dp"
+                android:fontFamily="@font/mmedium"
+                android:gravity="right"
+                android:layout_gravity="bottom"
+                android:textColor="@color/white"
+                android:background="@color/trans"
+                android:textSize="15sp"
+                android:text="s"/>
+            </LinearLayout>
+        </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/exercise_list_layout"

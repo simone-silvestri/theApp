@@ -29,6 +29,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,8 @@ public class AddWorkout2 extends AppCompatActivity {
     private TextView btnexercise, pauseOrTotalTime;
     private Spinner dropdownType, dropdownDifficulty;
     private LinearLayout linear;
+    private TextView generalworksec, generalpausesec, generaladditional;
+    private EditText generalexework, generalexepause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +74,41 @@ public class AddWorkout2 extends AppCompatActivity {
         btnexercise = findViewById(R.id.btexercise);
         pauseOrTotalTime = findViewById(R.id.pauseOrTotalTime);
 
-        currentDiff = 1;
-        currentType = "TIME";
+        generalpausesec   = findViewById(R.id.txt_general_pause);
+        generalworksec    = findViewById(R.id.txt_general_work);
+        generalexepause   = findViewById(R.id.btn_add_general_pause);
+        generalexework    = findViewById(R.id.btn_add_general_work);
+        generaladditional = findViewById(R.id.txt_general_additional);
+
+        generalexepause.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!exepause.isEmpty()) {
+                    for (int i = 0; i < exepause.size(); i++) {
+                        exepause.get(i).setText(s);
+                    }
+                }
+            }
+        });
+
+        generalexework.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!exework.isEmpty()) {
+                    for (int i = 0; i < exework.size(); i++) {
+                        exework.get(i).setText(s);
+                    }
+                }
+            }
+        });
 
         textname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -107,6 +143,10 @@ public class AddWorkout2 extends AppCompatActivity {
         skilled = findViewById(R.id.imgskilled);
         expert = findViewById(R.id.imgexpert);
         spartan = findViewById(R.id.imgspartan);
+
+        setCurrentDiff(beginner);
+        setCurrentType(time);
+
         final ImageButton buttoninfo = findViewById(R.id.buttoninfo);
         buttoninfo.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -212,6 +252,13 @@ public class AddWorkout2 extends AppCompatActivity {
                     additional.get(i).setText("");
                 }
             }
+            // set general hints
+            generalworksec.setText("\" ,");
+            generalpausesec.setText("\"");
+            generalexework.setHint("work");
+            generalexepause.setHint("pause");
+            generaladditional.setText("");
+            // set set info
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
             type.setText("H.I.I.T. workout");
@@ -243,6 +290,14 @@ public class AddWorkout2 extends AppCompatActivity {
                     additional.get(i).setText("");
                 }
             }
+            // set general hints
+            generalworksec.setText("X");
+            generalpausesec.setText("");
+            generalexework.setHint("");
+            generalexework.setText(null);
+            generalexepause.setHint("reps");
+            generaladditional.setText("");
+            // set set info
             pauseOrTotalTime.setText("Total time:");
             textpause.setHint("minutes");
             type.setText("Reps workout");
@@ -273,6 +328,13 @@ public class AddWorkout2 extends AppCompatActivity {
                     additional.get(i).setText("X");
                 }
             }
+            // set general hints
+            generalworksec.setText(" in");
+            generalpausesec.setText("\"");
+            generalexework.setHint("reps");
+            generalexepause.setHint("sec");
+            generaladditional.setText("X");
+            // set set info
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
             type.setText("Reps in time");
