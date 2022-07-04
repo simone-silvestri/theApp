@@ -2,25 +2,18 @@ package com.example.firsttry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SearchView;
@@ -30,7 +23,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class WorkoutActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -175,7 +167,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                     @Override
                     public void onClick(View v) {
                         Workout work = wodList.get(deletePosition);
-                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutBetter.class);
+                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
                         intent.putExtra("EXTRA_WORKOUT", work);
                         startActivity(intent);
                         puWindow.dismiss();
@@ -332,7 +324,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                     @Override
                     public void onClick(View v) {
                         Workout work = wodList.get(deletePosition);
-                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutBetter.class);
+                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
                         intent.putExtra("EXTRA_WORKOUT", work);
                         startActivity(intent);
                         puWindow.dismiss();
@@ -474,7 +466,7 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                     @Override
                     public void onClick(View v) {
                         Workout work = wodList.get(deletePosition);
-                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutBetter.class);
+                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
                         intent.putExtra("EXTRA_WORKOUT", work);
                         startActivity(intent);
                         puWindow.dismiss();

@@ -32,7 +32,7 @@ public class MyAdapterComplete extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_workout_2, null);
+            convertView = mInflater.inflate(R.layout.list_workout, null);
             holder = new MyAdapterComplete.ViewHolder();
             holder.txtDesc = (TextView) convertView.findViewById(R.id.subtitle);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
