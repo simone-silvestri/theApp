@@ -11,7 +11,13 @@
         <entry key="app/src/main/res/layout/activity_workout.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/add_exercise_list.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/add_exercise_list_2.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/dialog_searchable_spinner.xml" value="0.15476190476190477" />
         <entry key="app/src/main/res/layout/info_page.xml" value="0.2826086956521739" />
+        <entry key="app/src/main/res/layout/list_exercises.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/list_workout_2.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/popup_read_write.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/workout_2.xml" value="0.15476190476190477" />
       </map>
     </option>
   </component>

@@ -55,7 +55,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_workout2);
+        setContentView(R.layout.activity_add_workout);
 
         buttonBack = findViewById(R.id.btnBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -445,7 +445,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
     public void addExerciseToList(View v) {
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list_2, null, false);
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
 
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
