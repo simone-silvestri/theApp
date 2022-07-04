@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:layout_marginTop="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddWorkout2">
+    tools:context=".AddWorkoutActivity">
 
     <TextView
         android:id='@+id/text_search'

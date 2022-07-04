@@ -10,7 +10,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:background="@drawable/gradient1"
-    tools:context=".AddWorkout2">
+    tools:context=".AddWorkoutActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
