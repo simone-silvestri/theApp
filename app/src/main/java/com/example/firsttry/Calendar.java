@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
-public class calendar extends AppCompatActivity {
+public class Calendar extends AppCompatActivity {
 
     private CalendarView calendarView;
     private TextView monthlyGoals, dailyWod;
@@ -27,10 +25,10 @@ public class calendar extends AppCompatActivity {
         long date = System.currentTimeMillis();
         calendarView.setDate(date); // set selected date 22 May 2016 in milliseconds
 
-        Calendar currentDay= Calendar.getInstance();
-        int currDate= currentDay.get(Calendar.DATE);
-        int currMonth= currentDay.get(Calendar.MONTH)+1;
-        int currYear= currentDay.get(Calendar.YEAR);
+        java.util.Calendar currentDay= java.util.Calendar.getInstance();
+        int currDate= currentDay.get(java.util.Calendar.DATE);
+        int currMonth= currentDay.get(java.util.Calendar.MONTH)+1;
+        int currYear= currentDay.get(java.util.Calendar.YEAR);
         String day = new String(currDate + "-" + currMonth + "-" + currYear);
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
@@ -57,7 +55,7 @@ public class calendar extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
                 month=month+1;
-                DatabaseHelper dbhandler = DatabaseHelper.getInstance(calendar.this);
+                DatabaseHelper dbhandler = DatabaseHelper.getInstance(Calendar.this);
                 String day2 = new String(dayOfMonth + "-" + month + "-" + year);
                 History datewod = dbhandler.loadDate(day2);
                 if(datewod.getWod()==-1) {
