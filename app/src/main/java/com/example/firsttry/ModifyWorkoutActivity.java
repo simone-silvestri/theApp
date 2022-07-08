@@ -276,7 +276,6 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             diffname.setText("Spartan");
             diffname.setTextColor(getResources().getColor(R.color.spartan));
         }
-
     }
 
     public void setCurrentType(View v) {

@@ -72,7 +72,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             sendbutton.setVisibility(View.INVISIBLE);
         }
 
-
         title.setText(work.getTitle());
         if (new String("TIME").equals(work.getType())) {
             texttype.setText(R.string.type_1);
