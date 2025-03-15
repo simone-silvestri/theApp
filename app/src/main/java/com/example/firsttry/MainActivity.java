@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -361,7 +361,10 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
         wodList = dbhandler.loadDatabase();
         if(!wodList.isEmpty()) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, wodList.size());
+            Random rand = new Random();
+
+            // Obtain a number between [0 - wodList.size()].
+            int randomNum = rand.nextInt(wodList.size());
             String title = wodList.get(randomNum).getTitle();
             String wod = wodList.get(randomNum).getWod();
 
