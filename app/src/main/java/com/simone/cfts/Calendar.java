@@ -34,7 +34,6 @@ public class Calendar extends AppCompatActivity {
         return output;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +63,7 @@ public class Calendar extends AppCompatActivity {
             datewod = dbhandler.loadDate(day);
             count += datewod.getWod().size();
         }
+
         monthlyGoals.setText(count +" of 22 monthly workouts");
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
