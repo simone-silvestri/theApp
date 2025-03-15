@@ -15,20 +15,17 @@ public class Calendar extends AppCompatActivity {
     private TextView monthlyGoals, dailyWod;
 
     public String displayWods(History datewod, DatabaseHelper dbhandler) {
-        String output;
+        String output = "";
         String day = datewod.getDate();
         if (datewod.getWod().isEmpty()) {
-            output = "No WoD the " + day;
+            output = "--";
         } else {
             ArrayList<Integer> wodIndices = datewod.getWod();
-            ArrayList<Workout> wodList = new ArrayList<>();
             for (int i = 0; i < wodIndices.size(); i++) {
                 int wodIdx = wodIndices.get(i);
                 Workout wod = dbhandler.loadWorkoutFromId(wodIdx);
-                wodList.add(wod);
+                output += wod.getTitle() + "\n";
             }
-            // TODO: display all workouts (change the Textview to a Listview)
-            output = "There is a WoD";
         }
 
         return output;
