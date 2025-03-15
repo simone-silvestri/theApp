@@ -243,22 +243,22 @@
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
       <map>
-        <entry key="com.example.cfts">
+        <entry key="com.simone.cfts">
           <value>
             <CheckInfo lastCheckTimestamp="1742043628924" />
           </value>
         </entry>
-        <entry key="com.example.cfts.test">
+        <entry key="com.simone.cfts.test">
           <value>
             <CheckInfo lastCheckTimestamp="1742043628925" />
           </value>
         </entry>
-        <entry key="com.example.cfts">
+        <entry key="com.simone.cfts">
           <value>
             <CheckInfo lastCheckTimestamp="1742061348320" />
           </value>
         </entry>
-        <entry key="com.example.cfts.test">
+        <entry key="com.simone.cfts.test">
           <value>
             <CheckInfo lastCheckTimestamp="1742061348320" />
           </value>
