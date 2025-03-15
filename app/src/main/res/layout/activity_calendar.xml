@@ -42,8 +42,6 @@
             android:textColor="@color/white"
             android:fontFamily="@font/mmedium"/>
 
-
-
     </LinearLayout>
 
     <TextView
@@ -57,7 +55,6 @@
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/mlight"/>
-
 
     <TextView
         android:id="@+id/monthlyGoals"

@@ -21,8 +21,8 @@
         android:gravity="start|bottom"
         android:layout_gravity="bottom"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+        android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
         android:background="@color/trans"/>
-
 
     <TextView
         android:id="@+id/txtadditional"
@@ -39,7 +39,6 @@
         android:text="text"
         android:textColor="@color/white"
         android:textSize="15sp" />
-
 
     <EditText
         android:id="@+id/btnaddwork"
@@ -94,7 +93,6 @@
         android:autofillHints="sec"
         android:textColor="@color/gray"
         android:inputType="number"/>
-
 
     <TextView
         android:id="@+id/txtpause"
