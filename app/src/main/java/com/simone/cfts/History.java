@@ -1,15 +1,16 @@
 package com.simone.cfts;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class History implements Serializable {
 
     private String date;
-    private int wod;
+    private ArrayList<Integer> wod;
 
     public History() {
         this.date = "NOWOD";
-        this.wod = -1;
+        this.wod = new ArrayList<Integer>();
     }
 
     public String getDate() {
@@ -20,11 +21,11 @@ public class History implements Serializable {
         this.date = date;
     }
 
-    public int getWod() {
+    public ArrayList<Integer> getWod() {
         return wod;
     }
 
-    public void setWod(int wod) {
+    public void setWod(ArrayList<Integer> wod) {
         this.wod = wod;
     }
 }

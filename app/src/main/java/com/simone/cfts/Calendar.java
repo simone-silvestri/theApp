@@ -6,12 +6,30 @@ import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Calendar extends AppCompatActivity {
 
     private CalendarView calendarView;
     private TextView monthlyGoals, dailyWod;
+
+    public String displayWods(History datewod, DatabaseHelper dbhandler) {
+        String output = "";
+        String day = datewod.getDate();
+        if (datewod.getWod().isEmpty()) {
+            output = "--";
+        } else {
+            ArrayList<Integer> wodIndices = datewod.getWod();
+            for (int i = 0; i < wodIndices.size(); i++) {
+                int wodIdx = wodIndices.get(i);
+                Workout wod = dbhandler.loadWorkoutFromId(wodIdx);
+                output += wod.getTitle() + "\n";
+            }
+        }
+
+        return output;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,27 +45,22 @@ public class Calendar extends AppCompatActivity {
 
         java.util.Calendar currentDay= java.util.Calendar.getInstance();
         int currDate= currentDay.get(java.util.Calendar.DATE);
-        int currMonth= currentDay.get(java.util.Calendar.MONTH)+1;
-        int currYear= currentDay.get(java.util.Calendar.YEAR);
+        int currMonth= currentDay.get(java.util.Calendar.MONTH) + 1;
+        int currYear = currentDay.get(java.util.Calendar.YEAR);
         String day = new String(currDate + "-" + currMonth + "-" + currYear);
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
         History datewod = dbhandler.loadDate(day);
-        if(datewod.getWod()==-1) {
-            dailyWod.setText("No WoD the " + day);
-        } else {
-            Workout wod = dbhandler.loadWorkoutFromId(datewod.getWod());
-            dailyWod.setText("WoD: " + wod.getTitle());
-        }
+
+        dailyWod.setText(displayWods(datewod, dbhandler));
 
         int count = 0;
         for (int i = 1; i <= currDate; i++) {
             day = i + "-" + currMonth + "-" + currYear;
             datewod = dbhandler.loadDate(day);
-            if(datewod.getWod()!=-1) {
-                count+=1;
-            }
+            count += datewod.getWod().size();
         }
+
         monthlyGoals.setText(count +" of 22 monthly workouts");
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -58,12 +71,7 @@ public class Calendar extends AppCompatActivity {
                 DatabaseHelper dbhandler = DatabaseHelper.getInstance(Calendar.this);
                 String day2 = new String(dayOfMonth + "-" + month + "-" + year);
                 History datewod = dbhandler.loadDate(day2);
-                if(datewod.getWod()==-1) {
-                    dailyWod.setText("No WoD the " + day2);
-                } else {
-                    Workout wod = dbhandler.loadWorkoutFromId(datewod.getWod());
-                    dailyWod.setText("" + wod.getTitle());
-                }
+                dailyWod.setText(displayWods(datewod, dbhandler));
             }
         });
     }

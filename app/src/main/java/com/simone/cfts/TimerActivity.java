@@ -116,7 +116,6 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-
     public void startStop() {
         if (timerRunning) {
             stopTimer();

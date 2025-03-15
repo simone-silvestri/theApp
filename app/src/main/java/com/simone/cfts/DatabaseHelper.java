@@ -152,14 +152,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public History loadDate(String date) {
         History dateWod = new History();
 
-        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL+ " WHERE " + KEY_CAL_DAY + " = " + "'" + date + "'" ;
+        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL + " WHERE " + KEY_CAL_DAY + " = " + "'" + date + "'" ;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
+        ArrayList<Integer> wod = new ArrayList<Integer>();
         try {
             if (cursor.moveToFirst()) {
                 do {
                     dateWod.setDate(cursor.getString(getPositiveColumnIndex(cursor, KEY_CAL_DAY)));
-                    dateWod.setWod(cursor.getInt(getPositiveColumnIndex(cursor, KEY_CAL_WORK_ID)));
+                    wod.add(cursor.getInt(getPositiveColumnIndex(cursor, KEY_CAL_WORK_ID)));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -169,6 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
+        dateWod.setWod(wod);
         return dateWod;
     }
 
@@ -179,36 +181,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long calendarId = -1;
         db.beginTransaction();
         try {
-            Calendar currentDay= Calendar.getInstance();
-            int currDate= currentDay.get(Calendar.DATE);
-            int currMonth= currentDay.get(Calendar.MONTH)+1;
-            int currYear= currentDay.get(Calendar.YEAR);
+            Calendar currentDay = Calendar.getInstance();
+            int currDate = currentDay.get(Calendar.DATE);
+            int currMonth = currentDay.get(Calendar.MONTH)+1;
+            int currYear = currentDay.get(Calendar.YEAR);
             String date = new String(currDate + "-" + currMonth + "-" + currYear);
             ContentValues values = new ContentValues();
             values.put(KEY_CAL_DAY, date);
             values.put(KEY_CAL_WORK_ID, workoutId);
-            // First try to update the workout in case the workout already exists in the database
-            // This assumes workoutNames are unique
-            int rows = db.update(TABLE_CAL, values, KEY_CAL_DAY + "= ?", new String[]{date});
-            // Check if update succeeded
-            if (rows == 1) {
-                String calendarSelectQuery = "SELECT " + KEY_CAL_ID + " FROM " + TABLE_CAL
-                        + " WHERE " + KEY_CAL_DAY + " = ?";
-                Cursor cursor = db.rawQuery(calendarSelectQuery, new String[]{date});
-                try {
-                    if (cursor.moveToFirst()) {
-                        calendarId = cursor.getInt(0);
-                        db.setTransactionSuccessful();
-                    }
-                } finally {
-                    if (cursor != null && !cursor.isClosed()) {
-                        cursor.close();
-                    }
-                }
-            } else {
-                calendarId = db.insertOrThrow(TABLE_CAL, null, values);
-                db.setTransactionSuccessful();
-            }
+            // Just add the WoD to the calendar without trying to update
+            db.insert(TABLE_CAL, null, values);
+            db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(msg, "Error while trying to add or update user");
         } finally {
