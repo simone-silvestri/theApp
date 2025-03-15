@@ -155,11 +155,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL+ " WHERE " + KEY_CAL_DAY + " = " + "'" + date + "'" ;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
+        ArrayList<Integer> wod = new ArrayList<Integer>();
         try {
             if (cursor.moveToFirst()) {
                 do {
                     dateWod.setDate(cursor.getString(getPositiveColumnIndex(cursor, KEY_CAL_DAY)));
-                    dateWod.setWod(cursor.getInt(getPositiveColumnIndex(cursor, KEY_CAL_WORK_ID)));
+                    wod.add(cursor.getInt(getPositiveColumnIndex(cursor, KEY_CAL_WORK_ID)));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -169,6 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
+        dateWod.setWod(wod);
         return dateWod;
     }
 
