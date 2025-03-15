@@ -21,8 +21,8 @@
         android:gravity="start|bottom"
         android:layout_gravity="bottom"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+        android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
         android:background="@color/trans"/>
-
 
     <TextView
         android:id="@+id/txtadditional"
