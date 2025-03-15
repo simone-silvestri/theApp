@@ -142,6 +142,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // (https://code.google.com/p/android/issues/detail?id=13045) so we need to fall back to the more
     // verbose option of querying for the user's primary key if we did an update.
 
+    // this is needed because the value _could_ be smaller than 0 (not really in practice)
+    public int getPositiveColumnIndex(Cursor cursor, String string) {
+        int n1 = cursor.getColumnIndex(string);
+        if (n1 < 0) { n1 = 0; }
+        return n1;
+    }
 
     public History loadDate(String date) {
         History dateWod = new History();
@@ -152,8 +158,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    dateWod.setDate(cursor.getString(cursor.getColumnIndex(KEY_CAL_DAY)));
-                    dateWod.setWod(cursor.getInt(cursor.getColumnIndex(KEY_CAL_WORK_ID)));
+                    dateWod.setDate(cursor.getString(getPositiveColumnIndex(cursor, KEY_CAL_DAY)));
+                    dateWod.setWod(cursor.getInt(getPositiveColumnIndex(cursor, KEY_CAL_WORK_ID)));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -222,14 +228,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     Workout work = new Workout();
-                    work.setID(cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID)));
-                    work.setTitle(cursor.getString(cursor.getColumnIndex(KEY_WORK_NAME)));
-                    work.setWod(cursor.getString(cursor.getColumnIndex(KEY_WORK_WOD)));
-                    work.setType(cursor.getString(cursor.getColumnIndex(KEY_WORK_TYPE)));
-                    work.setTotalTime(cursor.getInt(cursor.getColumnIndex(KEY_WORK_TIME)));
-                    work.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_WORK_DIFF)));
-                    work.setNumberOfSets(cursor.getInt(cursor.getColumnIndex(KEY_WORK_SET)));
-                    work.setSetPause(cursor.getInt(cursor.getColumnIndex(KEY_WORK_PAUSE)));
+                    work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
+                    work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
+                    work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
+                    work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
+                    work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
+                    work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
+                    work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
+                    work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
 
                     ArrayList<Exercise> exeList = new ArrayList<>();
                     String REL_SELECT_QUERY = "SELECT * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + " = " + "'" + work.getID() + "'";
@@ -238,11 +244,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         if (cursor2.moveToFirst()) {
                             do {
                                 Exercise exe = new Exercise();
-                                exe.setWorkoutId(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_WORK_ID)));
-                                exe.setName(cursor2.getString(cursor2.getColumnIndex(KEY_REL_EXE_NAME)));
-                                exe.setPauseInSeconds(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_PAUSE)));
-                                exe.setTimeInSeconds(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_TIME)));
-                                exe.setReps(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_REPS)));
+                                exe.setWorkoutId(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_WORK_ID)));
+                                exe.setName(cursor2.getString(getPositiveColumnIndex(cursor2, KEY_REL_EXE_NAME)));
+                                exe.setPauseInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_PAUSE)));
+                                exe.setTimeInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_TIME)));
+                                exe.setReps(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_REPS)));
                                 exeList.add(exe);
                             } while (cursor2.moveToNext());
                         }
@@ -282,14 +288,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     Workout work = new Workout();
-                    work.setID(cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID)));
-                    work.setTitle(cursor.getString(cursor.getColumnIndex(KEY_WORK_NAME)));
-                    work.setWod(cursor.getString(cursor.getColumnIndex(KEY_WORK_WOD)));
-                    work.setType(cursor.getString(cursor.getColumnIndex(KEY_WORK_TYPE)));
-                    work.setTotalTime(cursor.getInt(cursor.getColumnIndex(KEY_WORK_TIME)));
-                    work.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_WORK_DIFF)));
-                    work.setNumberOfSets(cursor.getInt(cursor.getColumnIndex(KEY_WORK_SET)));
-                    work.setSetPause(cursor.getInt(cursor.getColumnIndex(KEY_WORK_PAUSE)));
+                    work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
+                    work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
+                    work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
+                    work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
+                    work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
+                    work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
+                    work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
+                    work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
 
                     ArrayList<Exercise> exeList = new ArrayList<>();
                     String REL_SELECT_QUERY = "SELECT * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + " = " + "'" + work.getID() + "'";
@@ -298,11 +304,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         if (cursor2.moveToFirst()) {
                             do {
                                 Exercise exe = new Exercise();
-                                exe.setWorkoutId(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_WORK_ID)));
-                                exe.setName(cursor2.getString(cursor2.getColumnIndex(KEY_REL_EXE_NAME)));
-                                exe.setPauseInSeconds(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_PAUSE)));
-                                exe.setTimeInSeconds(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_TIME)));
-                                exe.setReps(cursor2.getInt(cursor2.getColumnIndex(KEY_REL_REPS)));
+                                exe.setWorkoutId(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_WORK_ID)));
+                                exe.setName(cursor2.getString(getPositiveColumnIndex(cursor2, KEY_REL_EXE_NAME)));
+                                exe.setPauseInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_PAUSE)));
+                                exe.setTimeInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_TIME)));
+                                exe.setReps(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_REPS)));
                                 exeList.add(exe);
                             } while (cursor2.moveToNext());
                         }
@@ -341,7 +347,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Cursor cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
                 do {
-                    long id = cursor.getInt(cursor.getColumnIndex(KEY_REL_ID));
+                    long id = cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_ID));
                     db.delete(TABLE_REL, KEY_REL_ID + " = ?", new String[]{String.valueOf(id)});
                 } while (cursor.moveToNext());
             }
@@ -365,11 +371,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (cursor.moveToFirst()) {
                     do {
                         Exercise exe = new Exercise();
-                        exe.setWorkoutId(cursor.getInt(cursor.getColumnIndex(KEY_REL_WORK_ID)));
-                        exe.setName(cursor.getString(cursor.getColumnIndex(KEY_REL_EXE_NAME)));
-                        exe.setPauseInSeconds(cursor.getInt(cursor.getColumnIndex(KEY_REL_PAUSE)));
-                        exe.setTimeInSeconds(cursor.getInt(cursor.getColumnIndex(KEY_REL_TIME)));
-                        exe.setReps(cursor.getInt(cursor.getColumnIndex(KEY_REL_REPS)));
+                        exe.setWorkoutId(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_WORK_ID)));
+                        exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_REL_EXE_NAME)));
+                        exe.setPauseInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_PAUSE)));
+                        exe.setTimeInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_TIME)));
+                        exe.setReps(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_REPS)));
                         exeList.add(exe);
                     } while (cursor.moveToNext());
                 }
@@ -419,10 +425,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + " WHERE " + KEY_EXE_NAME + " = ?";
             Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{name});
             if (cursor.moveToFirst()) {
-                exe.setName(cursor.getString(cursor.getColumnIndex(KEY_EXE_NAME)));
-                exe.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_EXE_DIFF)));
-                exe.setDescription(cursor.getString(cursor.getColumnIndex(KEY_EXE_DESC)));
-                exe.setMuscle(cursor.getString(cursor.getColumnIndex(KEY_EXE_MUSC)));
+                exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_NAME)));
+                exe.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_EXE_DIFF)));
+                exe.setDescription(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_DESC)));
+                exe.setMuscle(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_MUSC)));
                 db.setTransactionSuccessful();
             }
             cursor.close();
@@ -444,11 +450,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     ExerciseDetail exe = new ExerciseDetail();
-                    exe.setName(cursor.getString(cursor.getColumnIndex(KEY_EXE_NAME)));
-                    exe.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_EXE_DIFF)));
-                    exe.setID(cursor.getInt(cursor.getColumnIndex(KEY_EXE_ID)));
-                    exe.setDescription(cursor.getString(cursor.getColumnIndex(KEY_EXE_DESC)));
-                    exe.setMuscle(cursor.getString(cursor.getColumnIndex(KEY_EXE_MUSC)));
+                    exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_NAME)));
+                    exe.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_EXE_DIFF)));
+                    exe.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_EXE_ID)));
+                    exe.setDescription(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_DESC)));
+                    exe.setMuscle(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_MUSC)));
                     exeList.add(exe);
                 } while(cursor.moveToNext());
                 cursor.close();
@@ -489,14 +495,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(WRK_SELECT_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
-                work.setID(cursor.getInt(cursor.getColumnIndex(KEY_WORK_ID)));
-                work.setTitle(cursor.getString(cursor.getColumnIndex(KEY_WORK_NAME)));
-                work.setWod(cursor.getString(cursor.getColumnIndex(KEY_WORK_WOD)));
-                work.setType(cursor.getString(cursor.getColumnIndex(KEY_WORK_TYPE)));
-                work.setTotalTime(cursor.getInt(cursor.getColumnIndex(KEY_WORK_TIME)));
-                work.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_WORK_DIFF)));
-                work.setNumberOfSets(cursor.getInt(cursor.getColumnIndex(KEY_WORK_SET)));
-                work.setSetPause(cursor.getInt(cursor.getColumnIndex(KEY_WORK_PAUSE)));
+                work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
+                work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
+                work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
+                work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
+                work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
+                work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
+                work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
+                work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
             }
         } catch (Exception e) {
             Log.d(msg, "Error while trying to get posts from database");
