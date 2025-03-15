@@ -1,4 +1,4 @@
-package com.example.firsttry;
+package com.example.cfts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;

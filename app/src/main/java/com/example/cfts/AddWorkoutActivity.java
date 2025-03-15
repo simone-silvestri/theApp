@@ -1,13 +1,18 @@
-package com.example.firsttry;
+package com.example.cfts;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -27,31 +32,26 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class AddWorkoutActivity extends AppCompatActivity {
 
-public class ModifyWorkoutActivity extends AppCompatActivity {
-
-    private ArrayList<String> arrayList;
     private Dialog dialog;
 
     private ArrayList<EditText> exework, exepause;
     private ArrayList<TextView> exename, worksec, pausesec, additional;
     private ArrayList<RelativeLayout> layoutlist;
     private ArrayList<ImageButton> btndelete;
-    private ImageButton buttonAddExe;
     private ImageView time, reps, reptime, beginner, average, skilled, expert, spartan;
     private EditText textname, textset, textpause;
-    private Workout work, workin;
+    private Workout work;
     private int currentDiff;
     private String currentType;
     private TextView btnexercise, pauseOrTotalTime;
     private Spinner dropdownType, dropdownDifficulty;
     private LinearLayout linear;
-    private ImageButton buttonBack;
-
     private TextView generalworksec, generalpausesec, generaladditional;
     private EditText generalexework, generalexepause;
 
+    private ImageButton buttonBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,16 +65,16 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             }
         });
 
-        exename = new ArrayList<>();
-        exework = new ArrayList<>();
-        exepause = new ArrayList<>();
-        worksec = new ArrayList<>();
-        pausesec = new ArrayList<>();
+        exename    = new ArrayList<>();
+        exework    = new ArrayList<>();
+        exepause   = new ArrayList<>();
+        worksec    = new ArrayList<>();
+        pausesec   = new ArrayList<>();
         additional = new ArrayList<>();
         layoutlist = new ArrayList<>();
-        btndelete = new ArrayList<>();
-        linear = findViewById(R.id.exercise_list_layout);
-        buttonAddExe = findViewById(R.id.buttonaddexercise);
+        btndelete  = new ArrayList<>();
+        linear     = findViewById(R.id.exercise_list_layout);
+
         textname = findViewById(R.id.titlename);
         textset = findViewById(R.id.editsets);
         textpause = findViewById(R.id.editpause);
@@ -117,10 +117,6 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             }
         });
 
-        currentDiff = 1;
-        currentType = "TIME";
-        btnexercise.setText("Modify");
-
         textname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -154,6 +150,10 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         skilled = findViewById(R.id.imgskilled);
         expert = findViewById(R.id.imgexpert);
         spartan = findViewById(R.id.imgspartan);
+
+        setCurrentDiff(beginner);
+        setCurrentType(time);
+
         final ImageButton buttoninfo = findViewById(R.id.buttoninfo);
         buttoninfo.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -186,57 +186,6 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
                 puWindow.showAsDropDown(buttoninfo, 0, 0);
             }
         });
-
-        //retrieve workout
-        workin = new Workout();
-        workin = (Workout) getIntent().getSerializableExtra("EXTRA_WORKOUT");
-        //Change name
-        TextView tvTitle = findViewById(R.id.title_tv);
-        tvTitle.setText("Modify workout");
-        textname.setText(workin.getTitle());
-        currentDiff = workin.getDifficulty();
-        if (currentDiff == 1) {
-            setCurrentDiff(beginner);
-        } else if (currentDiff == 2) {
-            setCurrentDiff(average);
-        } else if (currentDiff == 3) {
-            setCurrentDiff(skilled);
-        } else if (currentDiff == 4) {
-            setCurrentDiff(expert);
-        } else {
-            setCurrentDiff(spartan);
-        }
-        //Insert exercises
-        ArrayList<Exercise> exein = workin.getExercises();
-        for(int i=0; i< exein.size(); i++) {
-            addExerciseToList(buttonAddExe);
-            exename.get(i).setText(exein.get(i).getName());
-        }
-        //Change Type
-        textset.setText(String.valueOf(workin.getNumberOfSets()));
-        currentType = workin.getType();
-        if (currentType.equals("TIME")) {
-            setCurrentType(time);
-            textpause.setText(String.valueOf(workin.getSetPause()));
-            for (int i = 0; i < exein.size(); i++) {
-                exework.get(i).setText(String.valueOf(exein.get(i).getTimeInSeconds()));
-                exepause.get(i).setText(String.valueOf(exein.get(i).getPauseInSeconds()));
-            }
-        } else if (currentType.equals("REPS")) {
-            setCurrentType(reps);
-            textpause.setText(String.valueOf(workin.getTotalTime()));
-            for (int i = 0; i < exein.size(); i++) {
-                exepause.get(i).setText(String.valueOf(exein.get(i).getReps()));
-            }
-        } else {
-            setCurrentType(reptime);
-            textpause.setText(String.valueOf(workin.getSetPause()));
-            for (int i = 0; i < exein.size(); i++) {
-                exework.get(i).setText(String.valueOf(exein.get(i).getReps()));
-                exepause.get(i).setText(String.valueOf(exein.get(i).getTimeInSeconds()));
-            }
-        }
-
     }
 
     public void hideKeyboard(View view) {
@@ -249,10 +198,10 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         int idx = r.indexOfChild(v);
         TextView diffname = (TextView) findViewById(R.id.diffname);
         currentDiff = idx + 1;
-        LinearLayout.LayoutParams small = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.small_image), getResources().getDimensionPixelSize(R.dimen.small_image), 1.0f);
-        LinearLayout.LayoutParams large = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.large_image), getResources().getDimensionPixelSize(R.dimen.large_image), 1.0f);
-        small.gravity = Gravity.CENTER;
-        large.gravity = Gravity.CENTER;
+        LinearLayout.LayoutParams small = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.small_image), getResources().getDimensionPixelSize(R.dimen.small_image),1.0f);
+        LinearLayout.LayoutParams large = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.large_image), getResources().getDimensionPixelSize(R.dimen.large_image),1.0f);
+        small.gravity= Gravity.CENTER;
+        large.gravity= Gravity.CENTER;
         beginner.setLayoutParams(small);
         average.setLayoutParams(small);
         expert.setLayoutParams(small);
@@ -260,16 +209,16 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         spartan.setLayoutParams(small);
         v.setLayoutParams(large);
 
-        if (currentDiff == 1) {
+        if(currentDiff==1) {
             diffname.setText("Beginner");
             diffname.setTextColor(getResources().getColor(R.color.beginner));
-        } else if (currentDiff == 2) {
+        } else if (currentDiff==2) {
             diffname.setText("Average");
             diffname.setTextColor(getResources().getColor(R.color.average));
-        } else if (currentDiff == 3) {
+        } else if (currentDiff==3) {
             diffname.setText("Skilled");
             diffname.setTextColor(getResources().getColor(R.color.skilled));
-        } else if (currentDiff == 4) {
+        } else if (currentDiff==4) {
             diffname.setText("Expert");
             diffname.setTextColor(getResources().getColor(R.color.expert));
         } else {
@@ -316,6 +265,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             generalexework.setHint("work");
             generalexepause.setHint("pause");
             generaladditional.setText("");
+            // set set info
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
             type.setText("H.I.I.T. workout");
@@ -354,6 +304,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             generalexework.setText(null);
             generalexepause.setHint("reps");
             generaladditional.setText("");
+            // set set info
             pauseOrTotalTime.setText("Total time:");
             textpause.setHint("minutes");
             type.setText("Reps workout");
@@ -390,6 +341,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             generalexework.setHint("reps");
             generalexepause.setHint("sec");
             generaladditional.setText("X");
+            // set set info
             pauseOrTotalTime.setText("Pause:");
             textpause.setHint("seconds");
             type.setText("Reps in time");
@@ -450,7 +402,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
         exename.add((TextView) layout.findViewById(R.id.text_search));
-        arrayList = new ArrayList<>();
+        final ArrayList<String> arrayList = new ArrayList<>();
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
         ArrayList<ExerciseDetail> exeList = dbhandler.loadAllExercises();
@@ -465,7 +417,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
                 RelativeLayout r = (RelativeLayout) view.getParent();
                 final int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
 
-                dialog = new Dialog(ModifyWorkoutActivity.this);
+                dialog = new Dialog(AddWorkoutActivity.this);
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
 
                 DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -481,8 +433,8 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
                 final EditText editText = dialog.findViewById(R.id.edit_search_exercise);
                 ListView listView = dialog.findViewById(R.id.list_search_exercise);
 
-                final ArrayAdapter<String> adapter = new ArrayAdapter<>(ModifyWorkoutActivity.this,
-                        android.R.layout.simple_list_item_1,arrayList);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWorkoutActivity.this,
+                        android.R.layout.simple_list_item_1, arrayList);
 
                 listView.setAdapter(adapter);
 
@@ -577,71 +529,77 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         if (workoutToBeAdded.getTitle().isEmpty()) {
             textname.setHint("Insert Title!");
         } else {
-            if (exename.isEmpty()) {
-                btnexercise.setText("Add exercises first");
+            int check = dbhandler.loadWorkoutId(workoutToBeAdded.getTitle());
+            if (check != -1) {
+                textname.setHint("Title already existent, choose other");
+                textname.setText(null);
             } else {
-                if (textset.getText().toString().isEmpty()) {
-                    textset.setHint("Fill sets");
-                    textset.setText(null);
+                if (exename.isEmpty()) {
+                    btnexercise.setText("Add exercises first");
                 } else {
-                    if (textpause.getText().toString().isEmpty()) {
-                        textpause.setHint("Fill field");
-                        textpause.setText(null);
+                    if (textset.getText().toString().isEmpty()) {
+                        textset.setHint("Fill sets");
+                        textset.setText(null);
                     } else {
-                        workoutToBeAdded.setType(currentType);
-                        workoutToBeAdded.setDifficulty(currentDiff);
-                        workoutToBeAdded.setWod("");
-                        // Finally add and update the workout, by adding a workout and by adding the exercises
-                        for (int i = 0; i < exework.size(); i++) {
-                            String nm = exename.get(i).getText().toString();
-                            int time, pause, reps;
-                            if (new String("TIME").equals(currentType)) {
-                                time = Integer.parseInt(exework.get(i).getText().toString());
-                                pause = Integer.parseInt(exepause.get(i).getText().toString());
-                                reps = 0;
-                            } else if (new String("REPS").equals(currentType)) {
-                                time = 0;
-                                reps = Integer.parseInt(exepause.get(i).getText().toString());
-                                pause = 0;
-                            } else {
-                                reps = Integer.parseInt(exework.get(i).getText().toString());
-                                time = Integer.parseInt(exepause.get(i).getText().toString());
-                                pause = 0;
+                        if (textpause.getText().toString().isEmpty()) {
+                            textpause.setHint("Fill field");
+                            textpause.setText(null);
+                        } else {
+                            workoutToBeAdded.setType(currentType);
+                            workoutToBeAdded.setDifficulty(currentDiff);
+                            workoutToBeAdded.setWod("");
+                            // Finally add and update the workout, by adding a workout and by adding the exercises
+                            for (int i = 0; i < exework.size(); i++) {
+                                String nm = exename.get(i).getText().toString();
+                                int time, pause, reps;
+                                if (new String("TIME").equals(currentType)) {
+                                    time = Integer.parseInt(exework.get(i).getText().toString());
+                                    pause = Integer.parseInt(exepause.get(i).getText().toString());
+                                    reps = 0;
+                                } else if (new String("REPS").equals(currentType)) {
+                                    time = 0;
+                                    reps = Integer.parseInt(exepause.get(i).getText().toString());
+                                    pause = 0;
+                                } else {
+                                    reps = Integer.parseInt(exework.get(i).getText().toString());
+                                    time = Integer.parseInt(exepause.get(i).getText().toString());
+                                    pause = 0;
+                                }
+                                Exercise exe = new Exercise(nm, reps, time, pause);
+                                exe.setWorkoutName(workoutToBeAdded.getTitle());
+                                exercises.add(exe);
                             }
-                            Exercise exe = new Exercise(nm, reps, time, pause);
-                            exe.setWorkoutName(workoutToBeAdded.getTitle());
-                            exercises.add(exe);
-                        }
-                        workoutToBeAdded.setExercises(exercises);
-                        if (new String("REPS").equals(workoutToBeAdded.getType())) {
-                            workoutToBeAdded.setSetPause(0);
-                            workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
-                            workoutToBeAdded.setTotalTime(Integer.parseInt(textpause.getText().toString()) * 60);
-                        } else {
-                            workoutToBeAdded.setSetPause(Integer.parseInt(textpause.getText().toString()));
-                            workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
-                            workoutToBeAdded.setTotalTime();
-                        }
-                        if (workoutToBeAdded.getTotalTime() == 0) {
-                            textname.setHint("Total time is smaller than zero");
-                            textname.setText(null);
-                        } else {
-                            int id = (int) dbhandler.addOrUpdateWorkout(workoutToBeAdded);
-                            workoutToBeAdded.setID(id);
-                            dbhandler.removeExercises(workoutToBeAdded);
-                            for (int i = 0; i < exercises.size(); i++) {
-                                dbhandler.addExerciseInWorkout(exercises.get(i), workoutToBeAdded);
-                                ExerciseDetail exe = dbhandler.loadOneExercise(exercises.get(i).getName());
-                                if (exe.getName() == null) {
-                                    exe.setName(exercises.get(i).getName());
-                                    exe.setDifficulty(-1);
-                                    exe.setDescription("Sorry no exercise with that name, if you want you can add details for it below");
-                                    exe.setMuscle("Not found");
-                                    dbhandler.addOrUpdateExercise(exe);
+                            workoutToBeAdded.setExercises(exercises);
+                            if (new String("REPS").equals(workoutToBeAdded.getType())) {
+                                workoutToBeAdded.setSetPause(0);
+                                workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
+                                workoutToBeAdded.setTotalTime(Integer.parseInt(textpause.getText().toString()) * 60);
+                            } else {
+                                workoutToBeAdded.setSetPause(Integer.parseInt(textpause.getText().toString()));
+                                workoutToBeAdded.setNumberOfSets(Integer.parseInt(textset.getText().toString()));
+                                workoutToBeAdded.setTotalTime();
+                            }
+                            if (workoutToBeAdded.getTotalTime() == 0) {
+                                textname.setHint("Total time is smaller than zero");
+                                textname.setText(null);
+                            } else {
+                                int id = (int) dbhandler.addOrUpdateWorkout(workoutToBeAdded);
+                                workoutToBeAdded.setID(id);
+
+                                for (int i = 0; i < exercises.size(); i++) {
+                                    dbhandler.addExerciseInWorkout(exercises.get(i), workoutToBeAdded);
+                                    ExerciseDetail exe = dbhandler.loadOneExercise(exercises.get(i).getName());
+                                    if (exe.getName()==null) {
+                                        exe.setName(exercises.get(i).getName());
+                                        exe.setDifficulty(-1);
+                                        exe.setDescription("Sorry no exercise with that name, if you want you can add details for it below");
+                                        exe.setMuscle("Not found");
+                                        dbhandler.addOrUpdateExercise(exe);
+                                    }
                                 }
                             }
+                            btnexercise.setText("Added!");
                         }
-                        btnexercise.setText("Updated!");
                     }
                 }
             }

@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 33
 
-    namespace "com.example.firsttry"
+    namespace "com.example.cfts"
 
     defaultConfig {
-        applicationId "com.example.firsttry"
+        applicationId "com.example.cfts"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1

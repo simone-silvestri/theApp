@@ -1,4 +1,4 @@
-package com.example.firsttry;
+package com.example.cfts;
 
 import android.content.ContentValues;
 import android.content.Context;

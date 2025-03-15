@@ -1,4 +1,4 @@
-package com.example.firsttry;
+package com.example.cfts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

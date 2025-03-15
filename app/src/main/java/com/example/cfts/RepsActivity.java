@@ -1,4 +1,4 @@
-package com.example.firsttry;
+package com.example.cfts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,15 +16,15 @@ import android.media.AudioManager;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class RepsInTimeActivity extends AppCompatActivity {
+public class RepsActivity extends AppCompatActivity {
 
     private TextView command, nextExercise;
     private Workout work;
     private TextView countdownText, setnumber;
     private TextView nextRepNumber;
-    private Button countdownButton;
+    private Button countdownButton, doneButton;
     private long timeLeftInMilliseconds;
-    private boolean timerRunning;
+    private boolean timerRunning, finished;
     private CountDownTimer countdownTimer;
     public void stopCountDownTimer() {
         countdownTimer.cancel();
@@ -44,13 +44,10 @@ public class RepsInTimeActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reps_in_time);
+        setContentView(R.layout.activity_reps);
 
-        View currentView = findViewById(R.id.repsintimeview);
+        View currentView = findViewById(R.id.repsview);
         currentView.setKeepScreenOn(true);
-
-        timerRunning = false;
-        timeLeftInMilliseconds = 10000;
 
         command = (TextView) findViewById(R.id.command);
         Bundle extra = getIntent().getExtras();
@@ -61,16 +58,17 @@ public class RepsInTimeActivity extends AppCompatActivity {
         countdownButton = findViewById(R.id.countdownButton);
         setnumber = findViewById(R.id.setnumber);
         nextRepNumber = findViewById(R.id.numberofreps);
+        doneButton = findViewById(R.id.doneButton);
 
         exercises = work.getExercises();
-        currentExercise = -1;
-
-        command.setText("Get Ready!");
+        currentExercise = 0;
 
         nextExercise = (TextView) findViewById(R.id.nextexercise);
         numberOfSets = work.getNumberOfSets();
         currentSet = 1;
+
         setnumber.setText("set " + currentSet + " of " + numberOfSets);
+        command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
 
 //        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 //        int amStreamMusicMaxVol = am.getStreamMaxVolume(am.STREAM_NOTIFICATION);
@@ -100,32 +98,82 @@ public class RepsInTimeActivity extends AppCompatActivity {
 
         }, "com.google.android.tts");
 
+        finished = false;
+        timerRunning = false;
+        timeLeftInMilliseconds = work.getTotalTime()*1000;
+
         countdownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startStop();
             }
         });
-
         if(!exercises.isEmpty()) {
-            nextExercise.setText("Next: "+ exercises.get(0).getName());
+            nextExercise.setText(exercises.get(0).getName());
             nextRepNumber.setText("X " + exercises.get(0).getReps());
             startStop();
         }
     }
 
+    public void switchExercise(View view) {
+        if (finished) {
+            //do nothing
+            doneButton.setText("finished!");
+        } else {
+            if (currentExercise < exercises.size() - 1) {
+                currentExercise += 1;
+                nextExercise.setText(exercises.get(currentExercise).getName());
+                nextRepNumber.setText("X " + exercises.get(currentExercise).getReps());
+                command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
+            } else {
+                if (currentSet < numberOfSets) {
+                    currentSet += 1;
+                    currentExercise = 0;
+                    nextExercise.setText(exercises.get(currentExercise).getName());
+                    nextRepNumber.setText("X " + exercises.get(currentExercise).getReps());
+                    command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
+                    setnumber.setText("set " + currentSet + " of " + numberOfSets);
+                } else {
+                    nextRepNumber.setText("");
+                    command.setText("Finished!!");
+                    DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+                    long calendarId = dbhandler.addDateToCalendar(work.getTitle());
+                    finished = true;
+                    if (timerRunning) {
+                        finishTimer();
+                        long timeReq = work.getTotalTime() * 1000 - timeLeftInMilliseconds;
+                        int minutes = (int) timeReq / 60000;
+                        int seconds = (int) (timeReq % 60000) / 1000;
+                        String timeLeftText;
+                        timeLeftText = "" + minutes;
+                        timeLeftText += ":";
+                        if (seconds < 10) timeLeftText += "0";
+                        timeLeftText += seconds;
+
+                        nextExercise.setText("Time required: " + timeLeftText);
+                    } else {
+                        nextExercise.setText("Time required: more than " + work.getTotalTime() + ":00");
+                    }
+                }
+            }
+        }
+    }
+
 
     public void startStop() {
-        if (timerRunning) {
-            stopTimer();
+        if(finished) {
+            countdownButton.setText("Finished!");
         } else {
-            startTimer();
+            if (timerRunning) {
+                stopTimer();
+            } else {
+                startTimer();
+            }
         }
     }
 
     public void startTimer() {
         countdownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
-
             @Override
             public void onTick(long l) {
                 timeLeftInMilliseconds = l;
@@ -133,33 +181,6 @@ public class RepsInTimeActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                if(currentExercise<exercises.size()-1) {
-                    currentExercise += 1;
-                    timeLeftInMilliseconds = exercises.get(currentExercise).getTimeInSeconds() * 1000;
-                    command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
-                    nextExercise.setText(exercises.get(currentExercise).getName());
-                    nextRepNumber.setText("X "+exercises.get(currentExercise).getReps());
-                    timerRunning = false;
-                    startStop();
-                } else {
-                    if(currentSet==numberOfSets) {
-                        command.setText("Finished!!");
-                        nextExercise.setText("Well Done");
-                        countdownText.setText("Ole!");
-                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(RepsInTimeActivity.this);
-                        long calendarId = dbhandler.addDateToCalendar(work.getTitle());
-                    } else {
-                        currentSet += 1;
-                        currentExercise = -1;
-                        timeLeftInMilliseconds = work.getSetPause()*1000;
-                        command.setText("Break");
-                        nextExercise.setText("Next: "+ exercises.get(currentExercise+1).getName());
-                        nextRepNumber.setText("X "+exercises.get(currentExercise+1).getReps());
-                        setnumber.setText("set " + currentSet + " of " + numberOfSets);
-                        timerRunning = false;
-                        startStop();
-                    }
-                }
             }
         }.start();
         countdownButton.setText("tap to pause");
@@ -169,6 +190,11 @@ public class RepsInTimeActivity extends AppCompatActivity {
         countdownTimer.cancel();
         countdownButton.setText("tap to start");
         countdownText.setText("paused");
+        timerRunning = false;
+    }
+
+    public void finishTimer() {
+        countdownTimer.cancel();
         timerRunning = false;
     }
 
@@ -184,34 +210,8 @@ public class RepsInTimeActivity extends AppCompatActivity {
             timeLeftText += seconds;
             countdownText.setText(timeLeftText);
         } else {
-            if (seconds == 3) {
-                ttobj.speak("three", TextToSpeech.QUEUE_FLUSH, null);
-            } else if(seconds==2) {
-                ttobj.speak("two", TextToSpeech.QUEUE_FLUSH, null);
-            } else if(seconds==1) {
-                ttobj.speak("one", TextToSpeech.QUEUE_FLUSH, null);
-            } else if (seconds == 10) {
-                if (currentExercise == -1) {
-                    ttobj.speak(" first exercise, " + exercises.get(0).getName() + "; " + exercises.get(0).getReps() + " reps", TextToSpeech.QUEUE_FLUSH, null);
-                } else if (currentExercise > -1 && currentExercise < exercises.size() - 1) {
-                    ttobj.speak(" next exercise, " + exercises.get(currentExercise + 1).getName() + "; " + exercises.get(currentExercise+1).getReps() + " reps", TextToSpeech.QUEUE_FLUSH, null);
-                } else {
-                    ttobj.speak("ten seconds left", TextToSpeech.QUEUE_FLUSH, null);
-                }
-            }
             if (seconds == 0) {
-                if (currentExercise == exercises.size() - 1) {
-                    if (currentSet < numberOfSets) {
-                        countdownText.setText("BREAK");
-                        ttobj.speak("Break", TextToSpeech.QUEUE_FLUSH, null);
-                    } else {
-                        countdownText.setText("0");
-                        ttobj.speak("Finished, well done!", TextToSpeech.QUEUE_FLUSH, null);
-                    }
-                } else {
-                    countdownText.setText("GO!!");
-                    ttobj.speak("Go!", TextToSpeech.QUEUE_FLUSH, null);
-                }
+                countdownText.setText("Time Finished!");
             } else {
                 timeLeftText = "" + seconds;
                 countdownText.setText(timeLeftText);

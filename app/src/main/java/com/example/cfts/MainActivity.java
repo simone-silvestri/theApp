@@ -1,4 +1,4 @@
-package com.example.firsttry;
+package com.example.cfts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.firsttry.MESSAGE";
+    public static final String EXTRA_MESSAGE = "com.example.cfts.MESSAGE";
     private static final int CREATE_FILE = 1;
     private static final int OPEN_REQUEST_CODE = 41;
     private static final int WRITE_REQUEST_CODE = 101;
