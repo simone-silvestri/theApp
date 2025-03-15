@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void writeDataBase() {
+    private void writeDataBase(View view) {
         // when you create document, you need to add Intent.ACTION_CREATE_DOCUMENT
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         // filter to only show openable items.
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, WRITE_REQUEST_CODE);
     }
 
-    public void readDataBase() {
+    private void readDataBase(View view) {
         // when you create document, you need to add Intent.ACTION_CREATE_DOCUMENT
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         // filter to only show openable items.
