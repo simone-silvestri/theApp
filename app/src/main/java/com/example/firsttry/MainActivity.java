@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 btnWrite.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        writeDataBase();
+                        writeDataBase(v);
                         puWindow.dismiss();
                         Toast.makeText(MainActivity.this, "written database to file", Toast.LENGTH_SHORT).show();
                     }
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 btnRead.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        readDataBase();
+                        readDataBase(v);
                         puWindow.dismiss();
                         Toast.makeText(MainActivity.this, "read database from file", Toast.LENGTH_SHORT).show();
                     }
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void writeDataBase() {
+    public void writeDataBase(View view) {
         // when you create document, you need to add Intent.ACTION_CREATE_DOCUMENT
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         // filter to only show openable items.
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, WRITE_REQUEST_CODE);
     }
 
-    private void readDataBase() {
+    public void readDataBase(View view) {
         // when you create document, you need to add Intent.ACTION_CREATE_DOCUMENT
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         // filter to only show openable items.
@@ -361,7 +361,10 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
         wodList = dbhandler.loadDatabase();
         if(!wodList.isEmpty()) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, wodList.size());
+            Random rand = new Random();
+
+            // Obtain a number between [0 - wodList.size()].
+            int randomNum = rand.nextInt(wodList.size());
             String title = wodList.get(randomNum).getTitle();
             String wod = wodList.get(randomNum).getWod();
 
