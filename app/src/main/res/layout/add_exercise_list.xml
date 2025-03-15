@@ -40,7 +40,6 @@
         android:textColor="@color/white"
         android:textSize="15sp" />
 
-
     <EditText
         android:id="@+id/btnaddwork"
         android:layout_width="wrap_content"
@@ -94,7 +93,6 @@
         android:autofillHints="sec"
         android:textColor="@color/gray"
         android:inputType="number"/>
-
 
     <TextView
         android:id="@+id/txtpause"
