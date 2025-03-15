@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 34
 
-    namespace "com.example.firsttry"
+    namespace "com.simone.cfts"
 
     defaultConfig {
-        applicationId "com.example.firsttry"
-        minSdkVersion 14
-        targetSdkVersion 33
+        applicationId "com.simone.cfts"
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
