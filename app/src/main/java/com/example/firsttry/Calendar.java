@@ -62,7 +62,7 @@ public class Calendar extends AppCompatActivity {
                     dailyWod.setText("No WoD the " + day2);
                 } else {
                     Workout wod = dbhandler.loadWorkoutFromId(datewod.getWod());
-                    dailyWod.setText("WoD: " + wod.getTitle());
+                    dailyWod.setText("" + wod.getTitle());
                 }
             }
         });
