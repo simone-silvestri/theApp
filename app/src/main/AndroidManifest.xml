@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -11,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- The actual activity of the app -->
         <activity android:name=".Calendar" />
         <activity
             android:name=".AddWorkoutActivity"
@@ -29,7 +31,8 @@
         <activity android:name=".WorkoutActivity" />
         <activity 
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            tools:node="merge">
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
