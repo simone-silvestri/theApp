@@ -390,8 +390,6 @@ public class AddWorkoutActivity extends AppCompatActivity {
             exework.get(i).setText(wk.get(i));
             exepause.get(i).setText(ps.get(i));
         }
-
-
     }
 
     public void addExerciseToList(View v) {
