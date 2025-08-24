@@ -43,8 +43,8 @@ public class ExerciseActivity extends AppCompatActivity {
         editdescription = findViewById(R.id.editdescription);editdescription.setVisibility(View.INVISIBLE);
 
         easy = findViewById(R.id.imgeasy);
-        intermediate=findViewById(R.id.imgintermediate);
-        advanced=findViewById(R.id.imgadvanced);
+        intermediate = findViewById(R.id.imgintermediate);
+        advanced = findViewById(R.id.imgadvanced);
 
         difflayout = findViewById(R.id.linearlayout); difflayout.setVisibility(View.INVISIBLE);
         difftext = findViewById(R.id.difftext); difftext.setVisibility(View.INVISIBLE);
