@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="muscle_categories">
+        <item>All</item>
+        <item>Fullbody</item>
+        <item>Core</item>
+        <item>Arms</item>
+        <item>Chest</item>
+        <item>Shoulders</item>
+        <item>Back</item>
+        <item>Legs</item>
+        <item>Glutes</item>
+        <item>Cardio</item>
+    </string-array>
+</resources>

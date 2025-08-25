@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
 
-        DefaultWorkouts defaultWorkouts = new DefaultWorkouts();
+        DefaultWorkouts defaultWorkouts = new DefaultWorkouts(view);
 
         ArrayList<Workout> wodList = defaultWorkouts.getWodList();
 
@@ -403,10 +403,7 @@ public class MainActivity extends AppCompatActivity {
             exeList = wodList.get(i).getExercises();
             for (int j=0; j<exeList.size(); j++) {
                 dbhandler.addExerciseInWorkout(exeList.get(j),wodList.get(i));
-                ExerciseDetail exedet = new ExerciseDetail(exeList.get(j).getName(),1);
-                dbhandler.addOrUpdateExercise(exedet);
             }
         }
-
     }
 }
