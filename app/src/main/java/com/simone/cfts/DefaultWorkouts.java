@@ -921,15 +921,15 @@ public class DefaultWorkouts {
 
         // CARDIO & FULL BODY EXERCISES
         this.exeDetails.add(addExerciseDetail(db, "Burpees", 3, "Full Body & Cardio",
-                "From standing, squat down, kick your feet back into a plank, return to squat, and jump explosively upward."));
+                "From standing, squat down, kick your feet back into a plank, perform a pushup, return to squat, and jump explosively upward."));
         this.exeDetails.add(addExerciseDetail(db, "Burpees (no pushup)", 2, "Cardio",
                 "From standing, squat down, kick your feet back into a plank, quickly return to squat, and jump explosively upward."));
         this.exeDetails.add(addExerciseDetail(db, "Half burpees", 2, "Full Body & Cardio",
-                "Perform burpees without the pushup, finishing with a jump."));
+                "Perform burpees without the jump, always keeping the hands on the floor (i.e a pushup followed by a half quat)."));
         this.exeDetails.add(addExerciseDetail(db, "Side burpees left", 3, "Full Body & Cardio",
-                "Perform a burpee, then jump laterally to the left before repeating."));
+                "Perform a burpee keeping the right leg always raised."));
         this.exeDetails.add(addExerciseDetail(db, "Side burpees right", 3, "Full Body & Cardio",
-                "Perform a burpee, then jump laterally to the right before repeating."));
+                "Perform a burpee keeping the left leg always raised."));
         this.exeDetails.add(addExerciseDetail(db, "Mountain climbers", 2, "Cardio & Core",
                 "Start in plank position, alternate driving knees toward your chest quickly while keeping your core tight."));
         this.exeDetails.add(addExerciseDetail(db, "Jumping jacks", 1, "Cardio",
