@@ -159,7 +159,7 @@
         android:id="@+id/buttonwrite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2sp"
+        android:layout_marginBottom="20sp"
         android:layout_marginTop="10sp"
         android:background="@color/trans"
         android:src="@drawable/ic_menu_upload"
