@@ -63,268 +63,6 @@ public class DefaultWorkouts {
         addPureHIIT();
     }
 
-    private ExerciseDetail addExerciseDetail(DatabaseHelper db, String name, int difficulty,
-                                           String muscle, String description) {
-        ExerciseDetail exe = new ExerciseDetail();
-        exe.setName(name);
-        exe.setDifficulty(difficulty);
-        exe.setMuscle(muscle);
-        exe.setDescription(description);
-        db.addOrUpdateExercise(exe);
-        return exe;
-    }
-
-    public void addExerciseList(View view) {
-        DatabaseHelper db = DatabaseHelper.getInstance(view.getContext());
-
-        // CORE & ABS EXERCISES
-        this.exeDetails.add(addExerciseDetail(db, "Plank", 1, "Core",
-                "Hold forearm plank position keeping body in a straight line."));
-        this.exeDetails.add(addExerciseDetail(db, "Advanced plank", 2, "Core & Shoulders",
-                "Hold a plank with variations such as arm/leg lifts for increased intensity."));
-        this.exeDetails.add(addExerciseDetail(db, "One legged plank", 1, "Core & Balance",
-                "Hold a plank position while lifting one leg off the ground, maintaining a straight line from head to heels."));
-        this.exeDetails.add(addExerciseDetail(db, "Side plank", 2, "Core",
-                "Lie on your side, prop up on one forearm, lift hips to form a straight line from head to feet, and hold."));
-        this.exeDetails.add(addExerciseDetail(db, "Side plank left", 1, "Abs",
-                "Lie on your left side, prop up on your forearm, lift hips to form a straight line, hold position."));
-        this.exeDetails.add(addExerciseDetail(db, "Side plank right", 1, "Abs",
-                "Lie on your right side, prop up on your forearm, lift hips to form a straight line, hold position."));
-        this.exeDetails.add(addExerciseDetail(db, "Side plank leg up", 1, "Core & Glutes",
-                "Hold a side plank position and lift the top leg upward, keeping your core engaged throughout."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank rotation", 1, "Core",
-                "Start in a plank position, rotate your torso and extend one arm toward the ceiling, then return and repeat on the other side."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank ups", 2, "Core & Arms",
-                "Move from forearm plank to high plank and back, alternating one arm at a time."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank switches", 2, "Core",
-                "Alternate between high plank (hands) and low plank (forearms) positions by moving one arm at a time."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank leg lifts", 1, "Core & Glutes",
-                "In plank, lift legs alternately keeping hips stable."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank stars", 2, "Core & Shoulders",
-                "From plank, lift opposite arm and leg outwards forming a star shape."));
-        this.exeDetails.add(addExerciseDetail(db, "Arm leg plank", 2, "Core & Shoulders",
-                "In plank position, lift opposite arm and leg simultaneously and hold briefly."));
-        this.exeDetails.add(addExerciseDetail(db, "Crunches", 1, "Abs",
-                "Lie on your back, bend knees, lift your upper body toward your knees using your abs, then return slowly."));
-        this.exeDetails.add(addExerciseDetail(db, "Bicycle crunches", 2, "Abs",
-                "Lie on your back, lift shoulders off the ground, and alternate touching elbows to opposite knees in a pedaling motion."));
-        this.exeDetails.add(addExerciseDetail(db, "Butterfly crunches", 2, "Abs",
-                "Lie on back, bring soles together, perform crunches touching feet or ankles."));
-        this.exeDetails.add(addExerciseDetail(db, "Jump crunches", 3, "Abs & Cardio",
-                "Crunch up explosively while simultaneously jumping your feet off the floor."));
-        this.exeDetails.add(addExerciseDetail(db, "Sit ups", 2, "Abs",
-                "Lie on your back, bend knees, and lift your upper body all the way up to a sitting position, then lower slowly."));
-        this.exeDetails.add(addExerciseDetail(db, "Punch sit ups", 2, "Abs & Arms",
-                "Perform a sit up and punch forward at the top of the motion."));
-        this.exeDetails.add(addExerciseDetail(db, "Lower abs", 1, "Abs",
-                "Lie flat on your back, lift your legs toward the ceiling, then slowly lower them without touching the ground."));
-        this.exeDetails.add(addExerciseDetail(db, "Isometric lower abs", 3, "Abs",
-                "Hold legs slightly above the floor, keeping lower abs engaged."));
-        this.exeDetails.add(addExerciseDetail(db, "Scissors", 2, "Abs",
-                "Lie on your back, lift legs slightly, and alternate crossing them over each other in a scissor motion."));
-        this.exeDetails.add(addExerciseDetail(db, "Seated tucks", 1, "Abs",
-                "Sit on the floor, lean back slightly, pull your knees toward your chest, then extend your legs outward without touching the floor."));
-        this.exeDetails.add(addExerciseDetail(db, "Ankle taps", 1, "Abs",
-                "Lie on your back with knees bent, lift your shoulders slightly, and tap each ankle by bending sideways."));
-        this.exeDetails.add(addExerciseDetail(db, "Russian twists", 2, "Core & Abs",
-                "Sit with feet off the floor, twist torso side to side while holding hands together or a weight."));
-        this.exeDetails.add(addExerciseDetail(db, "Windshield wipers", 1, "Core",
-                "Lie on your back, lift legs, and rotate them side to side like wipers."));
-        this.exeDetails.add(addExerciseDetail(db, "Power tucks", 3, "Abs & Cardio",
-                "Jump and tuck knees to chest, landing softly before repeating."));
-        this.exeDetails.add(addExerciseDetail(db, "Single leg crunches", 2, "Abs",
-                "Perform crunches while keeping one leg raised and alternating sides."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank kicks", 1, "Core",
-                "From plank, lift legs alternately in a kicking motion."));
-
-        // CHEST & ARMS EXERCISES
-        this.exeDetails.add(addExerciseDetail(db, "Pushups", 2, "Chest & Arms",
-                "Start in high plank, lower your chest toward the floor, and push back up while keeping your core tight."));
-        this.exeDetails.add(addExerciseDetail(db, "Knee pushups", 1, "Chest & Arms",
-                "Perform pushups on knees with proper form, lowering chest to floor."));
-        this.exeDetails.add(addExerciseDetail(db, "Diamond pushups", 3, "Chest & Triceps",
-                "Form a diamond with hands and perform pushups targeting triceps."));
-        this.exeDetails.add(addExerciseDetail(db, "Decline pushups", 2, "Chest & Shoulders",
-                "Elevate your feet and perform pushups to target upper chest and shoulders."));
-        this.exeDetails.add(addExerciseDetail(db, "Hindu pushups", 3, "Shoulders & Chest",
-                "Start in a downward dog position, swoop your chest low and forward while bending elbows, then return to the starting position."));
-        this.exeDetails.add(addExerciseDetail(db, "Staggered pushups", 3, "Chest & Arms",
-                "Place one hand slightly forward and one back, perform pushups alternating sides for balance."));
-        this.exeDetails.add(addExerciseDetail(db, "Pushup rotation", 3, "Chest & Core",
-                "Do a pushup, then rotate your torso and raise one arm towards the ceiling for a side plank position."));
-        this.exeDetails.add(addExerciseDetail(db, "Pushups rotation", 2, "Chest & Core",
-                "Do a pushup and rotate into side plank, alternating sides."));
-        this.exeDetails.add(addExerciseDetail(db, "One leg pushups", 3, "Chest & Core",
-                "Perform pushups while keeping one leg lifted for extra core and balance challenge."));
-        this.exeDetails.add(addExerciseDetail(db, "Spiderman pushups", 3, "Chest & Core",
-                "As you lower in a pushup, bring one knee toward your elbow. Alternate sides each rep."));
-        this.exeDetails.add(addExerciseDetail(db, "Archer pushups", 3, "Chest & Arms",
-                "Keep one arm extended while lowering toward the opposite arm, mimicking an archer's draw motion."));
-        this.exeDetails.add(addExerciseDetail(db, "One arm pushups", 3, "Chest & Core",
-                "Perform pushups with one arm while keeping your core engaged and feet spread for stability."));
-        this.exeDetails.add(addExerciseDetail(db, "Explosive pushups", 3, "Chest & Power",
-                "Perform pushups explosively so your hands leave the floor. Land softly and repeat."));
-        this.exeDetails.add(addExerciseDetail(db, "Pushups on fist", 3, "Chest & Arms",
-                "Perform pushups on your fists for added wrist stability and forearm strength."));
-        this.exeDetails.add(addExerciseDetail(db, "Knee tap pushups", 2, "Chest & Core",
-                "Perform a push-up, then tap your knee with the opposite hand before starting the next rep."));
-        this.exeDetails.add(addExerciseDetail(db, "Pushups toe touch", 2, "Chest & Core",
-                "Perform pushups and touch one hand to opposite foot at the top."));
-        this.exeDetails.add(addExerciseDetail(db, "Pushups full rotation", 2, "Chest & Core",
-                "Do a pushup and rotate your body into a side plank before returning."));
-        this.exeDetails.add(addExerciseDetail(db, "Tiger band pushups", 3, "Chest & Arms",
-                "Perform pushups with resistance band around upper back for extra tension."));
-        this.exeDetails.add(addExerciseDetail(db, "Clap pushups", 3, "Chest & Arms",
-                "Perform explosive pushups and clap hands at the top."));
-        this.exeDetails.add(addExerciseDetail(db, "Sphinx pushups", 3, "Triceps & Chest",
-                "From forearm plank, lower and push up keeping elbows tucked."));
-        this.exeDetails.add(addExerciseDetail(db, "Isometric pushups", 3, "Chest & Core",
-                "Hold the low position of a pushup as long as possible, keeping your body straight."));
-        this.exeDetails.add(addExerciseDetail(db, "Pushups half squat", 1, "Chest & Legs",
-                "Do a pushup, then return to standing with a half squat before next repetition."));
-        this.exeDetails.add(addExerciseDetail(db, "Shoulder taps", 2, "Chest & Core",
-                "In plank position, tap each shoulder alternately keeping core tight."));
-
-        // SHOULDERS & ARMS
-        this.exeDetails.add(addExerciseDetail(db, "Pike pushups", 3, "Shoulders",
-                "Start in a pike position with hips up, bend elbows to lower your head toward the ground, then push back up."));
-        this.exeDetails.add(addExerciseDetail(db, "Handstand pushups", 3, "Shoulders & Arms",
-                "Perform pushups while in a handstand position against a wall for support."));
-        this.exeDetails.add(addExerciseDetail(db, "Dips", 1, "Triceps & Chest",
-                "Lower your body using parallel bars or a bench and push back up, keeping elbows close to your body."));
-        this.exeDetails.add(addExerciseDetail(db, "One leg dips", 2, "Triceps & Chest",
-                "Perform dips while extending one leg forward or backward."));
-        this.exeDetails.add(addExerciseDetail(db, "Dips toe touch", 1, "Triceps & Chest",
-                "Do dips and at the top reach one hand toward your opposite toe."));
-        this.exeDetails.add(addExerciseDetail(db, "Jumping sit outs", 2, "Core & Shoulders",
-                "Start in a bear crawl position, lift one hand and opposite leg, rotate your body and kick the leg through, then return and repeat."));
-
-        // BACK & ARMS
-        this.exeDetails.add(addExerciseDetail(db, "Australian pullups", 2, "Back & Arms",
-                "Hang under a bar, pull your chest toward the bar, then lower slowly while keeping your body straight."));
-        this.exeDetails.add(addExerciseDetail(db, "Hyperextensions", 1, "Lower Back",
-                "Lie face down, lift your chest and legs off the ground by contracting your lower back, then slowly return."));
-
-        // LEGS EXERCISES
-        this.exeDetails.add(addExerciseDetail(db, "Squats", 1, "Legs",
-                "Stand with feet shoulder-width apart, lower hips back and down as if sitting in a chair, then return to standing."));
-        this.exeDetails.add(addExerciseDetail(db, "Jump squats", 3, "Legs & Cardio",
-                "Perform a squat, then jump explosively, landing softly and returning to squat position."));
-        this.exeDetails.add(addExerciseDetail(db, "One legged squat", 3, "Legs & Balance",
-                "Perform a squat on one leg while keeping the other leg extended forward, maintaining balance."));
-        this.exeDetails.add(addExerciseDetail(db, "Side squat", 1, "Legs",
-                "Take a wide stance, shift your weight to one side as you bend the knee and keep the other leg straight, then switch sides."));
-        this.exeDetails.add(addExerciseDetail(db, "Butterfly squats (explosive)", 2, "Legs",
-                "Start in a squat position, jump explosively and tap your feet together mid-air, then land softly back into the squat."));
-        this.exeDetails.add(addExerciseDetail(db, "Lunges", 1, "Legs",
-                "Step forward with one leg, lower your hips until both knees are bent at about 90 degrees, then push back to start."));
-        this.exeDetails.add(addExerciseDetail(db, "Jump lunges", 3, "Legs & Cardio",
-                "Lunge forward, jump explosively, switch legs mid-air, and land softly."));
-        this.exeDetails.add(addExerciseDetail(db, "Bottom up lunges", 3, "Legs",
-                "Step forward into a lunge, then drive back to standing, focusing on pushing from the heel and engaging glutes."));
-        this.exeDetails.add(addExerciseDetail(db, "Single leg deadlifts", 1, "Legs & Glutes",
-                "Stand on one leg, hinge at the hips keeping back straight, and lower your torso toward the floor, then return upright."));
-        this.exeDetails.add(addExerciseDetail(db, "Single leg chair stands", 1, "Legs & Balance",
-                "Sit on a chair, extend one leg, then stand up using only the other leg, keeping balance controlled."));
-        this.exeDetails.add(addExerciseDetail(db, "Tuck jumps", 3, "Legs & Cardio",
-                "Jump explosively while pulling your knees toward your chest, land softly, and immediately go into the next jump."));
-        this.exeDetails.add(addExerciseDetail(db, "Super skater jumps", 2, "Legs & Cardio",
-                "Jump laterally from side to side, landing on one leg with the other leg sweeping behind for balance."));
-        this.exeDetails.add(addExerciseDetail(db, "Side kicks", 1, "Core & Legs",
-                "From plank or standing, perform controlled side kicks."));
-
-        // GLUTES EXERCISES
-        this.exeDetails.add(addExerciseDetail(db, "Hip thrusts", 1, "Glutes",
-                "Sit on the ground with your back against a bench, feet flat, and lift hips upward by squeezing your glutes."));
-        this.exeDetails.add(addExerciseDetail(db, "Donkey kicks", 1, "Glutes",
-                "Start on all fours, lift one leg upward while keeping your knee bent at 90 degrees, then lower and repeat."));
-        this.exeDetails.add(addExerciseDetail(db, "Lateral donkey", 2, "Glutes",
-                "Start on all fours, lift one leg to the side while keeping your knee bent, then lower back down and repeat."));
-
-        // CARDIO & FULL BODY EXERCISES
-        this.exeDetails.add(addExerciseDetail(db, "Burpees", 3, "Full Body & Cardio",
-                "From standing, squat down, kick your feet back into a plank, return to squat, and jump explosively upward."));
-        this.exeDetails.add(addExerciseDetail(db, "Burpees (no pushup)", 2, "Cardio",
-                "From standing, squat down, kick your feet back into a plank, quickly return to squat, and jump explosively upward."));
-        this.exeDetails.add(addExerciseDetail(db, "Half burpees", 2, "Full Body & Cardio",
-                "Perform burpees without the pushup, finishing with a jump."));
-        this.exeDetails.add(addExerciseDetail(db, "Side burpees left", 3, "Full Body & Cardio",
-                "Perform a burpee, then jump laterally to the left before repeating."));
-        this.exeDetails.add(addExerciseDetail(db, "Side burpees right", 3, "Full Body & Cardio",
-                "Perform a burpee, then jump laterally to the right before repeating."));
-        this.exeDetails.add(addExerciseDetail(db, "Mountain climbers", 2, "Cardio & Core",
-                "Start in plank position, alternate driving knees toward your chest quickly while keeping your core tight."));
-        this.exeDetails.add(addExerciseDetail(db, "Jumping jacks", 1, "Cardio",
-                "Jump with your legs spreading outward and arms going overhead, then return to the starting position quickly."));
-        this.exeDetails.add(addExerciseDetail(db, "Run in place", 1, "Cardio",
-                "Run on the spot, lifting knees high and pumping your arms."));
-        this.exeDetails.add(addExerciseDetail(db, "Knee up run", 1, "Cardio & Legs",
-                "Run in place bringing knees up towards chest to increase heart rate."));
-        this.exeDetails.add(addExerciseDetail(db, "Jump rope", 1, "Cardio & Legs",
-                "Jump rope continuously, keeping a steady pace and engaging your calves and core."));
-        this.exeDetails.add(addExerciseDetail(db, "Inchworms", 1, "Full Body",
-                "Stand tall, hinge at the hips to touch the floor, walk your hands forward into a plank, then walk them back and stand up."));
-
-        // ADDITIONAL CORE & ABS EXERCISES (New additions)
-        this.exeDetails.add(addExerciseDetail(db, "Jackknife twists", 3, "Abs & Obliques",
-                "From lying position, lift legs and torso, twisting to touch toes or sides."));
-        this.exeDetails.add(addExerciseDetail(db, "3 way crunch pulses", 2, "Abs",
-                "Pulse your torso in three directions to engage all areas of the abs."));
-        this.exeDetails.add(addExerciseDetail(db, "Low abs twists", 2, "Lower Abs & Obliques",
-                "Lie on back and twist lower body side to side while legs lifted."));
-        this.exeDetails.add(addExerciseDetail(db, "Low abs bent knees", 2, "Lower Abs",
-                "Raise bent knees toward chest while lying on back, lowering slowly."));
-        this.exeDetails.add(addExerciseDetail(db, "Side plank leg circle", 2, "Obliques & Glutes",
-                "Hold side plank and move top leg in controlled circles."));
-        this.exeDetails.add(addExerciseDetail(db, "Seated leg raises", 2, "Lower Abs",
-                "Sit with legs extended and lift them together while leaning back slightly."));
-        this.exeDetails.add(addExerciseDetail(db, "Circle crunches", 2, "Abs",
-                "Perform crunches moving your torso in a circular motion."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank buzzsaw", 3, "Core",
-                "From plank, rotate hips side to side rapidly while keeping torso stable."));
-        this.exeDetails.add(addExerciseDetail(db, "Jackknives", 3, "Abs",
-                "Lift legs and torso simultaneously to meet in a jackknife position."));
-        this.exeDetails.add(addExerciseDetail(db, "Full arm side plank leg up", 3, "Obliques & Glutes",
-                "In side plank, lift top leg and extend top arm overhead."));
-        this.exeDetails.add(addExerciseDetail(db, "Lateral abs", 2, "Obliques",
-                "Perform side crunches or twists to target lateral abdominal muscles."));
-        this.exeDetails.add(addExerciseDetail(db, "Scissor drops", 2, "Lower Abs",
-                "Alternate lowering legs in a scissor motion without touching the floor."));
-        this.exeDetails.add(addExerciseDetail(db, "Plank jacks", 3, "Core & Cardio",
-                "Jump legs in and out while holding a plank position."));
-
-        // ADDITIONAL EXERCISES (New additions - formatted and organized)
-        
-        // Additional Core & Abs
-        this.exeDetails.add(addExerciseDetail(db, "High plank", 2, "Core & Arms",
-                "Hold plank position with hands under shoulders and body straight."));
-        this.exeDetails.add(addExerciseDetail(db, "Low plank", 2, "Core & Arms",
-                "Hold a forearm plank keeping body straight and engaged."));
-        this.exeDetails.add(addExerciseDetail(db, "Knee to elbow", 2, "Core & Obliques",
-                "From plank, bring knee to opposite elbow alternately."));
-        this.exeDetails.add(addExerciseDetail(db, "Leg raises", 2, "Lower Abs",
-                "Lift legs straight up from the ground while lying on your back."));
-
-        // Additional Legs
-        this.exeDetails.add(addExerciseDetail(db, "Squat taps", 1, "Legs & Cardio",
-                "Perform a squat and tap one foot to the side, alternating sides."));
-        this.exeDetails.add(addExerciseDetail(db, "Squat run", 1, "Legs & Cardio",
-                "Alternate between squats and short running steps in place."));
-        this.exeDetails.add(addExerciseDetail(db, "Step in", 1, "Legs & Cardio",
-                "Step one foot forward and back repeatedly as a light warmup."));
-
-        // ADDITIONAL EXERCISES (More new additions)
-        
-        // Additional Cardio
-        this.exeDetails.add(addExerciseDetail(db, "High knees", 3, "Legs & Cardio",
-                "Run in place while lifting knees as high as possible, pumping arms."));
-        
-        // Additional Core & Chest
-        this.exeDetails.add(addExerciseDetail(db, "Spiderman", 3, "Core & Chest",
-                "In a pushup position, bring knee toward elbow alternating sides."));
-
-    }
-
     private ArrayList<Exercise> exerciseListFromName(ArrayList<String> names, int reps, int workTime, int restTime) {
         ArrayList<Exercise> exercises = new ArrayList<>();
 
@@ -953,5 +691,268 @@ public class DefaultWorkouts {
         wd.setTitle("Pure HIIT");
 
         this.wodList.add(wd);
+    }
+
+    // EXERCISES!!!
+        private ExerciseDetail addExerciseDetail(DatabaseHelper db, String name, int difficulty,
+                                           String muscle, String description) {
+        ExerciseDetail exe = new ExerciseDetail();
+        exe.setName(name);
+        exe.setDifficulty(difficulty);
+        exe.setMuscle(muscle);
+        exe.setDescription(description);
+        db.addOrUpdateExercise(exe);
+        return exe;
+    }
+
+    public void addExerciseList(View view) {
+        DatabaseHelper db = DatabaseHelper.getInstance(view.getContext());
+
+        // CORE & ABS EXERCISES
+        this.exeDetails.add(addExerciseDetail(db, "Plank", 1, "Core",
+                "Hold forearm plank position keeping body in a straight line."));
+        this.exeDetails.add(addExerciseDetail(db, "Advanced plank", 2, "Core & Shoulders",
+                "Hold a plank with variations such as arm/leg lifts for increased intensity."));
+        this.exeDetails.add(addExerciseDetail(db, "One legged plank", 1, "Core & Balance",
+                "Hold a plank position while lifting one leg off the ground, maintaining a straight line from head to heels."));
+        this.exeDetails.add(addExerciseDetail(db, "Side plank", 2, "Core",
+                "Lie on your side, prop up on one forearm, lift hips to form a straight line from head to feet, and hold."));
+        this.exeDetails.add(addExerciseDetail(db, "Side plank left", 1, "Abs",
+                "Lie on your left side, prop up on your forearm, lift hips to form a straight line, hold position."));
+        this.exeDetails.add(addExerciseDetail(db, "Side plank right", 1, "Abs",
+                "Lie on your right side, prop up on your forearm, lift hips to form a straight line, hold position."));
+        this.exeDetails.add(addExerciseDetail(db, "Side plank leg up", 1, "Core & Glutes",
+                "Hold a side plank position and lift the top leg upward, keeping your core engaged throughout."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank rotation", 1, "Core",
+                "Start in a plank position, rotate your torso and extend one arm toward the ceiling, then return and repeat on the other side."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank ups", 2, "Core & Arms",
+                "Move from forearm plank to high plank and back, alternating one arm at a time."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank switches", 2, "Core",
+                "Alternate between high plank (hands) and low plank (forearms) positions by moving one arm at a time."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank leg lifts", 1, "Core & Glutes",
+                "In plank, lift legs alternately keeping hips stable."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank stars", 2, "Core & Shoulders",
+                "From plank, lift opposite arm and leg outwards forming a star shape."));
+        this.exeDetails.add(addExerciseDetail(db, "Arm leg plank", 2, "Core & Shoulders",
+                "In plank position, lift opposite arm and leg simultaneously and hold briefly."));
+        this.exeDetails.add(addExerciseDetail(db, "Crunches", 1, "Abs",
+                "Lie on your back, bend knees, lift your upper body toward your knees using your abs, then return slowly."));
+        this.exeDetails.add(addExerciseDetail(db, "Bicycle crunches", 2, "Abs",
+                "Lie on your back, lift shoulders off the ground, and alternate touching elbows to opposite knees in a pedaling motion."));
+        this.exeDetails.add(addExerciseDetail(db, "Butterfly crunches", 2, "Abs",
+                "Lie on back, bring soles together, perform crunches touching feet or ankles."));
+        this.exeDetails.add(addExerciseDetail(db, "Jump crunches", 3, "Abs & Cardio",
+                "Crunch up explosively while simultaneously jumping your feet off the floor."));
+        this.exeDetails.add(addExerciseDetail(db, "Sit ups", 2, "Abs",
+                "Lie on your back, bend knees, and lift your upper body all the way up to a sitting position, then lower slowly."));
+        this.exeDetails.add(addExerciseDetail(db, "Punch sit ups", 2, "Abs & Arms",
+                "Perform a sit up and punch forward at the top of the motion."));
+        this.exeDetails.add(addExerciseDetail(db, "Lower abs", 1, "Abs",
+                "Lie flat on your back, lift your legs toward the ceiling, then slowly lower them without touching the ground."));
+        this.exeDetails.add(addExerciseDetail(db, "Isometric lower abs", 3, "Abs",
+                "Hold legs slightly above the floor, keeping lower abs engaged."));
+        this.exeDetails.add(addExerciseDetail(db, "Scissors", 2, "Abs",
+                "Lie on your back, lift legs slightly, and alternate crossing them over each other in a scissor motion."));
+        this.exeDetails.add(addExerciseDetail(db, "Seated tucks", 1, "Abs",
+                "Sit on the floor, lean back slightly, pull your knees toward your chest, then extend your legs outward without touching the floor."));
+        this.exeDetails.add(addExerciseDetail(db, "Ankle taps", 1, "Abs",
+                "Lie on your back with knees bent, lift your shoulders slightly, and tap each ankle by bending sideways."));
+        this.exeDetails.add(addExerciseDetail(db, "Russian twists", 2, "Core & Abs",
+                "Sit with feet off the floor, twist torso side to side while holding hands together or a weight."));
+        this.exeDetails.add(addExerciseDetail(db, "Windshield wipers", 1, "Core",
+                "Lie on your back, lift legs, and rotate them side to side like wipers."));
+        this.exeDetails.add(addExerciseDetail(db, "Power tucks", 3, "Abs & Cardio",
+                "Jump and tuck knees to chest, landing softly before repeating."));
+        this.exeDetails.add(addExerciseDetail(db, "Single leg crunches", 2, "Abs",
+                "Perform crunches while keeping one leg raised and alternating sides."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank kicks", 1, "Core",
+                "From plank, lift legs alternately in a kicking motion."));
+
+        // CHEST & ARMS EXERCISES
+        this.exeDetails.add(addExerciseDetail(db, "Pushups", 2, "Chest & Arms",
+                "Start in high plank, lower your chest toward the floor, and push back up while keeping your core tight."));
+        this.exeDetails.add(addExerciseDetail(db, "Knee pushups", 1, "Chest & Arms",
+                "Perform pushups on knees with proper form, lowering chest to floor."));
+        this.exeDetails.add(addExerciseDetail(db, "Diamond pushups", 3, "Chest & Triceps",
+                "Form a diamond with hands and perform pushups targeting triceps."));
+        this.exeDetails.add(addExerciseDetail(db, "Decline pushups", 2, "Chest & Shoulders",
+                "Elevate your feet and perform pushups to target upper chest and shoulders."));
+        this.exeDetails.add(addExerciseDetail(db, "Hindu pushups", 3, "Shoulders & Chest",
+                "Start in a downward dog position, swoop your chest low and forward while bending elbows, then return to the starting position."));
+        this.exeDetails.add(addExerciseDetail(db, "Staggered pushups", 3, "Chest & Arms",
+                "Place one hand slightly forward and one back, perform pushups alternating sides for balance."));
+        this.exeDetails.add(addExerciseDetail(db, "Pushup rotation", 3, "Chest & Core",
+                "Do a pushup, then rotate your torso and raise one arm towards the ceiling for a side plank position."));
+        this.exeDetails.add(addExerciseDetail(db, "Pushups rotation", 2, "Chest & Core",
+                "Do a pushup and rotate into side plank, alternating sides."));
+        this.exeDetails.add(addExerciseDetail(db, "One leg pushups", 3, "Chest & Core",
+                "Perform pushups while keeping one leg lifted for extra core and balance challenge."));
+        this.exeDetails.add(addExerciseDetail(db, "Spiderman pushups", 3, "Chest & Core",
+                "As you lower in a pushup, bring one knee toward your elbow. Alternate sides each rep."));
+        this.exeDetails.add(addExerciseDetail(db, "Archer pushups", 3, "Chest & Arms",
+                "Keep one arm extended while lowering toward the opposite arm, mimicking an archer's draw motion."));
+        this.exeDetails.add(addExerciseDetail(db, "One arm pushups", 3, "Chest & Core",
+                "Perform pushups with one arm while keeping your core engaged and feet spread for stability."));
+        this.exeDetails.add(addExerciseDetail(db, "Explosive pushups", 3, "Chest & Power",
+                "Perform pushups explosively so your hands leave the floor. Land softly and repeat."));
+        this.exeDetails.add(addExerciseDetail(db, "Pushups on fist", 3, "Chest & Arms",
+                "Perform pushups on your fists for added wrist stability and forearm strength."));
+        this.exeDetails.add(addExerciseDetail(db, "Knee tap pushups", 2, "Chest & Core",
+                "Perform a push-up, then tap your knee with the opposite hand before starting the next rep."));
+        this.exeDetails.add(addExerciseDetail(db, "Pushups toe touch", 2, "Chest & Core",
+                "Perform pushups and touch one hand to opposite foot at the top."));
+        this.exeDetails.add(addExerciseDetail(db, "Pushups full rotation", 2, "Chest & Core",
+                "Do a pushup and rotate your body into a side plank before returning."));
+        this.exeDetails.add(addExerciseDetail(db, "Tiger band pushups", 3, "Chest & Arms",
+                "Perform pushups with resistance band around upper back for extra tension."));
+        this.exeDetails.add(addExerciseDetail(db, "Clap pushups", 3, "Chest & Arms",
+                "Perform explosive pushups and clap hands at the top."));
+        this.exeDetails.add(addExerciseDetail(db, "Sphinx pushups", 3, "Triceps & Chest",
+                "From forearm plank, lower and push up keeping elbows tucked."));
+        this.exeDetails.add(addExerciseDetail(db, "Isometric pushups", 3, "Chest & Core",
+                "Hold the low position of a pushup as long as possible, keeping your body straight."));
+        this.exeDetails.add(addExerciseDetail(db, "Pushups half squat", 1, "Chest & Legs",
+                "Do a pushup, then return to standing with a half squat before next repetition."));
+        this.exeDetails.add(addExerciseDetail(db, "Shoulder taps", 2, "Chest & Core",
+                "In plank position, tap each shoulder alternately keeping core tight."));
+
+        // SHOULDERS & ARMS
+        this.exeDetails.add(addExerciseDetail(db, "Pike pushups", 3, "Shoulders",
+                "Start in a pike position with hips up, bend elbows to lower your head toward the ground, then push back up."));
+        this.exeDetails.add(addExerciseDetail(db, "Handstand pushups", 3, "Shoulders & Arms",
+                "Perform pushups while in a handstand position against a wall for support."));
+        this.exeDetails.add(addExerciseDetail(db, "Dips", 1, "Triceps & Chest",
+                "Lower your body using parallel bars or a bench and push back up, keeping elbows close to your body."));
+        this.exeDetails.add(addExerciseDetail(db, "One leg dips", 2, "Triceps & Chest",
+                "Perform dips while extending one leg forward or backward."));
+        this.exeDetails.add(addExerciseDetail(db, "Dips toe touch", 1, "Triceps & Chest",
+                "Do dips and at the top reach one hand toward your opposite toe."));
+        this.exeDetails.add(addExerciseDetail(db, "Jumping sit outs", 2, "Core & Shoulders",
+                "Start in a bear crawl position, lift one hand and opposite leg, rotate your body and kick the leg through, then return and repeat."));
+
+        // BACK & ARMS
+        this.exeDetails.add(addExerciseDetail(db, "Australian pullups", 2, "Back & Arms",
+                "Hang under a bar, pull your chest toward the bar, then lower slowly while keeping your body straight."));
+        this.exeDetails.add(addExerciseDetail(db, "Hyperextensions", 1, "Lower Back",
+                "Lie face down, lift your chest and legs off the ground by contracting your lower back, then slowly return."));
+
+        // LEGS EXERCISES
+        this.exeDetails.add(addExerciseDetail(db, "Squats", 1, "Legs",
+                "Stand with feet shoulder-width apart, lower hips back and down as if sitting in a chair, then return to standing."));
+        this.exeDetails.add(addExerciseDetail(db, "Jump squats", 3, "Legs & Cardio",
+                "Perform a squat, then jump explosively, landing softly and returning to squat position."));
+        this.exeDetails.add(addExerciseDetail(db, "One legged squat", 3, "Legs & Balance",
+                "Perform a squat on one leg while keeping the other leg extended forward, maintaining balance."));
+        this.exeDetails.add(addExerciseDetail(db, "Side squat", 1, "Legs",
+                "Take a wide stance, shift your weight to one side as you bend the knee and keep the other leg straight, then switch sides."));
+        this.exeDetails.add(addExerciseDetail(db, "Butterfly squats (explosive)", 2, "Legs",
+                "Start in a squat position, jump explosively and tap your feet together mid-air, then land softly back into the squat."));
+        this.exeDetails.add(addExerciseDetail(db, "Lunges", 1, "Legs",
+                "Step forward with one leg, lower your hips until both knees are bent at about 90 degrees, then push back to start."));
+        this.exeDetails.add(addExerciseDetail(db, "Jump lunges", 3, "Legs & Cardio",
+                "Lunge forward, jump explosively, switch legs mid-air, and land softly."));
+        this.exeDetails.add(addExerciseDetail(db, "Bottom up lunges", 3, "Legs",
+                "Step forward into a lunge, then drive back to standing, focusing on pushing from the heel and engaging glutes."));
+        this.exeDetails.add(addExerciseDetail(db, "Single leg deadlifts", 1, "Legs & Glutes",
+                "Stand on one leg, hinge at the hips keeping back straight, and lower your torso toward the floor, then return upright."));
+        this.exeDetails.add(addExerciseDetail(db, "Single leg chair stands", 1, "Legs & Balance",
+                "Sit on a chair, extend one leg, then stand up using only the other leg, keeping balance controlled."));
+        this.exeDetails.add(addExerciseDetail(db, "Tuck jumps", 3, "Legs & Cardio",
+                "Jump explosively while pulling your knees toward your chest, land softly, and immediately go into the next jump."));
+        this.exeDetails.add(addExerciseDetail(db, "Super skater jumps", 2, "Legs & Cardio",
+                "Jump laterally from side to side, landing on one leg with the other leg sweeping behind for balance."));
+        this.exeDetails.add(addExerciseDetail(db, "Side kicks", 1, "Core & Legs",
+                "From plank or standing, perform controlled side kicks."));
+
+        // GLUTES EXERCISES
+        this.exeDetails.add(addExerciseDetail(db, "Hip thrusts", 1, "Glutes",
+                "Sit on the ground with your back against a bench, feet flat, and lift hips upward by squeezing your glutes."));
+        this.exeDetails.add(addExerciseDetail(db, "Donkey kicks", 1, "Glutes",
+                "Start on all fours, lift one leg upward while keeping your knee bent at 90 degrees, then lower and repeat."));
+        this.exeDetails.add(addExerciseDetail(db, "Lateral donkey", 2, "Glutes",
+                "Start on all fours, lift one leg to the side while keeping your knee bent, then lower back down and repeat."));
+
+        // CARDIO & FULL BODY EXERCISES
+        this.exeDetails.add(addExerciseDetail(db, "Burpees", 3, "Full Body & Cardio",
+                "From standing, squat down, kick your feet back into a plank, return to squat, and jump explosively upward."));
+        this.exeDetails.add(addExerciseDetail(db, "Burpees (no pushup)", 2, "Cardio",
+                "From standing, squat down, kick your feet back into a plank, quickly return to squat, and jump explosively upward."));
+        this.exeDetails.add(addExerciseDetail(db, "Half burpees", 2, "Full Body & Cardio",
+                "Perform burpees without the pushup, finishing with a jump."));
+        this.exeDetails.add(addExerciseDetail(db, "Side burpees left", 3, "Full Body & Cardio",
+                "Perform a burpee, then jump laterally to the left before repeating."));
+        this.exeDetails.add(addExerciseDetail(db, "Side burpees right", 3, "Full Body & Cardio",
+                "Perform a burpee, then jump laterally to the right before repeating."));
+        this.exeDetails.add(addExerciseDetail(db, "Mountain climbers", 2, "Cardio & Core",
+                "Start in plank position, alternate driving knees toward your chest quickly while keeping your core tight."));
+        this.exeDetails.add(addExerciseDetail(db, "Jumping jacks", 1, "Cardio",
+                "Jump with your legs spreading outward and arms going overhead, then return to the starting position quickly."));
+        this.exeDetails.add(addExerciseDetail(db, "Run in place", 1, "Cardio",
+                "Run on the spot, lifting knees high and pumping your arms."));
+        this.exeDetails.add(addExerciseDetail(db, "Knee up run", 1, "Cardio & Legs",
+                "Run in place bringing knees up towards chest to increase heart rate."));
+        this.exeDetails.add(addExerciseDetail(db, "Jump rope", 1, "Cardio & Legs",
+                "Jump rope continuously, keeping a steady pace and engaging your calves and core."));
+        this.exeDetails.add(addExerciseDetail(db, "Inchworms", 1, "Full Body",
+                "Stand tall, hinge at the hips to touch the floor, walk your hands forward into a plank, then walk them back and stand up."));
+
+        // ADDITIONAL CORE & ABS EXERCISES (New additions)
+        this.exeDetails.add(addExerciseDetail(db, "Jackknife twists", 3, "Abs & Obliques",
+                "From lying position, lift legs and torso, twisting to touch toes or sides."));
+        this.exeDetails.add(addExerciseDetail(db, "3 way crunch pulses", 2, "Abs",
+                "Pulse your torso in three directions to engage all areas of the abs."));
+        this.exeDetails.add(addExerciseDetail(db, "Low abs twists", 2, "Lower Abs & Obliques",
+                "Lie on back and twist lower body side to side while legs lifted."));
+        this.exeDetails.add(addExerciseDetail(db, "Low abs bent knees", 2, "Lower Abs",
+                "Raise bent knees toward chest while lying on back, lowering slowly."));
+        this.exeDetails.add(addExerciseDetail(db, "Side plank leg circle", 2, "Obliques & Glutes",
+                "Hold side plank and move top leg in controlled circles."));
+        this.exeDetails.add(addExerciseDetail(db, "Seated leg raises", 2, "Lower Abs",
+                "Sit with legs extended and lift them together while leaning back slightly."));
+        this.exeDetails.add(addExerciseDetail(db, "Circle crunches", 2, "Abs",
+                "Perform crunches moving your torso in a circular motion."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank buzzsaw", 3, "Core",
+                "From plank, rotate hips side to side rapidly while keeping torso stable."));
+        this.exeDetails.add(addExerciseDetail(db, "Jackknives", 3, "Abs",
+                "Lift legs and torso simultaneously to meet in a jackknife position."));
+        this.exeDetails.add(addExerciseDetail(db, "Full arm side plank leg up", 3, "Obliques & Glutes",
+                "In side plank, lift top leg and extend top arm overhead."));
+        this.exeDetails.add(addExerciseDetail(db, "Lateral abs", 2, "Obliques",
+                "Perform side crunches or twists to target lateral abdominal muscles."));
+        this.exeDetails.add(addExerciseDetail(db, "Scissor drops", 2, "Lower Abs",
+                "Alternate lowering legs in a scissor motion without touching the floor."));
+        this.exeDetails.add(addExerciseDetail(db, "Plank jacks", 3, "Core & Cardio",
+                "Jump legs in and out while holding a plank position."));
+
+        // ADDITIONAL EXERCISES (New additions - formatted and organized)
+        
+        // Additional Core & Abs
+        this.exeDetails.add(addExerciseDetail(db, "High plank", 2, "Core & Arms",
+                "Hold plank position with hands under shoulders and body straight."));
+        this.exeDetails.add(addExerciseDetail(db, "Low plank", 2, "Core & Arms",
+                "Hold a forearm plank keeping body straight and engaged."));
+        this.exeDetails.add(addExerciseDetail(db, "Knee to elbow", 2, "Core & Obliques",
+                "From plank, bring knee to opposite elbow alternately."));
+        this.exeDetails.add(addExerciseDetail(db, "Leg raises", 2, "Lower Abs",
+                "Lift legs straight up from the ground while lying on your back."));
+
+        // Additional Legs
+        this.exeDetails.add(addExerciseDetail(db, "Squat taps", 1, "Legs & Cardio",
+                "Perform a squat and tap one foot to the side, alternating sides."));
+        this.exeDetails.add(addExerciseDetail(db, "Squat run", 1, "Legs & Cardio",
+                "Alternate between squats and short running steps in place."));
+        this.exeDetails.add(addExerciseDetail(db, "Step in", 1, "Legs & Cardio",
+                "Step one foot forward and back repeatedly as a light warmup."));
+
+        // ADDITIONAL EXERCISES (More new additions)
+        
+        // Additional Cardio
+        this.exeDetails.add(addExerciseDetail(db, "High knees", 3, "Legs & Cardio",
+                "Run in place while lifting knees as high as possible, pumping arms."));
+        
+        // Additional Core & Chest
+        this.exeDetails.add(addExerciseDetail(db, "Spiderman", 3, "Core & Chest",
+                "In a pushup position, bring knee toward elbow alternating sides."));
+
     }
 }
