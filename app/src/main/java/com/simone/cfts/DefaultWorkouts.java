@@ -47,7 +47,6 @@ public class DefaultWorkouts {
         return exercises;
     }
 
-
     private void addAllWorkouts() {
         addEntryLevel();
         addNoEffort();
@@ -704,7 +703,7 @@ public class DefaultWorkouts {
     /* ------------------------------------------------------------ */
 
 
-        private ExerciseDetail addExerciseDetail(DatabaseHelper db, String name, int difficulty,
+    private ExerciseDetail addExerciseDetail(DatabaseHelper db, String name, int difficulty,
                                            String muscle, String description) {
         ExerciseDetail exe = new ExerciseDetail();
         exe.setName(name);

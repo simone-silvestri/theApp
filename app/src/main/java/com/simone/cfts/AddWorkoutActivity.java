@@ -42,11 +42,9 @@ public class AddWorkoutActivity extends AppCompatActivity {
     private ArrayList<ImageButton> btndelete;
     private ImageView time, reps, reptime, beginner, average, skilled, expert, spartan;
     private EditText textname, textset, textpause;
-    private Workout work;
     private int currentDiff;
     private String currentType;
     private TextView btnexercise, pauseOrTotalTime;
-    private Spinner dropdownType, dropdownDifficulty;
     private LinearLayout linear;
     private TextView generalworksec, generalpausesec, generaladditional;
     private EditText generalexework, generalexepause;
@@ -400,20 +398,24 @@ public class AddWorkoutActivity extends AppCompatActivity {
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
         exename.add((TextView) layout.findViewById(R.id.text_search));
-        final ArrayList<String> arrayList = new ArrayList<>();
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-        ArrayList<ExerciseDetail> exeList = dbhandler.loadAllExercises();
-
-        for (int i=0; i<exeList.size(); i++) {
-            arrayList.add(exeList.get(i).getName());
-        }
+        final ArrayList<ExerciseDetail> exeList = dbhandler.loadAllExercises();
 
         exename.get(exename.size()-1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 RelativeLayout r = (RelativeLayout) view.getParent();
                 final int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
+
+                final ArrayList<String> nameList = new ArrayList<>();
+                final ArrayList<String> muscleList = new ArrayList<>();
+
+                for (int i=0; i<exeList.size(); i++) {
+                    nameList.add(exeList.get(i).getName());
+                    muscleList.add(exeList.get(i).getMuscle());
+                }
 
                 dialog = new Dialog(AddWorkoutActivity.this);
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
@@ -423,18 +425,73 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 int height = displayMetrics.heightPixels;
                 int width = displayMetrics.widthPixels;
 
-                dialog.getWindow().setLayout((int) ((float)width*1.0/5.0*4.0),(int) ((float)height*1.0/5.0*4.0));
+                dialog.getWindow().setLayout((int) ((float)width*1.0/7.0*6.0),(int) ((float)height*1.0/7.0*6.0));
 
                 dialog.show();
                 dialog.setCanceledOnTouchOutside(true);
 
                 final EditText editText = dialog.findViewById(R.id.edit_search_exercise);
+                final Spinner editMuscle = dialog.findViewById(R.id.spinner_menu);
+
                 ListView listView = dialog.findViewById(R.id.list_search_exercise);
 
-                final ArrayAdapter<String> adapter = new ArrayAdapter<>(AddWorkoutActivity.this,
-                        android.R.layout.simple_list_item_1, arrayList);
+                // Create a filtered list that will be updated based on both search text and muscle selection
+                final ArrayList<String> filteredNameList = new ArrayList<>(nameList);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWorkoutActivity.this,
+                        android.R.layout.simple_list_item_1, filteredNameList) {
+                    @Override
+                    public android.widget.Filter getFilter() {
+                        return new android.widget.Filter() {
+                            @Override
+                            protected FilterResults performFiltering(CharSequence constraint) {
+                                FilterResults results = new FilterResults();
+                                ArrayList<String> filteredList = new ArrayList<>();
+                                
+                                String searchText = editText.getText().toString().toLowerCase();
+                                String selectedMuscle = editMuscle.getSelectedItem() != null ? 
+                                    editMuscle.getSelectedItem().toString() : "";
+                                
+                                for (int i = 0; i < nameList.size(); i++) {
+                                    String exerciseName = nameList.get(i).toLowerCase();
+                                    String exerciseMuscle = muscleList.get(i);
+                                    
+                                    boolean matchesSearch = exerciseName.contains(searchText);
+                                    boolean matchesMuscle = selectedMuscle.isEmpty() || 
+                                        selectedMuscle.equals("All") || 
+                                        (selectedMuscle.equals("Fullbody") && exerciseMuscle.contains("Full Body")) || 
+                                        (exerciseMuscle != null && exerciseMuscle.contains(selectedMuscle));
+                                    
+                                    if (matchesSearch && matchesMuscle) {
+                                        filteredList.add(nameList.get(i));
+                                    }
+                                }
+                                
+                                results.values = filteredList;
+                                results.count = filteredList.size();
+                                return results;
+                            }
+                            
+                            @Override
+                            protected void publishResults(CharSequence constraint, FilterResults results) {
+                                filteredNameList.clear();
+                                if (results.values != null) {
+                                    filteredNameList.addAll((ArrayList<String>) results.values);
+                                }
+                                notifyDataSetChanged();
+                            }
+                        };
+                    }
+                };
 
                 listView.setAdapter(adapter);
+
+                // Method to apply filters
+                final Runnable applyFilters = new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.getFilter().filter("");
+                    }
+                };
 
                 editText.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -444,7 +501,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        adapter.getFilter().filter(charSequence);
+                        applyFilters.run();
                     }
 
                     @Override
@@ -452,10 +509,25 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
                     }
                 });
+
+                // Add listener for muscle spinner selection
+                editMuscle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        applyFilters.run();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // Do nothing
+                    }
+                });
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        exename.get(idx).setText(adapter.getItem(i));
+                        // Get the selected item from the filtered list
+                        String selectedExercise = filteredNameList.get(i);
+                        exename.get(idx).setText(selectedExercise);
                         exename.get(idx).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                         dialog.dismiss();
                     }
