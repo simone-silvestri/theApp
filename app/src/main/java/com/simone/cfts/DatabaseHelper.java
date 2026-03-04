@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private String msg;
+    private static final String TAG = "DatabaseHelper";
 
     // Database Info
     private static final String DATABASE_NAME = "workexeDatabase.db";
@@ -152,9 +152,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public History loadDate(String date) {
         History dateWod = new History();
 
-        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL + " WHERE " + KEY_CAL_DAY + " = " + "'" + date + "'" ;
+        String CAL_SELECT_QUERY = "SELECT * FROM " + TABLE_CAL + " WHERE " + KEY_CAL_DAY + " = ?";
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, null);
+        Cursor cursor = db.rawQuery(CAL_SELECT_QUERY, new String[]{date});
         ArrayList<Integer> wod = new ArrayList<Integer>();
         try {
             if (cursor.moveToFirst()) {
@@ -164,7 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to get posts from database");
+            Log.d(TAG, "Error while trying to get posts from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -193,130 +193,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.insert(TABLE_CAL, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to add or update user");
         } finally {
             db.endTransaction();
         }
         return calendarId;
     }
 
-    public ArrayList<Workout> loadDatabaseDiff(int difficulty) {
-        ArrayList<Workout> wdList = new ArrayList<>();
-        // First load all the names, then populate them with the exercises
+    private Workout workoutFromCursor(Cursor cursor) {
+        Workout work = new Workout();
+        work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
+        work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
+        work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
+        work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
+        work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
+        work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
+        work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
+        work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
+        return work;
+    }
 
-        String WORK_SELECT_QUERY = "SELECT * FROM " + TABLE_WORK + " WHERE " + KEY_WORK_DIFF + " = " + "'" + difficulty + "'" ;
+    private ArrayList<Workout> loadWorkouts(String whereClause, String[] whereArgs) {
+        ArrayList<Workout> wdList = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_WORK;
+        if (whereClause != null) {
+            query += " WHERE " + whereClause;
+        }
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(WORK_SELECT_QUERY, null);
+        Cursor cursor = db.rawQuery(query, whereArgs);
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    Workout work = new Workout();
-                    work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
-                    work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
-                    work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
-                    work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
-                    work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
-                    work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
-                    work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
-                    work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
-
-                    ArrayList<Exercise> exeList = new ArrayList<>();
-                    String REL_SELECT_QUERY = "SELECT * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + " = " + "'" + work.getID() + "'";
-                    Cursor cursor2 = db.rawQuery(REL_SELECT_QUERY, null);
-                    try {
-                        if (cursor2.moveToFirst()) {
-                            do {
-                                Exercise exe = new Exercise();
-                                exe.setWorkoutId(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_WORK_ID)));
-                                exe.setName(cursor2.getString(getPositiveColumnIndex(cursor2, KEY_REL_EXE_NAME)));
-                                exe.setPauseInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_PAUSE)));
-                                exe.setTimeInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_TIME)));
-                                exe.setReps(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_REPS)));
-                                exeList.add(exe);
-                            } while (cursor2.moveToNext());
-                        }
-
-                    } catch (Exception e) {
-                        Log.d(msg, "Error while trying to get posts from database");
-                    } finally {
-                        if (cursor2 != null && !cursor2.isClosed()) {
-                            cursor2.close();
-                        }
-                    }
+                    Workout work = workoutFromCursor(cursor);
+                    ArrayList<Exercise> exeList = loadExercisesForWorkout(db, work.getID());
                     work.setExercises(exeList);
                     wdList.add(work);
-
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to get posts from database");
+            Log.d(TAG, "Error while trying to get posts from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
-
         return wdList;
     }
 
+    public ArrayList<Workout> loadDatabaseDiff(int difficulty) {
+        return loadWorkouts(KEY_WORK_DIFF + " = ?", new String[]{String.valueOf(difficulty)});
+    }
+
     public ArrayList<Workout> loadDatabase() {
+        return loadWorkouts(null, null);
+    }
 
-        ArrayList<Workout> wdList = new ArrayList<>();
-        // First load all the names, then populate them with the exercises
-
-        String WORK_SELECT_QUERY = "SELECT * FROM " + TABLE_WORK;
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(WORK_SELECT_QUERY, null);
+    private ArrayList<Exercise> loadExercisesForWorkout(SQLiteDatabase db, int workoutId) {
+        ArrayList<Exercise> exeList = new ArrayList<>();
+        String REL_SELECT_QUERY = "SELECT * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + " = ?";
+        Cursor cursor = db.rawQuery(REL_SELECT_QUERY, new String[]{String.valueOf(workoutId)});
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    Workout work = new Workout();
-                    work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
-                    work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
-                    work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
-                    work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
-                    work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
-                    work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
-                    work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
-                    work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
-
-                    ArrayList<Exercise> exeList = new ArrayList<>();
-                    String REL_SELECT_QUERY = "SELECT * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + " = " + "'" + work.getID() + "'";
-                    Cursor cursor2 = db.rawQuery(REL_SELECT_QUERY, null);
-                    try {
-                        if (cursor2.moveToFirst()) {
-                            do {
-                                Exercise exe = new Exercise();
-                                exe.setWorkoutId(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_WORK_ID)));
-                                exe.setName(cursor2.getString(getPositiveColumnIndex(cursor2, KEY_REL_EXE_NAME)));
-                                exe.setPauseInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_PAUSE)));
-                                exe.setTimeInSeconds(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_TIME)));
-                                exe.setReps(cursor2.getInt(getPositiveColumnIndex(cursor2, KEY_REL_REPS)));
-                                exeList.add(exe);
-                            } while (cursor2.moveToNext());
-                        }
-
-                    } catch (Exception e) {
-                        Log.d(msg, "Error while trying to get posts from database");
-                    } finally {
-                        if (cursor2 != null && !cursor2.isClosed()) {
-                            cursor2.close();
-                        }
-                    }
-                    work.setExercises(exeList);
-                    wdList.add(work);
-
+                    Exercise exe = new Exercise();
+                    exe.setWorkoutId(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_WORK_ID)));
+                    exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_REL_EXE_NAME)));
+                    exe.setPauseInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_PAUSE)));
+                    exe.setTimeInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_TIME)));
+                    exe.setReps(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_REPS)));
+                    exeList.add(exe);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to get posts from database");
+            Log.d(TAG, "Error while loading exercises for workout");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
-
-        return wdList;
+        return exeList;
     }
 
     public void removeExercises(Workout work) {
@@ -326,8 +281,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             long workoutId = addOrUpdateWorkout(work);
-            String query = "Select * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + "=" + "'" + workoutId + "'";
-            Cursor cursor = db.rawQuery(query, null);
+            String query = "SELECT * FROM " + TABLE_REL + " WHERE " + KEY_REL_WORK_ID + " = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(workoutId)});
             if (cursor.moveToFirst()) {
                 do {
                     long id = cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_ID));
@@ -337,7 +292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.close();
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to get posts from database");
+            Log.d(TAG, "Error while trying to get posts from database");
         } finally {
             db.endTransaction();
         }
@@ -347,54 +302,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Exercise> exeList = new ArrayList<>();
         String REL_SELECT_QUERY = "SELECT * FROM " + TABLE_REL;
         SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
+        Cursor cursor = null;
         try {
-            Cursor cursor = db.rawQuery(REL_SELECT_QUERY, null);
-            try {
-                if (cursor.moveToFirst()) {
-                    do {
-                        Exercise exe = new Exercise();
-                        exe.setWorkoutId(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_WORK_ID)));
-                        exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_REL_EXE_NAME)));
-                        exe.setPauseInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_PAUSE)));
-                        exe.setTimeInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_TIME)));
-                        exe.setReps(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_REPS)));
-                        exeList.add(exe);
-                    } while (cursor.moveToNext());
-                }
-            } catch (Exception e) {
-                Log.d(msg, "Error while trying to get posts from database");
-            } finally {
-                if (cursor != null && !cursor.isClosed()) {
-                    cursor.close();
-                }
+            cursor = db.rawQuery(REL_SELECT_QUERY, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    Exercise exe = new Exercise();
+                    exe.setWorkoutId(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_WORK_ID)));
+                    exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_REL_EXE_NAME)));
+                    exe.setPauseInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_PAUSE)));
+                    exe.setTimeInSeconds(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_TIME)));
+                    exe.setReps(cursor.getInt(getPositiveColumnIndex(cursor, KEY_REL_REPS)));
+                    exeList.add(exe);
+                } while (cursor.moveToNext());
             }
-            db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error when oadin one exercise list");
+            Log.d(TAG, "Error while loading exercise list");
         } finally {
-            db.endTransaction();
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return exeList;
-
     }
 
     public int loadExerciseId(String name) {
         int exeId = -1;
         SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
+        Cursor cursor = null;
         try {
             String workoutSelectQuery = "SELECT " + KEY_EXE_ID + " FROM " + TABLE_EXE
                     + " WHERE " + KEY_EXE_NAME + " = ?";
-            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(name)});
+            cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(name)});
             if (cursor.moveToFirst()) {
                 exeId = cursor.getInt(0);
-                db.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to load exercise ID");
         } finally {
-            db.endTransaction();
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return exeId;
     }
@@ -402,23 +350,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ExerciseDetail loadOneExercise(String name) {
         ExerciseDetail exe = new ExerciseDetail();
         SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
+        Cursor cursor = null;
         try {
             String workoutSelectQuery = "SELECT * FROM " + TABLE_EXE
                     + " WHERE " + KEY_EXE_NAME + " = ?";
-            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{name});
+            cursor = db.rawQuery(workoutSelectQuery, new String[]{name});
             if (cursor.moveToFirst()) {
                 exe.setName(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_NAME)));
                 exe.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_EXE_DIFF)));
                 exe.setDescription(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_DESC)));
                 exe.setMuscle(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_MUSC)));
-                db.setTransactionSuccessful();
             }
-            cursor.close();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to load exercise");
         } finally {
-            db.endTransaction();
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return exe;
     }
@@ -426,10 +374,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<ExerciseDetail> loadAllExercises() {
         ArrayList<ExerciseDetail> exeList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
+        Cursor cursor = null;
         try {
             String workoutSelectQuery = "SELECT * FROM " + TABLE_EXE;
-            Cursor cursor = db.rawQuery(workoutSelectQuery, null);
+            cursor = db.rawQuery(workoutSelectQuery, null);
             if (cursor.moveToFirst()) {
                 do {
                     ExerciseDetail exe = new ExerciseDetail();
@@ -440,13 +388,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     exe.setMuscle(cursor.getString(getPositiveColumnIndex(cursor, KEY_EXE_MUSC)));
                     exeList.add(exe);
                 } while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to load all exercises");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
-        } finally {
-            db.endTransaction();
         }
         return exeList;
     }
@@ -454,41 +402,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int loadWorkoutId(String name) {
         int workoutId = -1;
         SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
+        Cursor cursor = null;
         try {
             String workoutSelectQuery = "SELECT " + KEY_WORK_ID + " FROM " + TABLE_WORK
                     + " WHERE " + KEY_WORK_NAME + " = ?";
-            Cursor cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(name)});
+            cursor = db.rawQuery(workoutSelectQuery, new String[]{String.valueOf(name)});
             if (cursor.moveToFirst()) {
                 workoutId = cursor.getInt(0);
-                db.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to load workout ID");
         } finally {
-            db.endTransaction();
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return workoutId;
     }
 
     public Workout loadWorkoutFromId(int wrkId) {
         Workout work = new Workout();
-        String WRK_SELECT_QUERY = "SELECT * FROM " + TABLE_WORK+ " WHERE " + KEY_WORK_ID + " = " + "'" + wrkId + "'" ;
+        String WRK_SELECT_QUERY = "SELECT * FROM " + TABLE_WORK + " WHERE " + KEY_WORK_ID + " = ?";
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(WRK_SELECT_QUERY, null);
+        Cursor cursor = db.rawQuery(WRK_SELECT_QUERY, new String[]{String.valueOf(wrkId)});
         try {
             if (cursor.moveToFirst()) {
-                work.setID(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_ID)));
-                work.setTitle(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_NAME)));
-                work.setWod(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_WOD)));
-                work.setType(cursor.getString(getPositiveColumnIndex(cursor, KEY_WORK_TYPE)));
-                work.setTotalTime(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_TIME)));
-                work.setDifficulty(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_DIFF)));
-                work.setNumberOfSets(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_SET)));
-                work.setSetPause(cursor.getInt(getPositiveColumnIndex(cursor, KEY_WORK_PAUSE)));
+                work = workoutFromCursor(cursor);
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to get posts from database");
+            Log.d(TAG, "Error while trying to get posts from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -512,7 +454,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.insertOrThrow(TABLE_REL, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to add or update user");
         } finally {
             db.endTransaction();
         }
@@ -535,7 +477,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             exerciseId = db.insert(TABLE_EXE, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to add or update user");
         } finally {
             db.endTransaction();
         }
@@ -576,7 +518,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to add or update user");
         } finally {
             db.endTransaction();
         }
@@ -620,7 +562,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to add or update user");
+            Log.d(TAG, "Error while trying to add or update user");
         } finally {
             db.endTransaction();
         }
@@ -638,7 +580,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_WORK, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to delete all posts and users");
+            Log.d(TAG, "Error while trying to delete all posts and users");
         } finally {
             db.endTransaction();
         }
@@ -653,7 +595,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_EXE, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to delete all posts and users");
+            Log.d(TAG, "Error while trying to delete all posts and users");
         } finally {
             db.endTransaction();
         }
@@ -667,7 +609,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_EXE, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to delete all posts and users");
+            Log.d(TAG, "Error while trying to delete all posts and users");
         } finally {
             db.endTransaction();
         }
@@ -681,7 +623,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_CAL, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error while trying to delete all posts and users");
+            Log.d(TAG, "Error while trying to delete all posts and users");
         } finally {
             db.endTransaction();
         }
@@ -703,19 +645,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_WORK, KEY_WORK_ID + "= ?", new String[]{String.valueOf(workoutId)});
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(msg, "Error when trying to delete one workout");
+            Log.d(TAG, "Error when trying to delete one workout");
         } finally {
             db.endTransaction();
         }
         return workoutId;
     }
 
-    public static final long MAGIC=86400000L;
+    public static final long MILLIS_PER_DAY = 86400000L;
 
     public int DateToDays (Date date){
         //  convert a date to an integer and back again
         long currentTime=date.getTime();
-        currentTime=currentTime/MAGIC;
+        currentTime=currentTime/MILLIS_PER_DAY;
         return (int) currentTime;
     }
 

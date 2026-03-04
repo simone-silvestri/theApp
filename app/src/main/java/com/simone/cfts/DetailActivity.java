@@ -122,19 +122,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         textpause.setText(timeLeftText);
 
 
-        int diff = work.getDifficulty();
-
-        if (diff == 1) {
-            diffIcon.setImageDrawable(getResources().getDrawable(R.drawable.beginner));
-        } else if (diff == 2) {
-            diffIcon.setImageDrawable(getResources().getDrawable(R.drawable.average));
-        } else if (diff == 3) {
-            diffIcon.setImageDrawable(getResources().getDrawable(R.drawable.skilled));
-        } else if (diff == 4) {
-            diffIcon.setImageDrawable(getResources().getDrawable(R.drawable.expert));
-        } else {
-            diffIcon.setImageDrawable(getResources().getDrawable(R.drawable.spartan));
-        }
+        diffIcon.setImageResource(DifficultyHelper.getIconResource(work.getDifficulty()));
 
         List<RowDataDetail> rowData;
         rowData = new ArrayList<RowDataDetail>();
