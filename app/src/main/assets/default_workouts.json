@@ -1,0 +1,3360 @@
+{
+  "workouts": [
+    {
+      "title": "Entry Level",
+      "type": "TIME",
+      "difficulty": 1,
+      "sets": 3,
+      "setPause": 180,
+      "totalTime": null,
+      "description": "This beginner-friendly workout focuses on full-body strength and core stability using simple bodyweight movements.",
+      "exercises": [
+        {
+          "name": "Shoulder taps",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Bicycle crunches",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Dips",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Hip thrusts",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Side plank left",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Side plank right",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        }
+      ]
+    },
+    {
+      "title": "No Effort",
+      "type": "TIME",
+      "difficulty": 1,
+      "sets": 3,
+      "setPause": 180,
+      "totalTime": null,
+      "description": "A light full-body workout designed for minimal effort, focusing on mobility and core stability.",
+      "exercises": [
+        {
+          "name": "Lunges",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Squats",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Hip thrusts",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Inchworms",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Hyperextensions",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Plank rotation",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Side squat",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Plank ups",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        }
+      ]
+    },
+    {
+      "title": "First Attempt",
+      "type": "TIME",
+      "difficulty": 2,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A challenging full-body workout to test your endurance and strength with a mix of cardio, core, and push variations.",
+      "exercises": [
+        {
+          "name": "Burpees (no pushup)",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Hindu pushups",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Scissors",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Pike pushups",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Lunges",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Hyperextensions",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Plank",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        }
+      ]
+    },
+    {
+      "title": "Whole Body",
+      "type": "TIME",
+      "difficulty": 2,
+      "sets": 4,
+      "setPause": 90,
+      "totalTime": null,
+      "description": "A full-body workout designed to improve strength and endurance using dynamic bodyweight movements.",
+      "exercises": [
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Knee pushups",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Plank",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Lunges",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Sit ups",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Pike pushups",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        },
+        {
+          "name": "Squats",
+          "reps": 10,
+          "workTime": 45,
+          "restTime": 15
+        }
+      ]
+    },
+    {
+      "title": "Monday Detox",
+      "type": "TIME",
+      "difficulty": 4,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "An intense full-body detox workout focusing on strength, endurance, and mobility with challenging push-up variations.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Diamond pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Scissors",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pike pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Side plank",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Hindu pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Ali's Monday Detox",
+      "type": "TIME",
+      "difficulty": 3,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A dynamic full-body workout focusing on strength, core stability, and lower-body power for an energizing start to the week.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Donkey kicks",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Scissors",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pike pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Lateral donkey",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Side plank",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Cardio",
+      "type": "TIME",
+      "difficulty": 2,
+      "sets": 4,
+      "setPause": 60,
+      "totalTime": null,
+      "description": "A fast-paced cardio session to boost endurance and burn calories with dynamic full-body movements.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Seated tucks",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Jumping sit outs",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Butterfly squats (explosive)",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Knee tap pushups",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Ankle taps",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Super skater jumps",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Shoulder taps",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Plank switches",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Tuck jumps",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        },
+        {
+          "name": "Jumping jacks",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 20
+        }
+      ]
+    },
+    {
+      "title": "Balanced Beginners",
+      "type": "REPSINTIME",
+      "difficulty": 1,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A balanced full-body beginner-friendly routine combining cardio, core, and strength for overall fitness.",
+      "exercises": [
+        {
+          "name": "Jumping jacks",
+          "reps": 40,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Squats",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Russian twists",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "High knees",
+          "reps": 45,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Sit ups",
+          "reps": 15,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Knee pushups",
+          "reps": 15,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Lower abs",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Hip thrusts",
+          "reps": 15,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees (no pushup)",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Scissors",
+          "reps": 40,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Pushup Power",
+      "type": "REPSINTIME",
+      "difficulty": 5,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "An advanced pushup challenge to build strength, endurance, and explosive power across chest, arms, and core.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 12,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Staggered pushups",
+          "reps": 16,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Pushup rotation",
+          "reps": 12,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Hindu pushups",
+          "reps": 16,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "One leg pushups",
+          "reps": 12,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Diamond pushups",
+          "reps": 16,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Spiderman pushups",
+          "reps": 16,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Decline pushups",
+          "reps": 12,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Archer pushups",
+          "reps": 16,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "One arm pushups",
+          "reps": 12,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Explosive pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Leg Day",
+      "type": "TIME",
+      "difficulty": 4,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A leg-focused workout targeting strength, balance, and explosive power for lower-body conditioning.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Side plank leg up",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Single leg deadlifts",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Bicycle crunches",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Bottom up lunges",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Single leg chair stands",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "One legged plank",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Greek Training",
+      "type": "REPS",
+      "difficulty": 5,
+      "sets": 2,
+      "setPause": 0,
+      "totalTime": 2400,
+      "description": "An extremely challenging full-body routine combining strength, cardio, and core endurance for maximal intensity.",
+      "exercises": [
+        {
+          "name": "Pushups",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Jump squats",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Sit ups",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Plank",
+          "reps": 1,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Pushups on fist",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Lower abs",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Pushups",
+          "reps": 40,
+          "workTime": 0,
+          "restTime": 0
+        },
+        {
+          "name": "Plank",
+          "reps": 1,
+          "workTime": 0,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Double Program 1",
+      "type": "TIME",
+      "difficulty": 4,
+      "sets": 2,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A high-intensity, full-body program combining strength, cardio, core, and advanced push/pull movements.",
+      "exercises": [
+        {
+          "name": "Side burpees left",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Run in place",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Side burpees right",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Isometric lower abs",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Australian pullups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pushup rotation",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "One legged squat",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Sphinx pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Isometric pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 120
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Australian pullups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Russian twists",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Handstand pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Plank ups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Archer pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Scissors",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Decline pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Dips",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 120
+        }
+      ]
+    },
+    {
+      "title": "Double Program 2",
+      "type": "TIME",
+      "difficulty": 4,
+      "sets": 2,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A high-intensity, full-body program combining cardio, core, upper and lower body strength exercises.",
+      "exercises": [
+        {
+          "name": "Side burpees left",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Run in place",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Side burpees right",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Bicycle crunches",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Hindu pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Shoulder taps",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Windshield wipers",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Isometric lower abs",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 120
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Butterfly crunches",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Jump crunches",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Half burpees",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Lower abs",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Punch sit ups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Power tucks",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Pike pushups",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 10
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 50,
+          "restTime": 120
+        }
+      ]
+    },
+    {
+      "title": "Abs-Chest HIIT",
+      "type": "TIME",
+      "difficulty": 3,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "High-intensity HIIT combining plank variations and pushups for abs, chest, and arms.",
+      "exercises": [
+        {
+          "name": "Arm leg plank",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Knee pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups full rotation",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank ups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Tiger band pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Dips toe touch",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Side kicks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Sphinx pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Clap pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Dips",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank leg lifts",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank stars",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Shoulder taps",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Diamond pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups rotation",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "One leg pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "One leg dips",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups half squat",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Abs Chillax",
+      "type": "TIME",
+      "difficulty": 2,
+      "sets": 4,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A relaxing yet effective ab-focused HIIT, combining core, obliques, and lower abs exercises.",
+      "exercises": [
+        {
+          "name": "Plank",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Russian twists",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Single leg crunches",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank kicks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jackknife twists",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "3 way crunch pulses",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Side plank",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Low abs twists",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Low abs bent knees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Side plank leg circle",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Seated leg raises",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Circle crunches",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank buzzsaw",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Russian twists",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jackknives",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Full arm side plank leg up",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Lateral abs",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Scissor drops",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Plank jacks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Butterfly crunches",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Jordan Yeoh HIIT",
+      "type": "TIME",
+      "difficulty": 5,
+      "sets": 1,
+      "setPause": 0,
+      "totalTime": null,
+      "description": "High-intensity, full-body HIIT combining cardio, plyometrics, and core exercises inspired by Jordan Yeoh training.",
+      "exercises": [
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 120
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 120
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Butt kicks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Running jacks",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 2
+        },
+        {
+          "name": "Pushups toe touch",
+          "reps": 10,
+          "workTime": 30,
+          "restTime": 30
+        }
+      ]
+    },
+    {
+      "title": "Morning Pushups",
+      "type": "REPSINTIME",
+      "difficulty": 4,
+      "sets": 3,
+      "setPause": 120,
+      "totalTime": null,
+      "description": "A morning pushup routine targeting chest, arms, shoulders, and core to kickstart your day.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 15,
+          "workTime": 60,
+          "restTime": 0
+        },
+        {
+          "name": "Diamond pushups",
+          "reps": 16,
+          "workTime": 60,
+          "restTime": 0
+        },
+        {
+          "name": "Spiderman pushups",
+          "reps": 16,
+          "workTime": 60,
+          "restTime": 0
+        },
+        {
+          "name": "One leg pushups",
+          "reps": 15,
+          "workTime": 60,
+          "restTime": 0
+        },
+        {
+          "name": "Staggered pushups",
+          "reps": 16,
+          "workTime": 60,
+          "restTime": 0
+        },
+        {
+          "name": "Archer pushups",
+          "reps": 16,
+          "workTime": 60,
+          "restTime": 0
+        },
+        {
+          "name": "Hindu pushups",
+          "reps": 16,
+          "workTime": 60,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Warmup pre Tabata",
+      "type": "TIME",
+      "difficulty": 1,
+      "sets": 1,
+      "setPause": 0,
+      "totalTime": null,
+      "description": "A dynamic full-body warmup to get your muscles ready and heart rate up before Tabata training.",
+      "exercises": [
+        {
+          "name": "Squats",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Crunches",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Squat taps",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump jacks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Hip thrusts",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Leg raises",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "High plank",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Run in place",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 120
+        },
+        {
+          "name": "Squat run",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Butterfly crunches",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Lunges",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump jacks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Knee to elbow",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Step in",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Knee up run",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Low plank",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Pure Tabata",
+      "type": "TIME",
+      "difficulty": 3,
+      "sets": 2,
+      "setPause": 30,
+      "totalTime": null,
+      "description": "An intense Tabata workout alternating burpees and jump rope to maximize cardiovascular and full-body endurance.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump rope",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump rope",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump rope",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Burpees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump rope",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        }
+      ]
+    },
+    {
+      "title": "Fra's Friday Classic",
+      "type": "REPSINTIME",
+      "difficulty": 3,
+      "sets": 7,
+      "setPause": 60,
+      "totalTime": null,
+      "description": "A classic Friday routine combining cardio, core, and strength exercises for a full-body challenge.",
+      "exercises": [
+        {
+          "name": "Jump Squats",
+          "reps": 10,
+          "workTime": 40,
+          "restTime": 0
+        },
+        {
+          "name": "Shoulder taps",
+          "reps": 20,
+          "workTime": 40,
+          "restTime": 0
+        },
+        {
+          "name": "Lower abs",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Knee up run",
+          "reps": 35,
+          "workTime": 40,
+          "restTime": 0
+        },
+        {
+          "name": "Sit ups",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Knee pushups",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Plank",
+          "reps": 1,
+          "workTime": 50,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Friday Classic",
+      "type": "REPSINTIME",
+      "difficulty": 4,
+      "sets": 7,
+      "setPause": 60,
+      "totalTime": null,
+      "description": "A high-intensity Friday routine combining strength, core, and explosive leg exercises for a full-body challenge.",
+      "exercises": [
+        {
+          "name": "Jump Squats",
+          "reps": 15,
+          "workTime": 40,
+          "restTime": 0
+        },
+        {
+          "name": "Decline pushups",
+          "reps": 20,
+          "workTime": 40,
+          "restTime": 0
+        },
+        {
+          "name": "Lower abs",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Dips",
+          "reps": 20,
+          "workTime": 40,
+          "restTime": 0
+        },
+        {
+          "name": "Sit ups",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Pushups",
+          "reps": 25,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Advanced plank",
+          "reps": 1,
+          "workTime": 50,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Whole Body Intense",
+      "type": "REPSINTIME",
+      "difficulty": 3,
+      "sets": 6,
+      "setPause": 60,
+      "totalTime": null,
+      "description": "An intermediate full-body routine combining explosive leg, chest, and core exercises to boost strength and endurance.",
+      "exercises": [
+        {
+          "name": "Diamond pushups",
+          "reps": 15,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Jump lunges",
+          "reps": 28,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Pushups",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Lower abs",
+          "reps": 20,
+          "workTime": 50,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 15,
+          "workTime": 50,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Burpees Mattanza",
+      "type": "REPSINTIME",
+      "difficulty": 5,
+      "sets": 4,
+      "setPause": 240,
+      "totalTime": null,
+      "description": "A brutal 400-burpee challenge to test your full-body strength and endurance.",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        },
+        {
+          "name": "Burpees",
+          "reps": 1,
+          "workTime": 4,
+          "restTime": 0
+        }
+      ]
+    },
+    {
+      "title": "Pure HIIT",
+      "type": "TIME",
+      "difficulty": 4,
+      "sets": 7,
+      "setPause": 60,
+      "totalTime": null,
+      "description": "A full-body high-intensity interval training session to boost cardio, strength, and endurance.",
+      "exercises": [
+        {
+          "name": "High knees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Spiderman",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump jacks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "High knees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Mountain climbers",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "High knees",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Spiderman",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Pushups",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Spiderman",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump jacks",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        },
+        {
+          "name": "Jump squats",
+          "reps": 10,
+          "workTime": 20,
+          "restTime": 10
+        }
+      ]
+    }
+  ],
+  "exerciseDetails": [
+    {
+      "name": "Plank",
+      "difficulty": 1,
+      "muscle": "Core",
+      "description": "Hold forearm plank position keeping body in a straight line."
+    },
+    {
+      "name": "Advanced plank",
+      "difficulty": 2,
+      "muscle": "Core & Shoulders",
+      "description": "Hold a plank with variations such as arm/leg lifts for increased intensity."
+    },
+    {
+      "name": "One legged plank",
+      "difficulty": 1,
+      "muscle": "Core & Balance",
+      "description": "Hold a plank position while lifting one leg off the ground, maintaining a straight line from head to heels."
+    },
+    {
+      "name": "Side plank",
+      "difficulty": 2,
+      "muscle": "Core",
+      "description": "Lie on your side, prop up on one forearm, lift hips to form a straight line from head to feet, and hold."
+    },
+    {
+      "name": "Side plank left",
+      "difficulty": 1,
+      "muscle": "Abs",
+      "description": "Lie on your left side, prop up on your forearm, lift hips to form a straight line, hold position."
+    },
+    {
+      "name": "Side plank right",
+      "difficulty": 1,
+      "muscle": "Abs",
+      "description": "Lie on your right side, prop up on your forearm, lift hips to form a straight line, hold position."
+    },
+    {
+      "name": "Side plank leg up",
+      "difficulty": 1,
+      "muscle": "Core & Glutes",
+      "description": "Hold a side plank position and lift the top leg upward, keeping your core engaged throughout."
+    },
+    {
+      "name": "Plank rotation",
+      "difficulty": 1,
+      "muscle": "Core",
+      "description": "Start in a plank position, rotate your torso and extend one arm toward the ceiling, then return and repeat on the other side."
+    },
+    {
+      "name": "Plank ups",
+      "difficulty": 2,
+      "muscle": "Core & Arms",
+      "description": "Move from forearm plank to high plank and back, alternating one arm at a time."
+    },
+    {
+      "name": "Plank switches",
+      "difficulty": 2,
+      "muscle": "Core",
+      "description": "Alternate between high plank (hands) and low plank (forearms) positions by moving one arm at a time."
+    },
+    {
+      "name": "Plank leg lifts",
+      "difficulty": 1,
+      "muscle": "Core & Glutes",
+      "description": "In plank, lift legs alternately keeping hips stable."
+    },
+    {
+      "name": "Plank stars",
+      "difficulty": 2,
+      "muscle": "Core & Shoulders",
+      "description": "From plank, lift opposite arm and leg outwards forming a star shape."
+    },
+    {
+      "name": "Arm leg plank",
+      "difficulty": 2,
+      "muscle": "Core & Shoulders",
+      "description": "In plank position, lift opposite arm and leg simultaneously and hold briefly."
+    },
+    {
+      "name": "Crunches",
+      "difficulty": 1,
+      "muscle": "Abs",
+      "description": "Lie on your back, bend knees, lift your upper body toward your knees using your abs, then return slowly."
+    },
+    {
+      "name": "Bicycle crunches",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Lie on your back, lift shoulders off the ground, and alternate touching elbows to opposite knees in a pedaling motion."
+    },
+    {
+      "name": "Butterfly crunches",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Lie on back, bring soles together, perform crunches touching feet or ankles."
+    },
+    {
+      "name": "Jump crunches",
+      "difficulty": 3,
+      "muscle": "Abs & Cardio",
+      "description": "Crunch up explosively while simultaneously jumping your feet off the floor."
+    },
+    {
+      "name": "Sit ups",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Lie on your back, bend knees, and lift your upper body all the way up to a sitting position, then lower slowly."
+    },
+    {
+      "name": "Punch sit ups",
+      "difficulty": 2,
+      "muscle": "Abs & Arms",
+      "description": "Perform a sit up and punch forward at the top of the motion."
+    },
+    {
+      "name": "Lower abs",
+      "difficulty": 1,
+      "muscle": "Abs",
+      "description": "Lie flat on your back, lift your legs toward the ceiling, then slowly lower them without touching the ground."
+    },
+    {
+      "name": "Isometric lower abs",
+      "difficulty": 3,
+      "muscle": "Abs",
+      "description": "Hold legs slightly above the floor, keeping lower abs engaged."
+    },
+    {
+      "name": "Scissors",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Lie on your back, lift legs slightly, and alternate crossing them over each other in a scissor motion."
+    },
+    {
+      "name": "Seated tucks",
+      "difficulty": 1,
+      "muscle": "Abs",
+      "description": "Sit on the floor, lean back slightly, pull your knees toward your chest, then extend your legs outward without touching the floor."
+    },
+    {
+      "name": "Ankle taps",
+      "difficulty": 1,
+      "muscle": "Abs",
+      "description": "Lie on your back with knees bent, lift your shoulders slightly, and tap each ankle by bending sideways."
+    },
+    {
+      "name": "Russian twists",
+      "difficulty": 2,
+      "muscle": "Core & Abs",
+      "description": "Sit with feet off the floor, twist torso side to side while holding hands together or a weight."
+    },
+    {
+      "name": "Windshield wipers",
+      "difficulty": 1,
+      "muscle": "Core",
+      "description": "Lie on your back, lift legs, and rotate them side to side like wipers."
+    },
+    {
+      "name": "Power tucks",
+      "difficulty": 3,
+      "muscle": "Abs & Cardio",
+      "description": "Jump and tuck knees to chest, landing softly before repeating."
+    },
+    {
+      "name": "Single leg crunches",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Perform crunches while keeping one leg raised and alternating sides."
+    },
+    {
+      "name": "Plank kicks",
+      "difficulty": 1,
+      "muscle": "Core",
+      "description": "From plank, lift legs alternately in a kicking motion."
+    },
+    {
+      "name": "Jackknife twists",
+      "difficulty": 3,
+      "muscle": "Abs & Obliques",
+      "description": "From lying position, lift legs and torso, twisting to touch toes or sides."
+    },
+    {
+      "name": "3 way crunch pulses",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Pulse your torso in three directions to engage all areas of the abs."
+    },
+    {
+      "name": "Low abs twists",
+      "difficulty": 2,
+      "muscle": "Lower Abs & Obliques",
+      "description": "Lie on back and twist lower body side to side while legs lifted."
+    },
+    {
+      "name": "Low abs bent knees",
+      "difficulty": 2,
+      "muscle": "Lower Abs",
+      "description": "Raise bent knees toward chest while lying on back, lowering slowly."
+    },
+    {
+      "name": "Side plank leg circle",
+      "difficulty": 2,
+      "muscle": "Obliques & Glutes",
+      "description": "Hold side plank and move top leg in controlled circles."
+    },
+    {
+      "name": "Seated leg raises",
+      "difficulty": 2,
+      "muscle": "Lower Abs",
+      "description": "Sit with legs extended and lift them together while leaning back slightly."
+    },
+    {
+      "name": "Circle crunches",
+      "difficulty": 2,
+      "muscle": "Abs",
+      "description": "Perform crunches moving your torso in a circular motion."
+    },
+    {
+      "name": "Plank buzzsaw",
+      "difficulty": 3,
+      "muscle": "Core",
+      "description": "From plank, rotate hips side to side rapidly while keeping torso stable."
+    },
+    {
+      "name": "Jackknives",
+      "difficulty": 3,
+      "muscle": "Abs",
+      "description": "Lift legs and torso simultaneously to meet in a jackknife position."
+    },
+    {
+      "name": "Full arm side plank leg up",
+      "difficulty": 3,
+      "muscle": "Obliques & Glutes",
+      "description": "In side plank, lift top leg and extend top arm overhead."
+    },
+    {
+      "name": "Lateral abs",
+      "difficulty": 2,
+      "muscle": "Obliques",
+      "description": "Perform side crunches or twists to target lateral abdominal muscles."
+    },
+    {
+      "name": "Scissor drops",
+      "difficulty": 2,
+      "muscle": "Lower Abs",
+      "description": "Alternate lowering legs in a scissor motion without touching the floor."
+    },
+    {
+      "name": "Plank jacks",
+      "difficulty": 3,
+      "muscle": "Core & Cardio",
+      "description": "Jump legs in and out while holding a plank position."
+    },
+    {
+      "name": "High plank",
+      "difficulty": 2,
+      "muscle": "Core & Arms",
+      "description": "Hold plank position with hands under shoulders and body straight."
+    },
+    {
+      "name": "Low plank",
+      "difficulty": 2,
+      "muscle": "Core & Arms",
+      "description": "Hold a forearm plank keeping body straight and engaged."
+    },
+    {
+      "name": "Knee to elbow",
+      "difficulty": 2,
+      "muscle": "Core & Obliques",
+      "description": "From plank, bring knee to opposite elbow alternately."
+    },
+    {
+      "name": "Leg raises",
+      "difficulty": 2,
+      "muscle": "Lower Abs",
+      "description": "Lift legs straight up from the ground while lying on your back."
+    },
+    {
+      "name": "Pushups",
+      "difficulty": 2,
+      "muscle": "Chest & Arms",
+      "description": "Start in high plank, lower your chest toward the floor, and push back up while keeping your core tight."
+    },
+    {
+      "name": "Knee pushups",
+      "difficulty": 1,
+      "muscle": "Chest & Arms",
+      "description": "Perform pushups on knees with proper form, lowering chest to floor."
+    },
+    {
+      "name": "Diamond pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Triceps",
+      "description": "Form a diamond with hands and perform pushups targeting triceps."
+    },
+    {
+      "name": "Decline pushups",
+      "difficulty": 2,
+      "muscle": "Chest & Shoulders",
+      "description": "Elevate your feet and perform pushups to target upper chest and shoulders."
+    },
+    {
+      "name": "Hindu pushups",
+      "difficulty": 3,
+      "muscle": "Shoulders & Chest",
+      "description": "Start in a downward dog position, swoop your chest low and forward while bending elbows, then return to the starting position."
+    },
+    {
+      "name": "Staggered pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Arms",
+      "description": "Place one hand slightly forward and one back, perform pushups alternating sides for balance."
+    },
+    {
+      "name": "Pushup rotation",
+      "difficulty": 3,
+      "muscle": "Chest & Core",
+      "description": "Do a pushup, then rotate your torso and raise one arm towards the ceiling for a side plank position."
+    },
+    {
+      "name": "Pushups rotation",
+      "difficulty": 2,
+      "muscle": "Chest & Core",
+      "description": "Do a pushup and rotate into side plank, alternating sides."
+    },
+    {
+      "name": "One leg pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Core",
+      "description": "Perform pushups while keeping one leg lifted for extra core and balance challenge."
+    },
+    {
+      "name": "Spiderman pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Core",
+      "description": "As you lower in a pushup, bring one knee toward your elbow. Alternate sides each rep."
+    },
+    {
+      "name": "Archer pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Arms",
+      "description": "Keep one arm extended while lowering toward the opposite arm, mimicking an archer's draw motion."
+    },
+    {
+      "name": "One arm pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Core",
+      "description": "Perform pushups with one arm while keeping your core engaged and feet spread for stability."
+    },
+    {
+      "name": "Explosive pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Power",
+      "description": "Perform pushups explosively so your hands leave the floor. Land softly and repeat."
+    },
+    {
+      "name": "Pushups on fist",
+      "difficulty": 3,
+      "muscle": "Chest & Arms",
+      "description": "Perform pushups on your fists for added wrist stability and forearm strength."
+    },
+    {
+      "name": "Knee tap pushups",
+      "difficulty": 2,
+      "muscle": "Chest & Core",
+      "description": "Perform a push-up, then tap your knee with the opposite hand before starting the next rep."
+    },
+    {
+      "name": "Pushups toe touch",
+      "difficulty": 2,
+      "muscle": "Chest & Core",
+      "description": "Perform pushups and touch one hand to opposite foot at the top."
+    },
+    {
+      "name": "Pushups full rotation",
+      "difficulty": 2,
+      "muscle": "Chest & Core",
+      "description": "Do a pushup and rotate your body into a side plank before returning."
+    },
+    {
+      "name": "Tiger band pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Arms",
+      "description": "Perform pushups with resistance band around upper back for extra tension."
+    },
+    {
+      "name": "Clap pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Arms",
+      "description": "Perform explosive pushups and clap hands at the top."
+    },
+    {
+      "name": "Sphinx pushups",
+      "difficulty": 3,
+      "muscle": "Triceps & Chest",
+      "description": "From forearm plank, lower and push up keeping elbows tucked."
+    },
+    {
+      "name": "Isometric pushups",
+      "difficulty": 3,
+      "muscle": "Chest & Core",
+      "description": "Hold the low position of a pushup as long as possible, keeping your body straight."
+    },
+    {
+      "name": "Pushups half squat",
+      "difficulty": 1,
+      "muscle": "Chest & Legs",
+      "description": "Do a pushup, then return to standing with a half squat before next repetition."
+    },
+    {
+      "name": "Shoulder taps",
+      "difficulty": 2,
+      "muscle": "Chest & Core",
+      "description": "In plank position, tap each shoulder alternately keeping core tight."
+    },
+    {
+      "name": "Spiderman",
+      "difficulty": 3,
+      "muscle": "Core & Chest",
+      "description": "In a pushup position, bring knee toward elbow alternating sides."
+    },
+    {
+      "name": "Pike pushups",
+      "difficulty": 3,
+      "muscle": "Shoulders",
+      "description": "Start in a pike position with hips up, bend elbows to lower your head toward the ground, then push back up."
+    },
+    {
+      "name": "Handstand pushups",
+      "difficulty": 3,
+      "muscle": "Shoulders & Arms",
+      "description": "Perform pushups while in a handstand position against a wall for support."
+    },
+    {
+      "name": "Dips",
+      "difficulty": 1,
+      "muscle": "Triceps & Chest",
+      "description": "Lower your body using parallel bars or a bench and push back up, keeping elbows close to your body."
+    },
+    {
+      "name": "One leg dips",
+      "difficulty": 2,
+      "muscle": "Triceps & Chest",
+      "description": "Perform dips while extending one leg forward or backward."
+    },
+    {
+      "name": "Dips toe touch",
+      "difficulty": 1,
+      "muscle": "Triceps & Chest",
+      "description": "Do dips and at the top reach one hand toward your opposite toe."
+    },
+    {
+      "name": "Jumping sit outs",
+      "difficulty": 2,
+      "muscle": "Core & Shoulders",
+      "description": "Start in a bear crawl position, lift one hand and opposite leg, rotate your body and kick the leg through, then return and repeat."
+    },
+    {
+      "name": "Australian pullups",
+      "difficulty": 2,
+      "muscle": "Back & Arms",
+      "description": "Hang under a bar, pull your chest toward the bar, then lower slowly while keeping your body straight."
+    },
+    {
+      "name": "Hyperextensions",
+      "difficulty": 1,
+      "muscle": "Lower Back",
+      "description": "Lie face down, lift your chest and legs off the ground by contracting your lower back, then slowly return."
+    },
+    {
+      "name": "Squats",
+      "difficulty": 1,
+      "muscle": "Legs",
+      "description": "Stand with feet shoulder-width apart, lower hips back and down as if sitting in a chair, then return to standing."
+    },
+    {
+      "name": "Jump squats",
+      "difficulty": 3,
+      "muscle": "Legs & Cardio",
+      "description": "Perform a squat, then jump explosively, landing softly and returning to squat position."
+    },
+    {
+      "name": "One legged squat",
+      "difficulty": 3,
+      "muscle": "Legs & Balance",
+      "description": "Perform a squat on one leg while keeping the other leg extended forward, maintaining balance."
+    },
+    {
+      "name": "Side squat",
+      "difficulty": 1,
+      "muscle": "Legs",
+      "description": "Take a wide stance, shift your weight to one side as you bend the knee and keep the other leg straight, then switch sides."
+    },
+    {
+      "name": "Butterfly squats (explosive)",
+      "difficulty": 2,
+      "muscle": "Legs",
+      "description": "Start in a squat position, jump explosively and tap your feet together mid-air, then land softly back into the squat."
+    },
+    {
+      "name": "Lunges",
+      "difficulty": 1,
+      "muscle": "Legs",
+      "description": "Step forward with one leg, lower your hips until both knees are bent at about 90 degrees, then push back to start."
+    },
+    {
+      "name": "Jump lunges",
+      "difficulty": 3,
+      "muscle": "Legs & Cardio",
+      "description": "Lunge forward, jump explosively, switch legs mid-air, and land softly."
+    },
+    {
+      "name": "Bottom up lunges",
+      "difficulty": 3,
+      "muscle": "Legs",
+      "description": "Step forward into a lunge, then drive back to standing, focusing on pushing from the heel and engaging glutes."
+    },
+    {
+      "name": "Single leg deadlifts",
+      "difficulty": 1,
+      "muscle": "Legs & Glutes",
+      "description": "Stand on one leg, hinge at the hips keeping back straight, and lower your torso toward the floor, then return upright."
+    },
+    {
+      "name": "Single leg chair stands",
+      "difficulty": 1,
+      "muscle": "Legs & Balance",
+      "description": "Sit on a chair, extend one leg, then stand up using only the other leg, keeping balance controlled."
+    },
+    {
+      "name": "Tuck jumps",
+      "difficulty": 3,
+      "muscle": "Legs & Cardio",
+      "description": "Jump explosively while pulling your knees toward your chest, land softly, and immediately go into the next jump."
+    },
+    {
+      "name": "Super skater jumps",
+      "difficulty": 2,
+      "muscle": "Legs & Cardio",
+      "description": "Jump laterally from side to side, landing on one leg with the other leg sweeping behind for balance."
+    },
+    {
+      "name": "Side kicks",
+      "difficulty": 1,
+      "muscle": "Core & Legs",
+      "description": "From plank or standing, perform controlled side kicks."
+    },
+    {
+      "name": "Hip thrusts",
+      "difficulty": 1,
+      "muscle": "Glutes",
+      "description": "Sit on the ground with your back against a bench, feet flat, and lift hips upward by squeezing your glutes."
+    },
+    {
+      "name": "Donkey kicks",
+      "difficulty": 1,
+      "muscle": "Glutes",
+      "description": "Start on all fours, lift one leg upward while keeping your knee bent at 90 degrees, then lower and repeat."
+    },
+    {
+      "name": "Lateral donkey",
+      "difficulty": 2,
+      "muscle": "Glutes",
+      "description": "Start on all fours, lift one leg to the side while keeping your knee bent, then lower back down and repeat."
+    },
+    {
+      "name": "Burpees",
+      "difficulty": 3,
+      "muscle": "Full Body & Cardio",
+      "description": "From standing, squat down, kick your feet back into a plank, perform a pushup, return to squat, and jump explosively upward."
+    },
+    {
+      "name": "Burpees (no pushup)",
+      "difficulty": 2,
+      "muscle": "Cardio",
+      "description": "From standing, squat down, kick your feet back into a plank, quickly return to squat, and jump explosively upward."
+    },
+    {
+      "name": "Half burpees",
+      "difficulty": 2,
+      "muscle": "Full Body & Cardio",
+      "description": "Perform burpees without the jump, always keeping the hands on the floor (i.e a pushup followed by a half quat)."
+    },
+    {
+      "name": "Side burpees left",
+      "difficulty": 3,
+      "muscle": "Full Body & Cardio",
+      "description": "Perform a burpee keeping the right leg always raised."
+    },
+    {
+      "name": "Side burpees right",
+      "difficulty": 3,
+      "muscle": "Full Body & Cardio",
+      "description": "Perform a burpee keeping the left leg always raised."
+    },
+    {
+      "name": "Mountain climbers",
+      "difficulty": 2,
+      "muscle": "Cardio & Core",
+      "description": "Start in plank position, alternate driving knees toward your chest quickly while keeping your core tight."
+    },
+    {
+      "name": "Jumping jacks",
+      "difficulty": 1,
+      "muscle": "Cardio",
+      "description": "Jump with your legs spreading outward and arms going overhead, then return to the starting position quickly."
+    },
+    {
+      "name": "Run in place",
+      "difficulty": 1,
+      "muscle": "Cardio",
+      "description": "Run on the spot, lifting knees high and pumping your arms."
+    },
+    {
+      "name": "Knee up run",
+      "difficulty": 1,
+      "muscle": "Cardio & Legs",
+      "description": "Run in place bringing knees up towards chest to increase heart rate."
+    },
+    {
+      "name": "Jump rope",
+      "difficulty": 1,
+      "muscle": "Cardio & Legs",
+      "description": "Jump rope continuously, keeping a steady pace and engaging your calves and core."
+    },
+    {
+      "name": "Inchworms",
+      "difficulty": 1,
+      "muscle": "Full Body",
+      "description": "Stand tall, hinge at the hips to touch the floor, walk your hands forward into a plank, then walk them back and stand up."
+    },
+    {
+      "name": "Squat taps",
+      "difficulty": 1,
+      "muscle": "Legs & Cardio",
+      "description": "Perform a squat and tap one foot to the side, alternating sides."
+    },
+    {
+      "name": "Squat run",
+      "difficulty": 1,
+      "muscle": "Legs & Cardio",
+      "description": "Alternate between squats and short running steps in place."
+    },
+    {
+      "name": "Step in",
+      "difficulty": 1,
+      "muscle": "Legs & Cardio",
+      "description": "Step one foot forward and back repeatedly as a light warmup."
+    },
+    {
+      "name": "High knees",
+      "difficulty": 3,
+      "muscle": "Legs & Cardio",
+      "description": "Run in place while lifting knees as high as possible, pumping arms."
+    }
+  ]
+}

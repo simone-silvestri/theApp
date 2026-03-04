@@ -1,10 +1,8 @@
 package com.simone.cfts;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,33 +20,26 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class WorkoutActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private TextView titlepage, subtitlepage, btexercise;
-    private Animation bttone, btttwo, bttthree, ltr;
-    private ImageView btn1, btn2, btn3, btn4, btn5, btnall;
+    private ImageView btn1, btn2, btn3, btn4, btn5;
     private SearchView workoutSearch;
 
     private int deletePosition;
     private ListView lv;
     private ArrayList<Workout> wodList;
-    private int currentTime, currentDiff;
-    private ImageButton buttonBack;
+    private int currentDiff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        buttonBack = findViewById(R.id.btnBack);
+        ImageButton buttonBack = findViewById(R.id.btnBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,135 +47,35 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
-        btn1 = (ImageView) findViewById(R.id.btn1);
-        btn2 = (ImageView) findViewById(R.id.btn2);
-        btn3 = (ImageView) findViewById(R.id.btn3);
-        btn4 = (ImageView) findViewById(R.id.btn4);
-        btn5 = (ImageView) findViewById(R.id.btn5);
-        btnall = (ImageView) findViewById(R.id.btnall);
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
 
-        bttone = AnimationUtils.loadAnimation(this, R.anim.bttone);
-        btttwo = AnimationUtils.loadAnimation(this, R.anim.btttwo);
-        bttthree = AnimationUtils.loadAnimation(this, R.anim.bttfour);
-        ltr = AnimationUtils.loadAnimation(this, R.anim.ltr);
+        Animation bttthree = AnimationUtils.loadAnimation(this, R.anim.bttfour);
 
         workoutSearch = findViewById(R.id.workout_search);
 
         int id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_button", null, null);
-        ImageView searchIcon = (ImageView) workoutSearch.findViewById(id);
+        ImageView searchIcon = workoutSearch.findViewById(id);
         searchIcon.setImageResource(R.drawable.ic_baseline_search_24);
 
         id = workoutSearch.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        TextView textView = (TextView) workoutSearch.findViewById(id);
+        TextView textView = workoutSearch.findViewById(id);
 
         textView.setTextColor(getResources().getColor(R.color.gray));
         textView.setHintTextColor(getResources().getColor(R.color.gray));
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
         wodList = dbhandler.loadDatabase();
-
         Collections.sort(wodList);
-        final List<RowDataComplete> rowData;
-        rowData = new ArrayList<RowDataComplete>();
-        for (int i = 0; i < wodList.size(); i++) {
-            RowDataComplete data = new RowDataComplete();
-            String str = wodList.get(i).getTitle();
-            data.setTitle(str);
-            String type;
-            if (new String("TIME").equals(wodList.get(i).getType())) {
-                type = "H.I.I.T. workout";
-                data.setImageType(R.drawable.time);
-            } else if (new String("REPS").equals(wodList.get(i).getType())) {
-                type = "Reps workout";
-                data.setImageType(R.drawable.reps);
-            } else {
-                type = "Reps in time";
-                data.setImageType(R.drawable.reptime);
-            }
-            String timeLeftText;
-            int minutes = (int) wodList.get(i).getTotalTime() / 60;
-            int seconds = (int) wodList.get(i).getTotalTime() % 60;
-            if (minutes > 0) {
-                timeLeftText = "" + minutes + "'";
-                if (seconds < 10) timeLeftText += "0";
-                timeLeftText += seconds + "\"";
-            } else {
-                timeLeftText = "" + seconds + "\"";
-            }
-            str = "Time: " + timeLeftText;
-            data.setSubtitle(str);
-            data.setType(type);
-            if (wodList.get(i).getDifficulty() == 1) {
-                data.setImageId(R.drawable.beginner);
-            } else if (wodList.get(i).getDifficulty() == 2) {
-                data.setImageId(R.drawable.average);
-            } else if (wodList.get(i).getDifficulty() == 3) {
-                data.setImageId(R.drawable.skilled);
-            } else if (wodList.get(i).getDifficulty() == 4) {
-                data.setImageId(R.drawable.expert);
-            } else {
-                data.setImageId(R.drawable.spartan);
-            }
-            rowData.add(data);
-        }
-        lv = findViewById(R.id.lv);
 
-        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
-        lv.setAdapter(adapter);
+        lv = findViewById(R.id.lv);
+        refreshList();
         lv.startAnimation(bttthree);
         lv.setOnItemClickListener(this);
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                deletePosition = position;
-                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
-
-                final TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("What do you want to do?");
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
-                puWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setText("Delete");
-                btnYes.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
-                        Workout work = wodList.get(deletePosition);
-                        int id = dbhandler.deleteWorkout(work);
-                        rowData.remove(deletePosition);
-                        adapter.notifyDataSetChanged();
-                        // TODO Auto-generated method stub
-                        Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
-                        puWindow.dismiss();
-                    }
-                });
-                Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setText("Modify");
-                btnNo.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Workout work = wodList.get(deletePosition);
-                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
-                        intent.putExtra("EXTRA_WORKOUT", work);
-                        startActivity(intent);
-                        puWindow.dismiss();
-                    }
-                });
-                return true;
-            }
-        });
-
-
-        currentTime = -1;
         currentDiff = -1;
 
         workoutSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -196,20 +87,110 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                         workoutSearch.clearFocus();
                     }
                 });
-
                 filterByName(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
         });
-
     }
 
+    private List<RowDataComplete> buildRowData() {
+        List<RowDataComplete> rowData = new ArrayList<>();
+        for (int i = 0; i < wodList.size(); i++) {
+            RowDataComplete data = new RowDataComplete();
+            Workout w = wodList.get(i);
+            data.setTitle(w.getTitle());
+
+            String type;
+            if ("TIME".equals(w.getType())) {
+                type = "H.I.I.T. workout";
+                data.setImageType(R.drawable.time);
+            } else if ("REPS".equals(w.getType())) {
+                type = "Reps workout";
+                data.setImageType(R.drawable.reps);
+            } else {
+                type = "Reps in time";
+                data.setImageType(R.drawable.reptime);
+            }
+
+            int minutes = w.getTotalTime() / 60;
+            int seconds = w.getTotalTime() % 60;
+            String timeLeftText;
+            if (minutes > 0) {
+                timeLeftText = "" + minutes + "'";
+                if (seconds < 10) timeLeftText += "0";
+                timeLeftText += seconds + "\"";
+            } else {
+                timeLeftText = "" + seconds + "\"";
+            }
+            data.setSubtitle("Time: " + timeLeftText);
+            data.setType(type);
+            data.setImageId(DifficultyHelper.getIconResource(w.getDifficulty()));
+            rowData.add(data);
+        }
+        return rowData;
+    }
+
+    private void refreshList() {
+        final List<RowDataComplete> rowData = buildRowData();
+        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
+        lv.setAdapter(adapter);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                deletePosition = position;
+                showWorkoutActionPopup(view, rowData, adapter);
+                return true;
+            }
+        });
+    }
+
+    private void showWorkoutActionPopup(View anchor, final List<RowDataComplete> rowData, final MyAdapterComplete adapter) {
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
+        puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+        TextView text = puView.findViewById(R.id.text_id);
+        text.setText("What do you want to do?");
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+        puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
+        puWindow.setAnimationStyle(R.style.Animation);
+
+        Button btnYes = puView.findViewById(R.id.button_yes);
+        btnYes.setText("Delete");
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
+                Workout work = wodList.get(deletePosition);
+                dbhandler.deleteWorkout(work);
+                rowData.remove(deletePosition);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
+                puWindow.dismiss();
+            }
+        });
+        Button btnNo = puView.findViewById(R.id.button_no);
+        btnNo.setText("Modify");
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Workout work = wodList.get(deletePosition);
+                Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
+                intent.putExtra("EXTRA_WORKOUT", work);
+                startActivity(intent);
+                puWindow.dismiss();
+            }
+        });
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -228,117 +209,19 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void filterByName(String query) {
-
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-
-        ArrayList<Workout> wdtemp = new ArrayList<>();
-        wdtemp = dbhandler.loadDatabase();
+        ArrayList<Workout> wdtemp = dbhandler.loadDatabase();
         wodList.clear();
 
         if (!wdtemp.isEmpty()) {
             for (int i = 0; i < wdtemp.size(); i++) {
-                if (containsIgnoreCase(wdtemp.get(i).getTitle(),query)) {
+                if (containsIgnoreCase(wdtemp.get(i).getTitle(), query)) {
                     wodList.add(wdtemp.get(i));
                 }
             }
         }
 
-
-        final List<RowDataComplete> rowData;
-        rowData = new ArrayList<RowDataComplete>();
-        for (int i = 0; i < wodList.size(); i++) {
-            RowDataComplete data = new RowDataComplete();
-            String str = wodList.get(i).getTitle();
-            data.setTitle(str);
-            String type;
-            if (new String("TIME").equals(wodList.get(i).getType())) {
-                type = "H.I.I.T. workout";
-                data.setImageType(R.drawable.time);
-            } else if (new String("REPS").equals(wodList.get(i).getType())) {
-                type = "Reps workout";
-                data.setImageType(R.drawable.reps);
-            } else {
-                type = "Reps in time";
-                data.setImageType(R.drawable.reptime);
-            }
-            String timeLeftText;
-            int minutes = (int) wodList.get(i).getTotalTime() / 60;
-            int seconds = (int) wodList.get(i).getTotalTime() % 60;
-            if (minutes > 0) {
-                timeLeftText = "" + minutes + "'";
-                if (seconds < 10) timeLeftText += "0";
-                timeLeftText += seconds + "\"";
-            } else {
-                timeLeftText = "" + seconds + "\"";
-            }
-            str = "Time: " + timeLeftText;
-            data.setSubtitle(str);
-            data.setType(type);
-            if (wodList.get(i).getDifficulty() == 1) {
-                data.setImageId(R.drawable.beginner);
-            } else if (wodList.get(i).getDifficulty() == 2) {
-                data.setImageId(R.drawable.average);
-            } else if (wodList.get(i).getDifficulty() == 3) {
-                data.setImageId(R.drawable.skilled);
-            } else if (wodList.get(i).getDifficulty() == 4) {
-                data.setImageId(R.drawable.expert);
-            } else {
-                data.setImageId(R.drawable.spartan);
-            }
-            rowData.add(data);
-        }
-        lv = findViewById(R.id.lv);
-
-        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
-        lv.setAdapter(adapter);
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                deletePosition = position;
-                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
-
-                TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("What do you want to do?");
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
-                puWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setText("Delete");
-                btnYes.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
-                        Workout work = wodList.get(deletePosition);
-                        int id = dbhandler.deleteWorkout(work);
-                        rowData.remove(deletePosition);
-                        adapter.notifyDataSetChanged();
-                        // TODO Auto-generated method stub
-                        Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
-                        puWindow.dismiss();
-                    }
-                });
-                Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setText("Modify");
-                btnNo.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Workout work = wodList.get(deletePosition);
-                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
-                        intent.putExtra("EXTRA_WORKOUT", work);
-                        startActivity(intent);
-                        puWindow.dismiss();
-                    }
-                });
-                return true;
-            }
-        });
+        refreshList();
     }
 
     public void filterWorkout(View view) {
@@ -352,21 +235,21 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         int idx = r.indexOfChild(view);
 
         currentDiff = idx;
-        if(currentDiff==1) {
+        if (currentDiff == 1) {
             btn1.setImageResource(R.drawable.star_beginner);
-        } else if (currentDiff==2) {
+        } else if (currentDiff == 2) {
             btn1.setImageResource(R.drawable.star_average);
             btn2.setImageResource(R.drawable.star_average);
-        } else if (currentDiff==3) {
+        } else if (currentDiff == 3) {
             btn1.setImageResource(R.drawable.star_skilled);
             btn2.setImageResource(R.drawable.star_skilled);
             btn3.setImageResource(R.drawable.star_skilled);
-        } else if (currentDiff==4) {
+        } else if (currentDiff == 4) {
             btn1.setImageResource(R.drawable.star_expert);
             btn2.setImageResource(R.drawable.star_expert);
             btn3.setImageResource(R.drawable.star_expert);
             btn4.setImageResource(R.drawable.star_expert);
-        } else if (currentDiff==5) {
+        } else if (currentDiff == 5) {
             btn1.setImageResource(R.drawable.star_spartan);
             btn2.setImageResource(R.drawable.star_spartan);
             btn3.setImageResource(R.drawable.star_spartan);
@@ -377,121 +260,25 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         }
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-
-        if (currentDiff==-1) {
+        if (currentDiff == -1) {
             wodList = dbhandler.loadDatabase();
             Collections.sort(wodList);
         } else {
             wodList = dbhandler.loadDatabaseDiff(currentDiff);
         }
 
-        final List<RowDataComplete> rowData;
-        rowData = new ArrayList<RowDataComplete>();
-        for (int i = 0; i < wodList.size(); i++) {
-            RowDataComplete data = new RowDataComplete();
-            String str = wodList.get(i).getTitle();
-            data.setTitle(str);
-            String type;
-            if (new String("TIME").equals(wodList.get(i).getType())) {
-                type = "H.I.I.T. workout";
-                data.setImageType(R.drawable.time);
-            } else if (new String("REPS").equals(wodList.get(i).getType())) {
-                type = "Reps workout";
-                data.setImageType(R.drawable.reps);
-            } else {
-                type = "Reps in time";
-                data.setImageType(R.drawable.reptime);
-            }
-            String timeLeftText;
-            int minutes = (int) wodList.get(i).getTotalTime() / 60;
-            int seconds = (int) wodList.get(i).getTotalTime() % 60;
-            if (minutes > 0) {
-                timeLeftText = "" + minutes + "'";
-                if (seconds < 10) timeLeftText += "0";
-                timeLeftText += seconds + "\"";
-            } else {
-                timeLeftText = "" + seconds + "\"";
-            }
-            str = "Time: " + timeLeftText;
-            data.setSubtitle(str);
-            data.setType(type);
-            if (wodList.get(i).getDifficulty() == 1) {
-                data.setImageId(R.drawable.beginner);
-            } else if (wodList.get(i).getDifficulty() == 2) {
-                data.setImageId(R.drawable.average);
-            } else if (wodList.get(i).getDifficulty() == 3) {
-                data.setImageId(R.drawable.skilled);
-            } else if (wodList.get(i).getDifficulty() == 4) {
-                data.setImageId(R.drawable.expert);
-            } else {
-                data.setImageId(R.drawable.spartan);
-            }
-            rowData.add(data);
-        }
-        lv = findViewById(R.id.lv);
-
-        final MyAdapterComplete adapter = new MyAdapterComplete(this, rowData);
-        lv.setAdapter(adapter);
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                deletePosition = position;
-                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
-
-                TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("What do you want to do?");
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
-                puWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setText("Delete");
-                btnYes.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
-                        Workout work = wodList.get(deletePosition);
-                        int id = dbhandler.deleteWorkout(work);
-                        rowData.remove(deletePosition);
-                        adapter.notifyDataSetChanged();
-                        // TODO Auto-generated method stub
-                        Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
-                        puWindow.dismiss();
-                    }
-                });
-                Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setText("Modify");
-                btnNo.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Workout work = wodList.get(deletePosition);
-                        Intent intent = new Intent(WorkoutActivity.this, ModifyWorkoutActivity.class);
-                        intent.putExtra("EXTRA_WORKOUT", work);
-                        startActivity(intent);
-                        puWindow.dismiss();
-                    }
-                });
-                return true;
-            }
-        });
+        refreshList();
     }
 
     public static boolean containsIgnoreCase(String src, String what) {
         final int length = what.length();
         if (length == 0)
-            return true; // Empty string is contained
+            return true;
 
         final char firstLo = Character.toLowerCase(what.charAt(0));
         final char firstUp = Character.toUpperCase(what.charAt(0));
 
         for (int i = src.length() - length; i >= 0; i--) {
-            // Quick check before calling the more expensive regionMatches() method:
             final char ch = src.charAt(i);
             if (ch != firstLo && ch != firstUp)
                 continue;

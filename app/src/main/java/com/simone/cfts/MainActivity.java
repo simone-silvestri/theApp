@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +31,6 @@ import java.io.OutputStreamWriter;
 import java.util.Random;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.simone.cfts.MESSAGE";
@@ -61,183 +60,144 @@ public class MainActivity extends AppCompatActivity {
         btexercise = (TextView) findViewById(R.id.btexercise);
         picstatistic = (ImageView) findViewById(R.id.picstatistics);
 
-        TextToSpeech ttobj=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-            }
-        }, "com.google.android.tts");
-        ttobj.setLanguage(Locale.US);
-
-        final ImageButton pubtn = (ImageButton) findViewById(R.id.buttonreset);
-        pubtn.setOnClickListener(new Button.OnClickListener() {
+        final ImageButton pubtn = findViewById(R.id.buttonreset);
+        pubtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView,height,width,true);
-                puWindow.showAtLocation(arg0, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setOnClickListener(new Button.OnClickListener() {
+                showConfirmPopup(arg0, null, null, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         resetDatabase(v);
-                        puWindow.dismiss();
                         Toast.makeText(MainActivity.this, "Database erased", Toast.LENGTH_SHORT).show();
                     }
-                });
-                Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        puWindow.dismiss();
-                    }
-                });
-                puWindow.showAsDropDown(pubtn, 0, 0);
+                }, null, null);
             }
         });
 
-        final ImageButton pubtnload = (ImageButton) findViewById(R.id.btnloaddatabase);
-        pubtnload.setOnClickListener(new Button.OnClickListener() {
+        final ImageButton pubtnload = findViewById(R.id.btnloaddatabase);
+        pubtnload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
-
-                TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Load the original corona workout routines?");
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView,height,width,true);
-                puWindow.showAtLocation(arg0, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setOnClickListener(new Button.OnClickListener() {
+                showConfirmPopup(arg0, "Load the original corona workout routines?", null, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         populateDatabase(v);
-                        puWindow.dismiss();
                         Toast.makeText(MainActivity.this, "Original database loaded", Toast.LENGTH_SHORT).show();
                     }
-                });
-                Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        puWindow.dismiss();
-                    }
-                });
-                puWindow.showAsDropDown(pubtnload, 0, 0);
+                }, null, null);
             }
         });
 
-        final ImageButton pubtnadd = (ImageButton) findViewById(R.id.buttonaddworkout);
-        pubtnadd.setOnClickListener(new Button.OnClickListener() {
+        final ImageButton pubtnadd = findViewById(R.id.buttonaddworkout);
+        pubtnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
-
-                TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Add workout to list");
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView,height,width,true);
-                puWindow.showAtLocation(arg0, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnYes = (Button) puView.findViewById(R.id.button_yes);
-                btnYes.setText("new");
-                btnYes.setOnClickListener(new Button.OnClickListener() {
+                showConfirmPopup(arg0, "Add workout to list", "new", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         openEditor(v);
-                        puWindow.dismiss();
                     }
-                });
-                Button btnNo = (Button) puView.findViewById(R.id.button_no);
-                btnNo.setText("copy");
-                btnNo.setOnClickListener(new Button.OnClickListener() {
+                }, "copy", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         openStringEditor(v);
-                        puWindow.dismiss();
                     }
                 });
-                puWindow.showAsDropDown(pubtnadd, 0, 0);
             }
         });
 
-        final ImageButton pubtnwrite = (ImageButton) findViewById(R.id.buttonwrite);
-        pubtnwrite.setOnClickListener(new Button.OnClickListener() {
+        final ImageButton pubtnwrite = findViewById(R.id.buttonwrite);
+        pubtnwrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View puView = layoutInflater.inflate(R.layout.popup_read_write, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
-
-                TextView text = (TextView) puView.findViewById(R.id.text_id);
-                text.setText("Write database to file?");
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView,height,width,true);
-                puWindow.showAtLocation(arg0, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnWrite = (Button) puView.findViewById(R.id.button_write);
-                btnWrite.setOnClickListener(new Button.OnClickListener() {
+                showSingleActionPopup(arg0, "Write database to file?", null, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         writeDataBase(v);
-                        puWindow.dismiss();
                         Toast.makeText(MainActivity.this, "written database to file", Toast.LENGTH_SHORT).show();
                     }
                 });
-                puWindow.showAsDropDown(pubtnload, 0, 0);
             }
         });
 
-        final ImageButton pubtnread = (ImageButton) findViewById(R.id.buttonread);
-        pubtnread.setOnClickListener(new Button.OnClickListener() {
+        final ImageButton pubtnread = findViewById(R.id.buttonread);
+        pubtnread.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View puView = layoutInflater.inflate(R.layout.popup_read_write, null);
-                puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.popup_show));
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow puWindow = new PopupWindow(puView,height,width,true);
-                puWindow.showAtLocation(arg0, Gravity.CENTER, 0, 0);
-                puWindow.setAnimationStyle(R.style.Animation);
-
-                Button btnRead = (Button) puView.findViewById(R.id.button_write);
-                btnRead.setText("READ");
-                btnRead.setOnClickListener(new Button.OnClickListener() {
+                showSingleActionPopup(arg0, null, "READ", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         readDataBase(v);
-                        puWindow.dismiss();
                         Toast.makeText(MainActivity.this, "read database from file", Toast.LENGTH_SHORT).show();
                     }
                 });
-                puWindow.showAsDropDown(pubtnload, 0, 0);
+            }
+        });
+    }
+
+    private void showConfirmPopup(View anchor, String message,
+                                  String yesText, final View.OnClickListener yesAction,
+                                  String noText, final View.OnClickListener noAction) {
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View puView = layoutInflater.inflate(R.layout.popup_are_you_sure, null);
+        puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+        if (message != null) {
+            TextView text = puView.findViewById(R.id.text_id);
+            text.setText(message);
+        }
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+        puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
+        puWindow.setAnimationStyle(R.style.Animation);
+
+        Button btnYes = puView.findViewById(R.id.button_yes);
+        if (yesText != null) btnYes.setText(yesText);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (yesAction != null) yesAction.onClick(v);
+                puWindow.dismiss();
+            }
+        });
+
+        Button btnNo = puView.findViewById(R.id.button_no);
+        if (noText != null) btnNo.setText(noText);
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (noAction != null) noAction.onClick(v);
+                puWindow.dismiss();
+            }
+        });
+    }
+
+    private void showSingleActionPopup(View anchor, String message, String buttonText,
+                                       final View.OnClickListener action) {
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View puView = layoutInflater.inflate(R.layout.popup_read_write, null);
+        puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+        if (message != null) {
+            TextView text = puView.findViewById(R.id.text_id);
+            text.setText(message);
+        }
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+        puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
+        puWindow.setAnimationStyle(R.style.Animation);
+
+        Button btn = puView.findViewById(R.id.button_write);
+        if (buttonText != null) btn.setText(buttonText);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (action != null) action.onClick(v);
+                puWindow.dismiss();
             }
         });
     }
@@ -291,23 +251,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readFromFile(@NonNull Uri uri) {
-        OutputStream outputStream;
         StringFormatter stringFormatter = new StringFormatter();
+        InputStream inputStream = null;
+        BufferedReader reader = null;
         try {
-            String toRead;
-            InputStream inputStream = getContentResolver().openInputStream(uri);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            toRead = reader.readLine();
+            inputStream = getContentResolver().openInputStream(uri);
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            String toRead = reader.readLine();
             stringFormatter.setWodList(toRead);
-            inputStream.close();
             ArrayList<Workout> wodList = stringFormatter.getWodList();
             DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
             for (int i=0; i<wodList.size(); i++) {
-                ArrayList<Exercise> exeList = new ArrayList<>();
                 int id = (int) dbhandler.addOrUpdateWorkout(wodList.get(i));
                 wodList.get(i).setID(id);
                 dbhandler.removeExercises(wodList.get(i));
-                exeList = wodList.get(i).getExercises();
+                ArrayList<Exercise> exeList = wodList.get(i).getExercises();
                 for (int j=0; j<exeList.size(); j++) {
                     dbhandler.addExerciseInWorkout(exeList.get(j),wodList.get(i));
                     ExerciseDetail exedet = new ExerciseDetail(exeList.get(j).getName(),1);
@@ -315,29 +273,43 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("MainActivity", "Error reading database from file", e);
+        } finally {
+            try {
+                if (reader != null) reader.close();
+                if (inputStream != null) inputStream.close();
+            } catch (IOException e) {
+                Log.e("MainActivity", "Error closing streams", e);
+            }
         }
     }
 
     private void writeInFile(@NonNull Uri uri) {
-        OutputStream outputStream;
+        OutputStream outputStream = null;
+        BufferedWriter bw = null;
         try {
-            String toWrite = "";
+            StringBuilder toWrite = new StringBuilder();
             DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
             ArrayList<Workout> wodList = dbhandler.loadDatabase();
 
             StringFormatter stringFormatter = new StringFormatter();
             for (int i = 0; i < wodList.size(); i++) {
                 stringFormatter.setContent(wodList.get(i));
-                toWrite += stringFormatter.getContent();
+                toWrite.append(stringFormatter.getContent());
             }
             outputStream = getContentResolver().openOutputStream(uri);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bw.write(toWrite);
+            bw = new BufferedWriter(new OutputStreamWriter(outputStream));
+            bw.write(toWrite.toString());
             bw.flush();
-            bw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("MainActivity", "Error writing database to file", e);
+        } finally {
+            try {
+                if (bw != null) bw.close();
+                if (outputStream != null) outputStream.close();
+            } catch (IOException e) {
+                Log.e("MainActivity", "Error closing streams", e);
+            }
         }
     }
 
@@ -391,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
 
-        DefaultWorkouts defaultWorkouts = new DefaultWorkouts(view);
+        DefaultWorkouts defaultWorkouts = new DefaultWorkouts(this);
 
         ArrayList<Workout> wodList = defaultWorkouts.getWodList();
 
