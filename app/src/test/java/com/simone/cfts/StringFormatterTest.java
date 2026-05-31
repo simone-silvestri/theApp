@@ -241,6 +241,71 @@ public class StringFormatterTest {
         assertEquals(2, list.get(1).getExercises().size());
     }
 
+    // --- Calorie + goal record types ---
+
+    @Test
+    public void setWodList_skipsCalorieRecordsButKeepsWorkouts() {
+        String input = "CFLSPASS|W1|TIME|1|2|60|300|Pushups|40|20|10|END"
+                + "CFLSKCAL|2026-05-31|0|450|END"
+                + "CFLSKCAL|2026-05-31|1|600|END"
+                + "CFLSGOAL|2000|END";
+
+        StringFormatter sf = new StringFormatter();
+        sf.setWodList(input);
+
+        assertEquals(1, sf.getWodList().size());
+        assertEquals("W1", sf.getWodList().get(0).getTitle());
+    }
+
+    @Test
+    public void parseCaloriesAndGoal_extractsRows() {
+        String input = "CFLSKCAL|2026-05-31|0|450|END"
+                + "CFLSKCAL|2026-05-31|2|520|END"
+                + "CFLSGOAL|1800|END";
+
+        StringFormatter sf = new StringFormatter();
+        sf.parseCaloriesAndGoal(input);
+
+        assertEquals(2, sf.getCalorieRows().size());
+
+        StringFormatter.CalorieRow r0 = sf.getCalorieRows().get(0);
+        assertEquals("2026-05-31", r0.date);
+        assertEquals(0, r0.meal);
+        assertEquals(450, r0.kcal);
+
+        StringFormatter.CalorieRow r1 = sf.getCalorieRows().get(1);
+        assertEquals("2026-05-31", r1.date);
+        assertEquals(2, r1.meal);
+        assertEquals(520, r1.kcal);
+
+        assertEquals(Integer.valueOf(1800), sf.getGoal());
+    }
+
+    @Test
+    public void parseCaloriesAndGoal_handlesOldFileWithoutCalorieRecords() {
+        String input = "CFLSPASS|W1|TIME|1|2|60|300|Pushups|40|20|10|END";
+
+        StringFormatter sf = new StringFormatter();
+        sf.parseCaloriesAndGoal(input);
+
+        assertEquals(0, sf.getCalorieRows().size());
+        assertNull(sf.getGoal());
+    }
+
+    @Test
+    public void appendCalorieRow_producesCorrectFormat() {
+        StringFormatter sf = new StringFormatter();
+        String row = sf.appendCalorieRow("2026-05-31", 0, 450);
+        assertEquals("CFLSKCAL|2026-05-31|0|450|END", row);
+    }
+
+    @Test
+    public void appendGoalRow_producesCorrectFormat() {
+        StringFormatter sf = new StringFormatter();
+        String row = sf.appendGoalRow(2000);
+        assertEquals("CFLSGOAL|2000|END", row);
+    }
+
     // --- Helpers ---
 
     private Workout makeWorkout(String title, String type, int diff, int sets, int pause, int totalTime) {

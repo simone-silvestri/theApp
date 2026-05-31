@@ -18,13 +18,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
     private static final String DATABASE_NAME = "workexeDatabase.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Table Names
     private static final String TABLE_WORK = "Workouts";
     private static final String TABLE_EXE  = "Exercises";
     private static final String TABLE_REL  = "WorkoutExercises";
     private static final String TABLE_CAL  = "Calendar";
+
+    // Calories Table
+    private static final String TABLE_CALORIES = "Calories";
+    private static final String KEY_CAL_DATE = "date";
+    private static final String KEY_CAL_MEAL = "meal";
+    private static final String KEY_CAL_KCAL = "kcal";
+
+    // Meal indices
+    public static final int MEAL_BREAKFAST = 0;
+    public static final int MEAL_LUNCH     = 1;
+    public static final int MEAL_DINNER    = 2;
+    public static final int MEAL_EXTRA     = 3;
 
     // Calendar Table
     private static final String KEY_CAL_ID      = "id";
@@ -118,6 +130,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_REL_TABLE);
         db.execSQL(CREATE_WORK_TABLE);
         db.execSQL(CREATE_CAL_TABLE);
+
+        String CREATE_CALORIES_TABLE = " CREATE TABLE " + TABLE_CALORIES + "("
+                + KEY_CAL_DATE + " TEXT NOT NULL, "
+                + KEY_CAL_MEAL + " INTEGER NOT NULL, "
+                + KEY_CAL_KCAL + " INTEGER NOT NULL, "
+                + "PRIMARY KEY (" + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + "))";
+        db.execSQL(CREATE_CALORIES_TABLE);
     }
 
     // Called when the database needs to be upgraded.
@@ -125,13 +144,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // but the DATABASE_VERSION is different than the version of the database that exists on disk.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion != newVersion) {
-            // Simplest implementation is to drop all old tables and recreate them
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_REL);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_WORK);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAL);
-            onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_CALORIES + "("
+                    + KEY_CAL_DATE + " TEXT NOT NULL, "
+                    + KEY_CAL_MEAL + " INTEGER NOT NULL, "
+                    + KEY_CAL_KCAL + " INTEGER NOT NULL, "
+                    + "PRIMARY KEY (" + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + "))");
         }
     }
 
@@ -659,6 +677,124 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long currentTime=date.getTime();
         currentTime=currentTime/MILLIS_PER_DAY;
         return (int) currentTime;
+    }
+
+    public void setMealKcal(String date, int meal, int kcal) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_CAL_DATE, date);
+            values.put(KEY_CAL_MEAL, meal);
+            values.put(KEY_CAL_KCAL, kcal);
+            db.insertWithOnConflict(TABLE_CALORIES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error writing meal kcal");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void clearMealKcal(String date, int meal) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_CALORIES,
+                    KEY_CAL_DATE + " = ? AND " + KEY_CAL_MEAL + " = ?",
+                    new String[]{date, String.valueOf(meal)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error clearing meal kcal");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public int[] getDayKcal(String date) {
+        int[] result = new int[4];
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_CAL_MEAL + ", " + KEY_CAL_KCAL
+                            + " FROM " + TABLE_CALORIES
+                            + " WHERE " + KEY_CAL_DATE + " = ?",
+                    new String[]{date});
+            while (cursor.moveToNext()) {
+                int meal = cursor.getInt(0);
+                int kcal = cursor.getInt(1);
+                if (meal >= 0 && meal < 4) {
+                    result[meal] = kcal;
+                }
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error reading day kcal");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return result;
+    }
+
+    /** Returns 7 daily totals, one per ISO weekday starting at {@code mondayDate}. */
+    public int[] getWeekKcal(String mondayDate) {
+        int[] totals = new int[7];
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_CAL_DATE + ", SUM(" + KEY_CAL_KCAL + ") "
+                            + "FROM " + TABLE_CALORIES + " "
+                            + "WHERE " + KEY_CAL_DATE + " >= ? AND " + KEY_CAL_DATE + " <= date(?, '+6 days') "
+                            + "GROUP BY " + KEY_CAL_DATE,
+                    new String[]{mondayDate, mondayDate});
+            while (cursor.moveToNext()) {
+                String d = cursor.getString(0);
+                int total = cursor.getInt(1);
+                int dayIndex = daysSinceMonday(mondayDate, d);
+                if (dayIndex >= 0 && dayIndex < 7) {
+                    totals[dayIndex] = total;
+                }
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error reading week kcal");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return totals;
+    }
+
+    /** Returns rows of (meal, kcal) for the export. Dates are appended in parallel into the {@code dates} list. */
+    public java.util.List<int[]> dumpCaloriesAsTriples(java.util.List<String> dates) {
+        java.util.List<int[]> rows = new java.util.ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + ", " + KEY_CAL_KCAL
+                            + " FROM " + TABLE_CALORIES,
+                    null);
+            while (cursor.moveToNext()) {
+                dates.add(cursor.getString(0));
+                rows.add(new int[]{cursor.getInt(1), cursor.getInt(2)});
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error dumping calories");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return rows;
+    }
+
+    private static int daysSinceMonday(String mondayIso, String otherIso) {
+        try {
+            java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US);
+            long a = fmt.parse(mondayIso).getTime();
+            long b = fmt.parse(otherIso).getTime();
+            return (int) ((b - a) / MILLIS_PER_DAY);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
 }

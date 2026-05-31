@@ -14,6 +14,7 @@
 
         <!-- The actual activity of the app -->
         <activity android:name=".Calendar" />
+        <activity android:name=".HealthActivity" />
         <activity
             android:name=".AddWorkoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
