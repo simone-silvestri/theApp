@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,7 +37,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
     private ArrayList<EditText> exework, exepause;
     private ArrayList<TextView> exename, worksec, pausesec, additional;
-    private ArrayList<RelativeLayout> layoutlist;
+    private ArrayList<LinearLayout> layoutlist;
     private ArrayList<ImageButton> btndelete;
     private ImageView time, reps, reptime, beginner, average, skilled, expert, spartan;
     private EditText textname, textset, textpause;
@@ -264,7 +263,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
             generalexepause.setHint("pause");
             generaladditional.setText("");
             // set set info
-            pauseOrTotalTime.setText("Pause:");
+            pauseOrTotalTime.setText("PAUSE");
             textpause.setHint("seconds");
             type.setText("H.I.I.T. workout");
         } else if (idx == 1) {
@@ -303,7 +302,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
             generalexepause.setHint("reps");
             generaladditional.setText("");
             // set set info
-            pauseOrTotalTime.setText("Total time:");
+            pauseOrTotalTime.setText("TOTAL");
             textpause.setHint("minutes");
             type.setText("Reps workout");
         } else {
@@ -340,7 +339,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
             generalexepause.setHint("sec");
             generaladditional.setText("X");
             // set set info
-            pauseOrTotalTime.setText("Pause:");
+            pauseOrTotalTime.setText("PAUSE");
             textpause.setHint("seconds");
             type.setText("Reps in time");
         }
@@ -355,7 +354,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
     }
 
     public void deleteExerciseFromList(View v) {
-        RelativeLayout r = (RelativeLayout) v.getParent();
+        LinearLayout r = (LinearLayout) v.getParent();
         int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
 
         ArrayList<String> nm = new ArrayList<>();
@@ -393,7 +392,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
     public void addExerciseToList(View v) {
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
 
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
@@ -406,7 +405,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                RelativeLayout r = (RelativeLayout) view.getParent();
+                LinearLayout r = (LinearLayout) view.getParent();
                 final int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
 
                 final ArrayList<String> nameList = new ArrayList<>();
@@ -433,12 +432,19 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 final EditText editText = dialog.findViewById(R.id.edit_search_exercise);
                 final Spinner editMuscle = dialog.findViewById(R.id.spinner_menu);
 
+                ArrayAdapter<CharSequence> muscleAdapter = ArrayAdapter.createFromResource(
+                        AddWorkoutActivity.this,
+                        R.array.muscle_categories,
+                        R.layout.spinner_item_search);
+                muscleAdapter.setDropDownViewResource(R.layout.spinner_dropdown_search);
+                editMuscle.setAdapter(muscleAdapter);
+
                 ListView listView = dialog.findViewById(R.id.list_search_exercise);
 
                 // Create a filtered list that will be updated based on both search text and muscle selection
                 final ArrayList<String> filteredNameList = new ArrayList<>(nameList);
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddWorkoutActivity.this,
-                        android.R.layout.simple_list_item_1, filteredNameList) {
+                        R.layout.list_exercise_search, filteredNameList) {
                     @Override
                     public android.widget.Filter getFilter() {
                         return new android.widget.Filter() {
@@ -586,7 +592,6 @@ public class AddWorkoutActivity extends AppCompatActivity {
             additional.get(additional.size()-1).setText("");
         }
 
-        btnexercise.setText("Add to Library");
         linear.addView(layout);
     }
 
@@ -605,7 +610,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 textname.setText(null);
             } else {
                 if (exename.isEmpty()) {
-                    btnexercise.setText("Add exercises first");
+                    btnexercise.setText("ADD EXERCISES FIRST");
                 } else {
                     if (textset.getText().toString().isEmpty()) {
                         textset.setHint("Fill sets");
@@ -670,7 +675,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                                 }
                                 SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(workoutToBeAdded);
                             }
-                            btnexercise.setText("Added!");
+                            btnexercise.setText("ADDED");
                         }
                     }
                 }

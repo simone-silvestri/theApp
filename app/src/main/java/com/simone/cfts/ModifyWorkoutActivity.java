@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -36,7 +35,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
 
     private ArrayList<EditText> exework, exepause;
     private ArrayList<TextView> exename, worksec, pausesec, additional;
-    private ArrayList<RelativeLayout> layoutlist;
+    private ArrayList<LinearLayout> layoutlist;
     private ArrayList<ImageButton> btndelete;
     private ImageButton buttonAddExe;
     private ImageView time, reps, reptime, beginner, average, skilled, expert, spartan;
@@ -119,7 +118,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
 
         currentDiff = 1;
         currentType = "TIME";
-        btnexercise.setText("Modify");
+        btnexercise.setText("UPDATE WORKOUT");
 
         textname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -192,7 +191,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         workin = (Workout) getIntent().getSerializableExtra("EXTRA_WORKOUT");
         //Change name
         TextView tvTitle = findViewById(R.id.title_tv);
-        tvTitle.setText("Modify workout");
+        tvTitle.setText("MODIFY");
         textname.setText(workin.getTitle());
         currentDiff = workin.getDifficulty();
         if (currentDiff == 1) {
@@ -316,7 +315,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             generalexework.setHint("work");
             generalexepause.setHint("pause");
             generaladditional.setText("");
-            pauseOrTotalTime.setText("Pause:");
+            pauseOrTotalTime.setText("PAUSE");
             textpause.setHint("seconds");
             type.setText("H.I.I.T. workout");
         } else if (idx == 1) {
@@ -354,7 +353,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             generalexework.setText(null);
             generalexepause.setHint("reps");
             generaladditional.setText("");
-            pauseOrTotalTime.setText("Total time:");
+            pauseOrTotalTime.setText("TOTAL");
             textpause.setHint("minutes");
             type.setText("Reps workout");
         } else {
@@ -390,7 +389,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             generalexework.setHint("reps");
             generalexepause.setHint("sec");
             generaladditional.setText("X");
-            pauseOrTotalTime.setText("Pause:");
+            pauseOrTotalTime.setText("PAUSE");
             textpause.setHint("seconds");
             type.setText("Reps in time");
         }
@@ -405,7 +404,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
     }
 
     public void deleteExerciseFromList(View v) {
-        RelativeLayout r = (RelativeLayout) v.getParent();
+        LinearLayout r = (LinearLayout) v.getParent();
         int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
 
         ArrayList<String> nm = new ArrayList<>();
@@ -445,7 +444,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
     public void addExerciseToList(View v) {
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.add_exercise_list, null, false);
 
         layoutlist.add(layout);
         btndelete.add((ImageButton) layout.findViewById(R.id.btndeleteexercise));
@@ -462,7 +461,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
         exename.get(exename.size()-1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RelativeLayout r = (RelativeLayout) view.getParent();
+                LinearLayout r = (LinearLayout) view.getParent();
                 final int idx = ((ViewGroup) r.getParent()).indexOfChild(r);
 
                 dialog = new Dialog(ModifyWorkoutActivity.this);
@@ -479,10 +478,19 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
                 dialog.setCanceledOnTouchOutside(true);
 
                 final EditText editText = dialog.findViewById(R.id.edit_search_exercise);
+                final Spinner editMuscle = dialog.findViewById(R.id.spinner_menu);
+
+                ArrayAdapter<CharSequence> muscleAdapter = ArrayAdapter.createFromResource(
+                        ModifyWorkoutActivity.this,
+                        R.array.muscle_categories,
+                        R.layout.spinner_item_search);
+                muscleAdapter.setDropDownViewResource(R.layout.spinner_dropdown_search);
+                editMuscle.setAdapter(muscleAdapter);
+
                 ListView listView = dialog.findViewById(R.id.list_search_exercise);
 
                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(ModifyWorkoutActivity.this,
-                        android.R.layout.simple_list_item_1,arrayList);
+                        R.layout.list_exercise_search, arrayList);
 
                 listView.setAdapter(adapter);
 
@@ -564,7 +572,6 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             additional.get(additional.size()-1).setText("");
         }
 
-        btnexercise.setText("Add to Library");
         linear.addView(layout);
     }
 
@@ -578,7 +585,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
             textname.setHint("Insert Title!");
         } else {
             if (exename.isEmpty()) {
-                btnexercise.setText("Add exercises first");
+                btnexercise.setText("ADD EXERCISES FIRST");
             } else {
                 if (textset.getText().toString().isEmpty()) {
                     textset.setHint("Fill sets");
@@ -643,7 +650,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
                             }
                             SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(workoutToBeAdded);
                         }
-                        btnexercise.setText("Updated!");
+                        btnexercise.setText("UPDATED");
                     }
                 }
             }

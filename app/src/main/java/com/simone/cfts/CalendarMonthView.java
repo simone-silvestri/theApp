@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Calendar;
 
@@ -21,6 +24,9 @@ public class CalendarMonthView extends View {
             0xFFE5842B,
             0xFFE20814
     };
+
+    private static final int ORANGE_ACCENT = 0xFFE58E26;
+    private static final int WEEKDAY_GRAY  = 0xFF7A8FB0;
 
     private final String[] weekdays = new String[]{"M", "T", "W", "T", "F", "S", "S"};
 
@@ -39,12 +45,12 @@ public class CalendarMonthView extends View {
 
     private OnDayTapListener listener;
 
-    private final Paint cellFill   = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint dayText    = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint fadedText  = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint weekdayHdr = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint todayRing  = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint selectedRing = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint diffLine    = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint dayText     = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint fadedText   = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint weekdayHdr  = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint todayDot    = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint selectedBox = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public CalendarMonthView(Context c) { super(c); init(); }
     public CalendarMonthView(Context c, AttributeSet a) { super(c, a); init(); }
@@ -54,28 +60,45 @@ public class CalendarMonthView extends View {
         setClickable(true);
         setFocusable(true);
 
+        Typeface mlight = null, mmedium = null;
+        try {
+            mlight  = ResourcesCompat.getFont(getContext(), R.font.mlight);
+            mmedium = ResourcesCompat.getFont(getContext(), R.font.mmedium);
+        } catch (Exception ignored) {}
+
+        // Day number: italic-skewed mlight white
         dayText.setColor(Color.WHITE);
         dayText.setTextAlign(Paint.Align.CENTER);
         dayText.setTextSize(sp(14));
+        if (mlight != null) dayText.setTypeface(mlight);
+        dayText.setTextSkewX(-0.18f);
 
+        // Faded text for prev/next month days
         fadedText.setColor(Color.WHITE);
-        fadedText.setAlpha(80);
+        fadedText.setAlpha(70);
         fadedText.setTextAlign(Paint.Align.CENTER);
         fadedText.setTextSize(sp(14));
+        if (mlight != null) fadedText.setTypeface(mlight);
+        fadedText.setTextSkewX(-0.18f);
 
-        weekdayHdr.setColor(Color.WHITE);
-        weekdayHdr.setAlpha(160);
+        // Weekday header: small letterspaced caps
+        weekdayHdr.setColor(WEEKDAY_GRAY);
         weekdayHdr.setTextAlign(Paint.Align.CENTER);
-        weekdayHdr.setTextSize(sp(12));
+        weekdayHdr.setTextSize(sp(11));
+        if (mmedium != null) weekdayHdr.setTypeface(mmedium);
+        weekdayHdr.setLetterSpacing(0.32f);
 
-        todayRing.setColor(Color.WHITE);
-        todayRing.setAlpha(180);
-        todayRing.setStyle(Paint.Style.STROKE);
-        todayRing.setStrokeWidth(dp(1.5f));
+        // Today: small orange filled dot above the day number
+        todayDot.setColor(ORANGE_ACCENT);
+        todayDot.setStyle(Paint.Style.FILL);
 
-        selectedRing.setColor(Color.WHITE);
-        selectedRing.setStyle(Paint.Style.STROKE);
-        selectedRing.setStrokeWidth(dp(2.5f));
+        // Selected: thin orange rectangle stroke around the cell
+        selectedBox.setColor(ORANGE_ACCENT);
+        selectedBox.setStyle(Paint.Style.STROKE);
+        selectedBox.setStrokeWidth(dp(1.5f));
+
+        // Difficulty: thin colored underline beneath the day number
+        diffLine.setStyle(Paint.Style.FILL);
     }
 
     public void setMonth(int year, int monthIndex /* 1-based */, int selectedDay,
@@ -112,7 +135,7 @@ public class CalendarMonthView extends View {
         if (ev.getAction() == MotionEvent.ACTION_UP) {
             int w = getWidth();
             int h = getHeight();
-            int headerH = (int) (dp(8) + sp(14));
+            int headerH = (int) (dp(10) + sp(11));
             float cellW = w / 7f;
             float cellH = (h - headerH) / 6f;
             float x = ev.getX();
@@ -139,13 +162,14 @@ public class CalendarMonthView extends View {
     protected void onDraw(Canvas canvas) {
         int w = getWidth();
         int h = getHeight();
-        int headerH = (int) (dp(8) + sp(14));
+        int headerH = (int) (dp(10) + sp(11));
         float cellW = w / 7f;
         float cellH = (h - headerH) / 6f;
 
+        // Weekday header
         for (int i = 0; i < 7; i++) {
             float cx = (i + 0.5f) * cellW;
-            canvas.drawText(weekdays[i], cx, sp(14), weekdayHdr);
+            canvas.drawText(weekdays[i], cx, sp(11) + dp(2), weekdayHdr);
         }
 
         for (int row = 0; row < 6; row++) {
@@ -166,36 +190,43 @@ public class CalendarMonthView extends View {
 
                 float cx = (col + 0.5f) * cellW;
                 float cy = headerH + (row + 0.5f) * cellH;
-                float pillRadius = Math.min(cellW, cellH) * 0.40f;
-
-                if (!otherMonth) {
-                    int diff = maxDiffPerDay[day];
-                    if (diff >= 1 && diff <= 5) {
-                        cellFill.setColor(DIFF_COLORS[diff - 1]);
-                        canvas.drawRoundRect(cx - pillRadius, cy - pillRadius,
-                                cx + pillRadius, cy + pillRadius,
-                                dp(8), dp(8), cellFill);
-                    }
-                }
+                float cellLeft   = col * cellW;
+                float cellRight  = (col + 1) * cellW;
+                float cellTop    = headerH + row * cellH;
+                float cellBottom = headerH + (row + 1) * cellH;
 
                 boolean isToday = !otherMonth
                         && year == todayYear && monthIndex == todayMonth && day == todayDay;
-                if (isToday) {
-                    canvas.drawRoundRect(cx - pillRadius, cy - pillRadius,
-                            cx + pillRadius, cy + pillRadius,
-                            dp(8), dp(8), todayRing);
-                }
-
                 boolean isSelected = !otherMonth && day == selectedDay;
+                int diff = !otherMonth ? maxDiffPerDay[day] : 0;
+
+                // Selected cell outline (drawn first so other marks sit inside)
                 if (isSelected) {
-                    float sr = pillRadius + dp(2);
-                    canvas.drawRoundRect(cx - sr, cy - sr,
-                            cx + sr, cy + sr,
-                            dp(10), dp(10), selectedRing);
+                    float inset = dp(4);
+                    canvas.drawRoundRect(
+                            cellLeft + inset, cellTop + inset,
+                            cellRight - inset, cellBottom - inset,
+                            dp(3), dp(3), selectedBox);
                 }
 
+                // Today dot above the day number
+                if (isToday) {
+                    float dotY = cy - sp(9) - dp(3);
+                    canvas.drawCircle(cx, dotY, dp(2.2f), todayDot);
+                }
+
+                // Day number (text baseline at cy + ~sp(5) keeps glyph centered)
                 Paint p = otherMonth ? fadedText : dayText;
                 canvas.drawText(String.valueOf(day), cx, cy + sp(5), p);
+
+                // Difficulty underline beneath the day number
+                if (diff >= 1 && diff <= 5) {
+                    diffLine.setColor(DIFF_COLORS[diff - 1]);
+                    float lineY = cy + sp(5) + dp(3);
+                    float lineHalfW = dp(7);
+                    canvas.drawRect(cx - lineHalfW, lineY,
+                            cx + lineHalfW, lineY + dp(1.5f), diffLine);
+                }
             }
         }
     }

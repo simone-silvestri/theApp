@@ -12,626 +12,477 @@
     android:background="@drawable/gradient1"
     tools:context=".AddWorkoutActivity">
 
+    <!-- ====== HEADER ====== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="18dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/trans"
+            android:padding="4dp"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
 
-            <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/trans"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/ic_baseline_arrow_back_24"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1.2"/>
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mmedium"
+            android:text="BUILD"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:letterSpacing="0.18" />
 
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/mmedium"
-                android:gravity="center"
-                android:text="Create workout"
-                android:textColor="@color/white"
-                android:textSize="25sp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
-        </LinearLayout>
-
-
+        <ImageButton
+            android:id="@+id/buttoninfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/trans"
+            android:padding="4dp"
+            android:src="@drawable/ic_outline_info_24" />
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_width="42dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:background="#E58E26" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="26dp"
+            android:paddingEnd="26dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="120dp">
 
-            <LinearLayout
+            <!-- ===========================================
+                 MASTHEAD BLOCK
+                 (title + type/intensity selectors + sets/pause)
+                 =========================================== -->
+
+            <!-- Title (hero, no label) -->
+            <EditText
+                android:id="@+id/titlename"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Choose a title:"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="15sp"
-                    android:layout_gravity="start|center"
-                    android:gravity="start|center"
-                    android:fontFamily="@font/mlight"
-                    android:textColor="@color/white"/>
-
-                <EditText
-                    android:id="@+id/titlename"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Choose the workout name"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/mlight"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/gray"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/mlight"
-                        android:gravity="start|center"
-                        android:text="Choose a type:"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/typename"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/mmedium"
-                        android:gravity="start|center"
-                        android:text="H.I.I.T. workout"
-                        android:textColor="@color/type"
-                        android:textSize="15sp"
-                        android:textStyle="italic" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="1"/>
-
-
-                    <ImageButton
-                        android:id="@+id/buttoninfo"
-                        android:layout_width="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@color/trans"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:src="@drawable/ic_outline_info_24" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:weightSum="3">
-
-
-                    <ImageView
-                        android:id="@+id/imgtime"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:onClick="setCurrentType"
-                        android:src="@drawable/time" />
-
-
-                    <ImageView
-                        android:id="@+id/imgreps"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:onClick="setCurrentType"
-                        android:src="@drawable/reps" />
-
-
-                    <ImageView
-                        android:id="@+id/imgreptime"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:onClick="setCurrentType"
-                        android:src="@drawable/reptime" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/mlight"
-                    android:gravity="start|center"
-                    android:text="What is the difficulty?"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/diffname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/mmedium"
-                        android:gravity="start|center"
-                        android:text="Beginner"
-                        android:textColor="@color/beginner"
-                        android:textSize="15sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:weightSum="5">
-
-
-                    <ImageView
-                        android:id="@+id/imgbeginner"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:onClick="setCurrentDiff"
-                        android:src="@drawable/beginner" />
-
-
-                    <ImageView
-                        android:id="@+id/imgaverage"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:onClick="setCurrentDiff"
-                        android:layout_gravity="center"
-                        android:src="@drawable/average" />
-
-
-                    <ImageView
-                        android:id="@+id/imgskilled"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:onClick="setCurrentDiff"
-                        android:src="@drawable/skilled" />
-
-
-                    <ImageView
-                        android:id="@+id/imgexpert"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:onClick="setCurrentDiff"
-                        android:src="@drawable/expert" />
-
-
-                    <ImageView
-                        android:id="@+id/imgspartan"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:onClick="setCurrentDiff"
-                        android:src="@drawable/spartan" />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/mlight"
-                    android:gravity="start|center"
-                    android:text="Choose last details"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:weightSum="5">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/mlight"
-                        android:gravity="start|center"
-                        android:text="Sets:"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editsets"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="number"
-                        android:textStyle="bold"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/mlight"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/gray"
-                        android:inputType="number"/>
-
-                    <TextView
-                        android:id="@+id/pauseOrTotalTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/mlight"
-                        android:gravity="start|center"
-                        android:text="Pause:"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editpause"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="seconds"
-                        android:textStyle="bold"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/mlight"
-                        android:textColor="@color/white"
-                        android:inputType="number"
-                        android:textColorHint="@color/gray"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
+                android:hint="name this workout"
+                android:textSize="24sp"
+                android:fontFamily="@font/mlight"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textColorHint="#5A6B85"
+                android:background="@color/trans"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingBottom="2dp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_height="1px"
+                android:background="#4DFFFFFF" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="left"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            android:weightSum="2">
-
+            <!-- editorial deck line below the title -->
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="15dp"
-                android:text="Fill exercise list"
-                android:textSize="15sp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/mlight"
-                android:textColor="@color/white"
-                android:gravity="start|bottom"
-                android:layout_gravity="bottom"
-                android:textStyle="bold"/>
+                android:textStyle="italic"
+                android:gravity="center"
+                android:text="— forge your own hour, your own pain —"
+                android:textColor="#7A8FB0"
+                android:textSize="12sp"
+                android:letterSpacing="0.04" />
 
+            <!-- Type picker (icons only, no section label) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="right"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="1dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="22dp"
+                android:weightSum="3">
+
+                <ImageView
+                    android:id="@+id/imgtime"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:onClick="setCurrentType"
+                    android:src="@drawable/time" />
+
+                <ImageView
+                    android:id="@+id/imgreps"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:onClick="setCurrentType"
+                    android:src="@drawable/reps" />
+
+                <ImageView
+                    android:id="@+id/imgreptime"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:onClick="setCurrentType"
+                    android:src="@drawable/reptime" />
+            </LinearLayout>
+
+            <!-- Small italic caption (selected type) -->
+            <TextView
+                android:id="@+id/typename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/mlight"
+                android:textStyle="italic"
+                android:text="H.I.I.T. workout"
+                android:textColor="@color/type"
+                android:textSize="15sp" />
+
+            <!-- Intensity picker (icons only) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
                 android:weightSum="5">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/txt_general_time"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="15dp"
-                    android:text="all exercises: "
-                    android:textSize="15sp"
-                    android:fontFamily="@font/mlight"
-                    android:textColor="@color/white"
-                    android:gravity="start|bottom"
-                    android:layout_gravity="bottom"/>
+                <ImageView
+                    android:id="@+id/imgbeginner"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:onClick="setCurrentDiff"
+                    android:src="@drawable/beginner" />
+
+                <ImageView
+                    android:id="@+id/imgaverage"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:onClick="setCurrentDiff"
+                    android:layout_gravity="center"
+                    android:src="@drawable/average" />
+
+                <ImageView
+                    android:id="@+id/imgskilled"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:onClick="setCurrentDiff"
+                    android:src="@drawable/skilled" />
+
+                <ImageView
+                    android:id="@+id/imgexpert"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:onClick="setCurrentDiff"
+                    android:src="@drawable/expert" />
+
+                <ImageView
+                    android:id="@+id/imgspartan"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:onClick="setCurrentDiff"
+                    android:src="@drawable/spartan" />
+            </LinearLayout>
+
+            <!-- Small italic caption (selected intensity) -->
+            <TextView
+                android:id="@+id/diffname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/mlight"
+                android:textStyle="italic"
+                android:text="Beginner"
+                android:textColor="@color/beginner"
+                android:textSize="15sp" />
+
+            <!-- Sets / Pause inline strip (one row, no section header) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="26dp">
 
                 <TextView
-                    android:id="@+id/txt_general_additional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/btn_add_general_work"
-                    android:background="@color/trans"
                     android:fontFamily="@font/mmedium"
-                    android:gravity="center|bottom"
-                    android:text="text"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:text="SETS"
+                    android:textColor="#7A8FB0"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.28" />
 
                 <EditText
-                    android:id="@+id/btn_add_general_work"
+                    android:id="@+id/editsets"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="28dp"
+                    android:hint="sets"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/mlight"
+                    android:gravity="start"
+                    android:textColor="@color/white"
+                    android:textColorHint="#5A6B85"
+                    android:background="@color/trans"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/pauseOrTotalTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/txt_general_work"
                     android:fontFamily="@font/mmedium"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="right|bottom"
-                    android:layout_gravity="bottom"
-                    android:background="@color/trans"
+                    android:text="PAUSE"
+                    android:textColor="#7A8FB0"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.28" />
+
+                <EditText
+                    android:id="@+id/editpause"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:hint="seconds"
                     android:textSize="15sp"
-                    android:textColorHint="@color/gray"
-                    android:hint="sec"
-                    android:autofillHints="sec"
-                    android:textColor="@color/gray"
-                    android:inputType="number"/>
-
-            <TextView
-                android:id="@+id/txt_general_work"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/btn_add_general_pause"
-                android:fontFamily="@font/mmedium"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="right|bottom"
-                android:layout_gravity="bottom"
-                android:textColor="@color/white"
-                android:background="@color/trans"
-                android:textSize="15sp"
-                android:text="s" />
-
-            <EditText
-                android:id="@+id/btn_add_general_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mmedium"
-                android:layout_toLeftOf="@+id/txt_general_pause"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="right|bottom"
-                android:layout_gravity="bottom"
-                android:background="@color/trans"
-                android:textSize="15sp"
-                android:textColorHint="@color/gray"
-                android:hint="sec"
-                android:autofillHints="sec"
-                android:textColor="@color/gray"
-                android:inputType="number"/>
-
-
-            <TextView
-                android:id="@+id/txt_general_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="5dp"
-                android:fontFamily="@font/mmedium"
-                android:gravity="right"
-                android:layout_gravity="bottom"
-                android:textColor="@color/white"
-                android:background="@color/trans"
-                android:textSize="15sp"
-                android:text="s"/>
-            </LinearLayout>
-        </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/exercise_list_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical">
-
+                    android:fontFamily="@font/mlight"
+                    android:gravity="start"
+                    android:textColor="@color/white"
+                    android:textColorHint="#5A6B85"
+                    android:background="@color/trans"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingBottom="4dp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#4DFFFFFF" />
+
+            <!-- ===========================================
+                 THE FOLD — orange accent bar separating
+                 masthead (identity) from body (exercises)
+                 =========================================== -->
+            <View
+                android:layout_width="42dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="34dp"
+                android:background="#E58E26" />
+
+            <!-- ===========================================
+                 BODY — exercises (the article content)
+                 =========================================== -->
+
+            <!-- Section header: EXERCISES with inline ADD button -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:gravity="center_vertical"
+                android:layout_marginTop="18dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="130dp"
-                    android:layout_marginLeft="130dp"
-                    android:gravity="center"
-                    android:text="Add"
+                    android:fontFamily="@font/mmedium"
+                    android:text="EXERCISES"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="13sp"
+                    android:letterSpacing="0.30" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mmedium"
+                    android:text="ADD"
+                    android:textColor="#E58E26"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.30" />
 
                 <ImageButton
                     android:id="@+id/buttonaddexercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:onClick="addExerciseToList"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="6dp"
                     android:background="@color/trans"
-                    android:src="@drawable/ic_menu_add"
-                    android:layout_marginTop="0dp"/>
+                    android:padding="2dp"
+                    android:onClick="addExerciseToList"
+                    android:src="@drawable/ic_menu_add" />
+            </LinearLayout>
+
+            <!-- Apply-to-all compact row (mirrors exercise row column structure exactly) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/mlight"
+                    android:textStyle="italic"
+                    android:text="apply to all"
+                    android:textColor="#7A8FB0"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txt_general_additional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="2dp"
+                    android:fontFamily="@font/mmedium"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/btn_add_general_work"
+                    android:layout_width="52dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mlight"
+                    android:gravity="end"
+                    android:background="@color/trans"
+                    android:textSize="14sp"
+                    android:textColorHint="#5A6B85"
+                    android:hint="sec"
+                    android:autofillHints="sec"
+                    android:textColor="@color/white"
+                    android:inputType="number"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/txt_general_work"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/mmedium"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:text="s" />
+
+                <EditText
+                    android:id="@+id/btn_add_general_pause"
+                    android:layout_width="52dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mlight"
+                    android:gravity="end"
+                    android:background="@color/trans"
+                    android:textSize="14sp"
+                    android:textColorHint="#5A6B85"
+                    android:hint="sec"
+                    android:autofillHints="sec"
+                    android:textColor="@color/white"
+                    android:inputType="number"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/txt_general_pause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="@font/mmedium"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:text="s" />
+
+                <!-- spacer matching delete-button footprint (36dp) + its marginStart=2dp -->
+                <View
+                    android:layout_width="38dp"
+                    android:layout_height="1dp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="500dp"/>
+                android:layout_height="1px"
+                android:background="#33FFFFFF" />
+
+            <!-- Dynamic list of exercise rows -->
+            <LinearLayout
+                android:id="@+id/exercise_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
         </LinearLayout>
-
-
     </ScrollView>
 
-
+    <!-- ====== BOTTOM CTA ====== -->
     <TextView
         android:id="@+id/btexercise"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="0dp"
-        android:fontFamily="@font/mmedium"
-        android:text="Add to List"
+        android:layout_height="56dp"
         android:background="@color/white"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="22sp"
+        android:fontFamily="@font/mmedium"
+        android:gravity="center"
         android:onClick="createWorkout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="SAVE WORKOUT"
+        android:textAlignment="center"
+        android:textColor="#0D122C"
+        android:textSize="20sp"
+        android:letterSpacing="0.22" />
 
 </LinearLayout>

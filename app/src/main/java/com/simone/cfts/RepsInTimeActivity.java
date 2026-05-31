@@ -18,10 +18,11 @@ public class RepsInTimeActivity extends BaseWorkoutActivity {
 
     @Override
     protected void onExercisesReady() {
-        command.setText("Get Ready!");
+        setPhase(Phase.READY);
         if (!exercises.isEmpty()) {
-            nextExercise.setText("Next: " + exercises.get(0).getName());
-            nextRepNumber.setText("X " + exercises.get(0).getReps());
+            setExerciseHero(exercises.get(0).getName());
+            nextRepNumber.setText("× " + exercises.get(0).getReps() + " reps");
+            setNextHint(exercises.size() > 1 ? exercises.get(1).getName() : "");
             startStop();
         }
     }
@@ -31,25 +32,30 @@ public class RepsInTimeActivity extends BaseWorkoutActivity {
         if (currentExercise < exercises.size() - 1) {
             currentExercise += 1;
             timeLeftInMilliseconds = exercises.get(currentExercise).getTimeInSeconds() * 1000;
-            command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
-            nextExercise.setText(exercises.get(currentExercise).getName());
-            nextRepNumber.setText("X " + exercises.get(currentExercise).getReps());
+            setPhase(Phase.WORK);
+            setExerciseHero(exercises.get(currentExercise).getName());
+            nextRepNumber.setText("× " + exercises.get(currentExercise).getReps() + " reps");
+            setNextHint(currentExercise + 1 < exercises.size()
+                    ? exercises.get(currentExercise + 1).getName() : "");
             timerRunning = false;
             startStop();
         } else {
             if (currentSet == numberOfSets) {
-                command.setText("Finished!!");
-                nextExercise.setText("Well Done");
+                setPhase(Phase.DONE);
+                setExerciseHero("Well done");
+                setNextHint("");
+                nextRepNumber.setText("");
                 countdownText.setText("Ole!");
                 markWorkoutComplete();
             } else {
                 currentSet += 1;
                 currentExercise = -1;
                 timeLeftInMilliseconds = work.getSetPause() * 1000;
-                command.setText("Break");
-                nextExercise.setText("Next: " + exercises.get(currentExercise + 1).getName());
-                nextRepNumber.setText("X " + exercises.get(currentExercise + 1).getReps());
-                setnumber.setText("set " + currentSet + " of " + numberOfSets);
+                setPhase(Phase.BREAK);
+                setExerciseHero(exercises.get(0).getName());
+                nextRepNumber.setText("× " + exercises.get(0).getReps() + " reps");
+                setNextHint(exercises.size() > 1 ? exercises.get(1).getName() : "");
+                setnumber.setText("SET " + currentSet + " OF " + numberOfSets);
                 timerRunning = false;
                 startStop();
             }
@@ -89,7 +95,7 @@ public class RepsInTimeActivity extends BaseWorkoutActivity {
                         speak("Finished, well done!");
                     }
                 } else {
-                    countdownText.setText("GO!!");
+                    countdownText.setText("GO");
                     speak("Go!");
                 }
             } else {

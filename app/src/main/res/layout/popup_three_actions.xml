@@ -1,87 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minWidth="340dp"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:minWidth="320dp"
+    android:background="#F8F4EC"
+    android:orientation="vertical"
+    android:paddingTop="26dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
 
+    <!-- Title (dynamic per caller) -->
     <TextView
         android:id="@+id/text_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:fontFamily="@font/mmedium"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:textSize="20sp"
-        android:text="Choose an option" />
+        android:textColor="#0D122C"
+        android:textSize="15sp"
+        android:letterSpacing="0.04"
+        tools:text="ADD WORKOUT" />
 
+    <!-- Orange accent bar -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:background="#E58E26" />
+
+    <!-- Row 01 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="22dp"
+            android:fontFamily="@font/mlight"
+            android:gravity="end"
+            android:text="01"
+            android:textColor="#998A6D"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/button_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/mmedium"
+            android:textColor="#0D122C"
+            android:textSize="14sp"
+            android:letterSpacing="0.04"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="BUILD" />
+    </LinearLayout>
+
+    <!-- Hairline -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#1A0D122C" />
+
+    <!-- Row 02 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="14dp">
+        android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/button_one"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="28dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:textAllCaps="false"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="One" />
+            android:layout_marginEnd="22dp"
+            android:fontFamily="@font/mlight"
+            android:gravity="end"
+            android:text="02"
+            android:textColor="#998A6D"
+            android:textSize="22sp" />
 
-        <Button
+        <TextView
             android:id="@+id/button_two"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@color/white"
-            android:textSize="13sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/mmedium"
+            android:textColor="#0D122C"
+            android:textSize="14sp"
+            android:letterSpacing="0.04"
             android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="Two" />
+            tools:text="COPY" />
+    </LinearLayout>
 
-        <Button
+    <!-- Hairline -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#1A0D122C" />
+
+    <!-- Row 03 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="22dp"
+            android:fontFamily="@font/mlight"
+            android:gravity="end"
+            android:text="03"
+            android:textColor="#998A6D"
+            android:textSize="22sp" />
+
+        <TextView
             android:id="@+id/button_three"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@color/white"
-            android:textSize="13sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:fontFamily="@font/mmedium"
+            android:textColor="#0D122C"
+            android:textSize="14sp"
+            android:letterSpacing="0.04"
             android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:text="Three" />
-
+            tools:text="OG WODS" />
     </LinearLayout>
 
 </LinearLayout>

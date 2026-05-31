@@ -1,108 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id = "@+id/timerview"
+    android:id="@+id/timerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/gradient1"
     tools:context=".TimerActivity">
 
-    <TextView
-        android:id="@+id/nextexercise"
-        android:layout_width="0dp"
+    <!-- ====== TOP STRIP (close + set count) ====== -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="32sp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginRight="52dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="150dp"
-        android:fontFamily="@font/mlight"
-        android:textColor="@color/lightpink"
-        android:text = "Next: "
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="18dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp">
 
+        <ImageButton
+            android:id="@+id/workoutClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/trans"
+            android:padding="4dp"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/setnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mmedium"
+            android:textColor="#7A8FB0"
+            android:textSize="11sp"
+            android:letterSpacing="0.32"
+            tools:text="SET 2 OF 5" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- spacer matching close button width -->
+        <View
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+    </LinearLayout>
+
+    <!-- ====== HERO EXERCISE NAME ====== -->
     <TextView
-        android:id="@+id/setnumber"
-        android:layout_width="0dp"
+        android:id="@+id/exerciseLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="24sp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginRight="52dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="22dp"
+        android:paddingStart="26dp"
+        android:paddingEnd="26dp"
         android:fontFamily="@font/mlight"
-        android:textColor="@color/lightpink"
-        android:text = "set x of y"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:textStyle="italic"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        tools:text="Burpees" />
 
+    <View
+        android:layout_width="42dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:background="#E58E26" />
+
+    <!-- ====== PHASE LABEL (renamed from command) ====== -->
     <TextView
         android:id="@+id/command"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="32sp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginRight="52dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="88dp"
-        android:fontFamily="@font/mlight"
-        android:textColor="@color/lightpink"
-        android:text = "Ready to go!"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="14dp"
+        android:fontFamily="@font/mmedium"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:letterSpacing="0.30"
+        tools:text="WORK" />
 
-    <TextView
-        android:id="@+id/countdownText"
-        android:layout_width="0dp"
+    <!-- top spacer (slightly bigger than bottom so ring sits below center) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2" />
+
+    <!-- ====== TIMER RING + COUNTDOWN ====== -->
+    <com.simone.cfts.TimerRingView
+        android:id="@+id/timerRing"
+        android:layout_width="380dp"
+        android:layout_height="380dp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/countdownText"
+            android:layout_width="290dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/mlight"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="30sp"
+            app:autoSizeMaxTextSize="180sp"
+            tools:text="00:10" />
+    </com.simone.cfts.TimerRingView>
+
+    <!-- bottom spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- ====== NEXT EXERCISE BLOCK ====== -->
+    <LinearLayout
+        android:id="@+id/nextRow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:textSize="65sp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginRight="52dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginBottom="60dp"
-        android:fontFamily="@font/mlight"
-        android:textColor="@color/lightpink"
-        android:text = "00:10"
-        app:layout_constraintBottom_toTopOf="@+id/countdownButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="18dp"
+        android:paddingStart="26dp"
+        android:paddingEnd="26dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mmedium"
+            android:text="UP NEXT"
+            android:textColor="#7A8FB0"
+            android:textSize="11sp"
+            android:letterSpacing="0.32" />
+
+        <TextView
+            android:id="@+id/nextexercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/mlight"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Squats" />
+    </LinearLayout>
+
+    <!-- ====== BOTTOM CTA ====== -->
     <Button
         android:id="@+id/countdownButton"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:background="@color/white"
         android:fontFamily="@font/mmedium"
-        android:text="tap to pause"
+        android:gravity="center"
+        android:text="TAP TO PAUSE"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="#0D122C"
+        android:textSize="20sp"
+        android:letterSpacing="0.22" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

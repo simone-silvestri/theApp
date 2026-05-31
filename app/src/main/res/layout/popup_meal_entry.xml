@@ -1,81 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minWidth="320dp"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="20dp">
+    android:background="#F8F4EC"
+    android:paddingTop="26dp"
+    android:paddingBottom="14dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/popupMealName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/mmedium"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
         android:gravity="center"
-        android:text="@string/meal_breakfast" />
+        android:textColor="#0D122C"
+        android:textSize="15sp"
+        android:letterSpacing="0.04"
+        tools:text="BREAKFAST" />
 
+    <!-- Orange accent bar -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:background="#E58E26" />
+
+    <!-- Italic kicker -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/mlight"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:text="— how many kcal in this meal?"
+        android:textColor="#7A8FB0"
+        android:textSize="12sp" />
+
+    <!-- Big kcal input -->
     <EditText
         android:id="@+id/popupKcalField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="18dp"
         android:fontFamily="@font/mlight"
+        android:textStyle="italic"
         android:gravity="center"
         android:inputType="number"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="36sp" />
+        android:textColor="#0D122C"
+        android:textColorHint="#998A6D"
+        android:textSize="32sp"
+        android:background="@color/trans"
+        android:hint="0" />
 
+    <!-- Unit caption -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/mlight"
+        android:textStyle="italic"
         android:gravity="center"
-        android:text="@string/kcal_label"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp" />
+        android:text="kcal"
+        android:textColor="#7A8FB0"
+        android:textSize="12sp" />
 
+    <!-- Bottom bar (CLEAR | SAVE) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
         android:weightSum="2">
 
         <TextView
             android:id="@+id/popupClear"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
             android:fontFamily="@font/mmedium"
             android:gravity="center"
+            android:textColor="#998A6D"
+            android:textSize="14sp"
+            android:letterSpacing="0.22"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
             android:maxLines="1"
-            android:singleLine="true"
             android:ellipsize="end"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/clear"
-            android:textColor="@color/colorPrimaryDark6"
-            android:textSize="16sp" />
+            android:text="CLEAR" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#1A0D122C" />
 
         <TextView
             android:id="@+id/popupSave"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
             android:fontFamily="@font/mmedium"
             android:gravity="center"
+            android:textColor="#0D122C"
+            android:textSize="14sp"
+            android:letterSpacing="0.22"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
             android:maxLines="1"
-            android:singleLine="true"
             android:ellipsize="end"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/save"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:text="SAVE" />
     </LinearLayout>
+
 </LinearLayout>

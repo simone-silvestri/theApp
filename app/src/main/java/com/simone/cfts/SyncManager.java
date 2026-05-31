@@ -11,7 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -305,9 +304,9 @@ public class SyncManager {
         View content = LayoutInflater.from(caller).inflate(R.layout.popup_three_actions, null);
         TextView text = content.findViewById(R.id.text_id);
         text.setText("This phone and the cloud both have workouts. Which set do you want to keep?");
-        Button one   = content.findViewById(R.id.button_one);
-        Button two   = content.findViewById(R.id.button_two);
-        Button three = content.findViewById(R.id.button_three);
+        TextView one   = content.findViewById(R.id.button_one);
+        TextView two   = content.findViewById(R.id.button_two);
+        TextView three = content.findViewById(R.id.button_three);
         one.setText("This phone");
         two.setText("Cloud");
         three.setText("Merge both");
