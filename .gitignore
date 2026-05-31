@@ -47,3 +47,8 @@ docs/*
 
 # Firebase secrets — do NOT commit; download from Firebase Console per device
 app/google-services.json
+
+# Release signing — do NOT commit
+keystore.properties
+*.jks
+*.keystore
