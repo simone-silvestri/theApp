@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minWidth="320dp"
+    android:minWidth="360dp"
     android:background="#F8F4EC"
     android:orientation="vertical"
-    android:paddingTop="26dp"
-    android:paddingBottom="10dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp">
+    android:paddingTop="30dp"
+    android:paddingBottom="14dp"
+    android:paddingStart="28dp"
+    android:paddingEnd="28dp">
 
     <!-- Title (dynamic per caller) -->
     <TextView
@@ -19,15 +19,16 @@
         android:fontFamily="@font/mmedium"
         android:gravity="center"
         android:textColor="#0D122C"
-        android:textSize="15sp"
-        android:letterSpacing="0.04"
+        android:textSize="18sp"
+        android:textAllCaps="true"
+        android:letterSpacing="0.06"
         tools:text="ADD WORKOUT" />
 
     <!-- Orange accent bar -->
     <View
-        android:layout_width="36dp"
+        android:layout_width="44dp"
         android:layout_height="3dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         android:layout_gravity="center"
         android:background="#E58E26" />
 
@@ -35,38 +36,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="28dp"
+            android:layout_width="44dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="22dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
             android:text="01"
             android:textColor="#998A6D"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:fontFeatureSettings="tnum"
+            android:includeFontPadding="false" />
 
         <TextView
             android:id="@+id/button_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
             android:fontFamily="@font/mmedium"
             android:textColor="#0D122C"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:letterSpacing="0.04"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
             android:background="@color/trans"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:text="BUILD" />
+            tools:text="BUILD from scratch" />
     </LinearLayout>
 
     <!-- Hairline -->
@@ -83,33 +86,35 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="28dp"
+            android:layout_width="44dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="22dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
             android:text="02"
             android:textColor="#998A6D"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:fontFeatureSettings="tnum"
+            android:includeFontPadding="false" />
 
         <TextView
             android:id="@+id/button_two"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
             android:fontFamily="@font/mmedium"
             android:textColor="#0D122C"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:letterSpacing="0.04"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
             android:background="@color/trans"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:text="COPY" />
+            tools:text="COPY from string" />
     </LinearLayout>
 
     <!-- Hairline -->
@@ -126,33 +131,35 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="28dp"
+            android:layout_width="44dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="22dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="start"
             android:text="03"
             android:textColor="#998A6D"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:fontFeatureSettings="tnum"
+            android:includeFontPadding="false" />
 
         <TextView
             android:id="@+id/button_three"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
             android:fontFamily="@font/mmedium"
             android:textColor="#0D122C"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:letterSpacing="0.04"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
             android:background="@color/trans"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:text="OG WODS" />
+            tools:text="LOAD the og wods" />
     </LinearLayout>
 
 </LinearLayout>
