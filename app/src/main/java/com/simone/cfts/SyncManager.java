@@ -49,6 +49,7 @@ public class SyncManager {
     public static final String ACTION_DATA_CHANGED = "com.simone.cfts.DATA_CHANGED";
 
     private static final String PREF_MERGE_DONE = "sync.merge_done";
+    private static final String PREF_BACKFILL_DONE = "sync.backfill_calendar_calories_v1";
 
     private static SyncManager instance;
 
@@ -114,7 +115,34 @@ public class SyncManager {
     /** Call after a successful Firebase sign-in. Runs the smart-merge flow and attaches listeners. */
     public void onSignedIn(Activity caller) {
         if (!isSignedIn()) return;
+        notifyProfile();
         runSmartMerge(caller);
+        backfillIfNeeded();
+    }
+
+    /**
+     * One-shot upload of local calendar + calories to cloud, for users who signed in before
+     * the upload sweeps were implemented. Idempotent (uses INSERT OR REPLACE keyed by id),
+     * so re-runs cost only redundant Firestore writes.
+     */
+    private void backfillIfNeeded() {
+        if (prefs.getBoolean(PREF_BACKFILL_DONE, false)) return;
+        uploadAllCalendar();
+        uploadAllCalories();
+        prefs.edit().putBoolean(PREF_BACKFILL_DONE, true).apply();
+    }
+
+    private void notifyProfile() {
+        if (!isSignedIn()) return;
+        FirebaseUser u = auth.getCurrentUser();
+        Map<String, Object> doc = new HashMap<>();
+        doc.put("email", u.getEmail());
+        doc.put("displayName", u.getDisplayName());
+        doc.put("lastSeen", FieldValue.serverTimestamp());
+        doc.put("schemaVersion", 1);
+        firestore.collection("users").document(u.getUid())
+                .set(doc, SetOptions.merge())
+                .addOnFailureListener(e -> Log.e(TAG, "profile upsert failed", e));
     }
 
     public void onSignedOut() {
@@ -126,26 +154,27 @@ public class SyncManager {
 
     public void notifyWorkoutUpsert(Workout w) {
         if (!isSignedIn()) return;
-        Map<String, Object> doc = new HashMap<>();
-        doc.put("title", w.getTitle());
-        doc.put("type", w.getType());
-        doc.put("difficulty", w.getDifficulty());
-        doc.put("totalTime", w.getTotalTime());
-        doc.put("numberOfSets", w.getNumberOfSets());
-        doc.put("setPause", w.getSetPause());
-        doc.put("wod", w.getWod());
-        doc.put("updatedAt", FieldValue.serverTimestamp());
-        userDoc("workouts").document(String.valueOf(w.getID()))
-                .set(doc, SetOptions.merge())
-                .addOnFailureListener(e -> Log.e(TAG, "workout upsert failed", e));
+        String wid = String.valueOf(w.getID());
+        DocumentReference workoutDoc = userDoc("workouts").document(wid);
+        CollectionReference exes = workoutDoc.collection("exercises");
 
-        // Also push the workout's exercise list under its subcollection.
-        CollectionReference exes = userDoc("workouts").document(String.valueOf(w.getID()))
-                .collection("exercises");
-        // Clear and rewrite — the relation rows are recreated wholesale by addOrUpdateWorkout flows.
+        // Single atomic batch: delete old exercises, set workout doc, set new exercises.
+        // Avoids the race where the listener sees workout doc but empty exercises.
         exes.get().addOnSuccessListener(snap -> {
             WriteBatch batch = firestore.batch();
             for (QueryDocumentSnapshot d : snap) batch.delete(d.getReference());
+
+            Map<String, Object> doc = new HashMap<>();
+            doc.put("title", w.getTitle());
+            doc.put("type", w.getType());
+            doc.put("difficulty", w.getDifficulty());
+            doc.put("totalTime", w.getTotalTime());
+            doc.put("numberOfSets", w.getNumberOfSets());
+            doc.put("setPause", w.getSetPause());
+            doc.put("wod", w.getWod());
+            doc.put("updatedAt", FieldValue.serverTimestamp());
+            batch.set(workoutDoc, doc, SetOptions.merge());
+
             int idx = 0;
             for (Exercise e : w.getExercises()) {
                 Map<String, Object> ed = new HashMap<>();
@@ -156,8 +185,8 @@ public class SyncManager {
                 ed.put("updatedAt", FieldValue.serverTimestamp());
                 batch.set(exes.document(String.valueOf(idx++)), ed);
             }
-            batch.commit();
-        });
+            batch.commit().addOnFailureListener(e -> Log.e(TAG, "workout upsert failed", e));
+        }).addOnFailureListener(e -> Log.e(TAG, "workout exercises preflight failed", e));
     }
 
     public void notifyWorkoutDelete(int workoutId) {
@@ -289,12 +318,15 @@ public class SyncManager {
     }
 
     private void uploadAllCalendar() {
-        // Simple full sweep via a per-row read — works for a few hundred entries.
-        // For larger sets a single query would be more efficient.
+        for (DatabaseHelper.CalendarRow row : db.loadAllCalendarRows()) {
+            notifyCalendarAdd(row.rowId, row.day, row.workoutId);
+        }
     }
 
     private void uploadAllCalories() {
-        // Same pattern as uploadAllCalendar — placeholder for now.
+        for (DatabaseHelper.CalorieRow row : db.loadAllCalorieRows()) {
+            notifyMealKcal(row.date, row.meal, row.kcal);
+        }
     }
 
     private void clearCloudThenUpload() {
@@ -360,8 +392,9 @@ public class SyncManager {
 
     private void applyRemoteWorkout(DocumentSnapshot d) {
         try {
+            final int cloudId = Integer.parseInt(d.getId());
             Workout w = new Workout();
-            w.setID(Integer.parseInt(d.getId()));
+            w.setID(cloudId);
             w.setTitle(d.getString("title"));
             w.setType(d.getString("type"));
             Long diff  = d.getLong("difficulty");
@@ -373,9 +406,25 @@ public class SyncManager {
             w.setNumberOfSets(sets != null ? sets.intValue() : 0);
             w.setSetPause(pause != null ? pause.intValue() : 0);
             w.setWod(d.getString("wod"));
-            ArrayList<Exercise> exes = new ArrayList<>();
-            w.setExercises(exes);
-            db.addOrUpdateWorkout(w);
+            db.upsertWorkoutWithId(w);
+
+            // Pull the exercises subcollection so reinstalled clients see them.
+            d.getReference().collection("exercises").get().addOnSuccessListener(exSnap -> {
+                db.removeExercisesByWorkoutId(cloudId);
+                for (DocumentSnapshot ex : exSnap.getDocuments()) {
+                    Exercise e = new Exercise();
+                    e.setName(ex.getString("name"));
+                    Long time = ex.getLong("time");
+                    Long pauseSec = ex.getLong("pause");
+                    Long reps = ex.getLong("reps");
+                    e.setTimeInSeconds(time != null ? time.intValue() : 0);
+                    e.setPauseInSeconds(pauseSec != null ? pauseSec.intValue() : 0);
+                    e.setReps(reps != null ? reps.intValue() : 0);
+                    e.setWorkoutId(cloudId);
+                    db.addExerciseInWorkoutById(e, cloudId);
+                }
+                broadcastChanged();
+            });
         } catch (Exception e) {
             Log.e(TAG, "applyRemoteWorkout", e);
         }
@@ -383,10 +432,11 @@ public class SyncManager {
 
     private void applyRemoteCalendar(DocumentSnapshot d) {
         try {
+            int rowId = Integer.parseInt(d.getId());
             String day = d.getString("day");
             Long workoutId = d.getLong("workoutId");
             if (day != null && workoutId != null) {
-                db.addWorkoutOnDate(day, workoutId.intValue());
+                db.upsertCalendarEntry(rowId, day, workoutId.intValue());
             }
         } catch (Exception e) {
             Log.e(TAG, "applyRemoteCalendar", e);

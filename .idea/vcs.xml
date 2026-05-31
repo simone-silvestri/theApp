@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/CoronaFTS/SPMCache/checkouts/GRDB.swift" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/CoronaFTS/SPMCache/checkouts/GRDB.swift/SQLiteCustom/src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ios/CoronaFTS/SPMCache/checkouts/GRDB.swift/Tests/CustomSQLite/GRDB" vcs="Git" />
   </component>
 </project>

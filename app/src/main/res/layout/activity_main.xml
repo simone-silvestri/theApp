@@ -7,29 +7,12 @@
     android:background="@drawable/gradient1"
     tools:context=".MainActivity">
 
-
-    <ImageView
-        android:id='@+id/picstatistics'
-        android:layout_width="280sp"
-        android:layout_height="280sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10sp"
-        android:gravity="center"
-        android:src="@drawable/home_img_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titlepage" />
-
     <TextView
-        android:id='@+id/titlepage'
+        android:id="@+id/titlepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30sp"
-        android:layout_marginRight="30sp"
-        android:layout_marginEnd="30sp"
         android:layout_marginStart="30sp"
+        android:layout_marginEnd="30sp"
         android:layout_marginTop="20sp"
         android:fontFamily="@font/mlight"
         android:gravity="center"
@@ -38,147 +21,149 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/picstatistics"
+        android:layout_width="280sp"
+        android:layout_height="280sp"
+        android:layout_marginTop="10sp"
+        android:src="@drawable/home_img_small"
+        app:layout_constraintTop_toBottomOf="@+id/titlepage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id='@+id/subtitlepage'
+        android:id="@+id/subtitlepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="280sp"
-        android:layout_marginLeft="30sp"
-        android:layout_marginRight="30sp"
         android:layout_marginStart="30sp"
         android:layout_marginEnd="30sp"
+        android:layout_marginTop="10sp"
         android:fontFamily="@font/mlight"
         android:gravity="center"
         android:lineSpacingExtra="4sp"
         android:text="@string/subtitle_string"
         android:textAlignment="center"
         android:textColor="#C0C0C0"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/picstatistics"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/picstatistics" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-   <!--170dp-->
+    <!-- small icon row (account / add / reset) centered above the button rows -->
     <LinearLayout
-        android:id="@+id/button_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:id="@+id/icon_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:weightSum="2">
+        android:gravity="center"
+        android:layout_marginBottom="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_row"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/buttonAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+            android:background="@color/trans"
+            android:src="@drawable/ic_baseline_person_24"
+            android:onClick="openSignIn" />
+
+        <ImageButton
+            android:id="@+id/buttonaddworkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+            android:background="@color/trans"
+            android:src="@drawable/ic_baseline_library_add_24" />
+
+        <ImageButton
+            android:id="@+id/buttonreset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/trans"
+            android:src="@drawable/ic_menu_delete" />
+    </LinearLayout>
+
+    <!-- 2×2 skinny button block at bottom -->
+    <LinearLayout
+        android:id="@+id/button_row_2"
+        android:layout_width="match_parent"
+        android:layout_height="48sp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/btexercise"
+            android:id="@+id/tile_health"
             android:layout_width="0dp"
-            android:layout_height="55sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="2sp"
-            android:layout_marginEnd="2sp"
-            android:layout_marginRight="2sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginStart="2sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="1dp"
+            android:background="@color/white"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:onClick="openHealth"
+            android:text="HEALTH"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tile_calendar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="@color/white"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:onClick="openCalendar"
+            android:text="CALENDAR"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_row"
+        android:layout_width="match_parent"
+        android:layout_height="48sp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_row_2">
+
+        <TextView
+            android:id="@+id/tile_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="1dp"
             android:background="@color/white"
             android:fontFamily="@font/mmedium"
             android:gravity="center"
             android:onClick="openLibrary"
             android:text="LIST"
-            android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btrandom"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_weight="1"/>
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/btrandom"
+            android:id="@+id/tile_random"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="55sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="2sp"
-            android:layout_marginStart="2sp"
-            android:layout_marginBottom="2sp"
-            android:layout_marginEnd="2sp"
-            android:layout_marginRight="2sp"
+            android:layout_marginStart="1dp"
             android:background="@color/white"
             android:fontFamily="@font/mmedium"
             android:gravity="center"
             android:onClick="openRandom"
             android:text="RANDOM"
-            android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+            android:textSize="18sp" />
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/buttonAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24sp"
-        android:background="@color/trans"
-        android:src="@drawable/ic_baseline_person_24"
-        android:onClick="openSignIn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttoncalendar"/>
-
-    <ImageButton
-        android:id="@+id/buttoncalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/trans"
-        android:src="@drawable/ic_baseline_calendar_today_24"
-        android:onClick="openCalendar"
-        android:layout_marginBottom="60sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonaddworkout"
-        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
-
-    <ImageButton
-        android:id="@+id/buttonaddworkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60sp"
-        android:background="@color/trans"
-        android:src="@drawable/ic_baseline_library_add_24"
-        app:layout_constraintStart_toEndOf="@+id/buttoncalendar"
-        app:layout_constraintEnd_toStartOf="@+id/buttonHealth"
-        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
-
-    <ImageButton
-        android:id="@+id/buttonHealth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/trans"
-        android:onClick="openHealth"
-        android:src="@drawable/ic_baseline_favorite_24"
-        android:layout_marginBottom="60sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonaddworkout"
-        app:layout_constraintEnd_toStartOf="@+id/buttonreset"
-        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
-
-    <ImageButton
-        android:id="@+id/buttonreset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/trans"
-        android:src="@drawable/ic_menu_delete"
-        android:layout_marginBottom="60sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonHealth"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

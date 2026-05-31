@@ -23,10 +23,6 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.simone.cfts.MESSAGE";
 
-    TextView titlepage,subtitlepage,btexercise;
-    ImageView picstatistic;
-    Animation imgpage, bttone, btttwo, bttthree, ltr;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
         SyncManager sync = SyncManager.get(getApplicationContext());
         if (sync.isSignedIn()) sync.onSignedIn(this);
-
-        // load animation
-        imgpage = AnimationUtils.loadAnimation(this, R.anim.imgpage);
-        bttone = AnimationUtils.loadAnimation(this, R.anim.bttone);
-        btttwo = AnimationUtils.loadAnimation(this, R.anim.btttwo);
-        bttthree = AnimationUtils.loadAnimation(this, R.anim.bttthree);
-        ltr = AnimationUtils.loadAnimation(this, R.anim.ltr);
-
-        //import font
-        titlepage = (TextView) findViewById(R.id.titlepage);
-        subtitlepage = (TextView) findViewById(R.id.subtitlepage);
-        btexercise = (TextView) findViewById(R.id.btexercise);
-        picstatistic = (ImageView) findViewById(R.id.picstatistics);
 
         final ImageButton pubtn = findViewById(R.id.buttonreset);
         pubtn.setOnClickListener(new View.OnClickListener() {

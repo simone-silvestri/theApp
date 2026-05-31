@@ -217,6 +217,143 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return calendarId;
     }
 
+    /** Insert or replace a calendar row at an explicit id (used by the cloud listener). */
+    public void upsertCalendarEntry(int rowId, String isoDate, int workoutId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_CAL_ID, rowId);
+            values.put(KEY_CAL_DAY, isoDate);
+            values.put(KEY_CAL_WORK_ID, workoutId);
+            db.insertWithOnConflict(TABLE_CAL, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error upserting calendar entry");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /** Insert or replace a workout at an explicit id (used by the cloud listener). */
+    public void upsertWorkoutWithId(Workout work) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_WORK_ID, work.getID());
+            values.put(KEY_WORK_NAME, work.getTitle());
+            values.put(KEY_WORK_WOD, work.getWod());
+            values.put(KEY_WORK_TYPE, work.getType());
+            values.put(KEY_WORK_DIFF, work.getDifficulty());
+            values.put(KEY_WORK_TIME, work.getTotalTime());
+            values.put(KEY_WORK_SET, work.getNumberOfSets());
+            values.put(KEY_WORK_PAUSE, work.getSetPause());
+            db.insertWithOnConflict(TABLE_WORK, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error upserting workout");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /** Wipe all exercise rows for a given workout id (used before re-syncing from cloud). */
+    public void removeExercisesByWorkoutId(int workoutId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_REL, KEY_REL_WORK_ID + " = ?", new String[]{String.valueOf(workoutId)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error wiping exercises");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /** Add an exercise row for a known workout id (used by the cloud listener). */
+    public void addExerciseInWorkoutById(Exercise exercise, int workoutId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_REL_WORK_ID, workoutId);
+            values.put(KEY_REL_EXE_NAME, exercise.getName());
+            values.put(KEY_REL_TIME, exercise.getTimeInSeconds());
+            values.put(KEY_REL_PAUSE, exercise.getPauseInSeconds());
+            values.put(KEY_REL_REPS, exercise.getReps());
+            db.insertOrThrow(TABLE_REL, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error adding exercise by workout id");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public static class CalendarRow {
+        public final int rowId;
+        public final String day;
+        public final int workoutId;
+        public CalendarRow(int rowId, String day, int workoutId) {
+            this.rowId = rowId;
+            this.day = day;
+            this.workoutId = workoutId;
+        }
+    }
+
+    public static class CalorieRow {
+        public final String date;
+        public final int meal;
+        public final int kcal;
+        public CalorieRow(String date, int meal, int kcal) {
+            this.date = date;
+            this.meal = meal;
+            this.kcal = kcal;
+        }
+    }
+
+    public java.util.List<CalendarRow> loadAllCalendarRows() {
+        java.util.List<CalendarRow> out = new java.util.ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_CAL_ID + ", " + KEY_CAL_DAY + ", " + KEY_CAL_WORK_ID
+                            + " FROM " + TABLE_CAL,
+                    null);
+            while (cursor.moveToNext()) {
+                out.add(new CalendarRow(cursor.getInt(0), cursor.getString(1), cursor.getInt(2)));
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error loading all calendar rows");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return out;
+    }
+
+    public java.util.List<CalorieRow> loadAllCalorieRows() {
+        java.util.List<CalorieRow> out = new java.util.ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + ", " + KEY_CAL_KCAL
+                            + " FROM " + TABLE_CALORIES,
+                    null);
+            while (cursor.moveToNext()) {
+                out.add(new CalorieRow(cursor.getString(0), cursor.getInt(1), cursor.getInt(2)));
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error loading all calorie rows");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return out;
+    }
+
     public void removeCalendarEntry(int rowId) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
