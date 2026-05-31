@@ -111,6 +111,9 @@ public class HealthActivity extends AppCompatActivity {
                 hideKeyboard(field);
                 int newGoal = parseOr(field.getText().toString(), DEFAULT_GOAL);
                 prefs.edit().putInt(PREF_GOAL, newGoal).apply();
+                int monthly = prefs.getInt(com.simone.cfts.Calendar.PREF_MONTHLY_GOAL,
+                        com.simone.cfts.Calendar.DEFAULT_MONTHLY_GOAL);
+                SyncManager.get(getApplicationContext()).notifyGoalsChanged(newGoal, monthly);
                 pw.dismiss();
                 refresh();
             }
@@ -135,7 +138,9 @@ public class HealthActivity extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 hideKeyboard(field);
-                db.clearMealKcal(selectedIsoDate(), meal);
+                String d = selectedIsoDate();
+                db.clearMealKcal(d, meal);
+                SyncManager.get(getApplicationContext()).notifyMealClear(d, meal);
                 pw.dismiss();
                 refresh();
             }
@@ -144,8 +149,14 @@ public class HealthActivity extends AppCompatActivity {
             @Override public void onClick(View v) {
                 hideKeyboard(field);
                 int kcal = parseOr(field.getText().toString(), 0);
-                if (kcal > 0) db.setMealKcal(selectedIsoDate(), meal, kcal);
-                else db.clearMealKcal(selectedIsoDate(), meal);
+                String d = selectedIsoDate();
+                if (kcal > 0) {
+                    db.setMealKcal(d, meal, kcal);
+                    SyncManager.get(getApplicationContext()).notifyMealKcal(d, meal, kcal);
+                } else {
+                    db.clearMealKcal(d, meal);
+                    SyncManager.get(getApplicationContext()).notifyMealClear(d, meal);
+                }
                 pw.dismiss();
                 refresh();
             }

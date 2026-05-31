@@ -44,3 +44,6 @@ hs_err_pid*
 # End of https://www.toptal.com/developers/gitignore/api/java
 
 docs/*
+
+# Firebase secrets — do NOT commit; download from Firebase Console per device
+app/google-services.json

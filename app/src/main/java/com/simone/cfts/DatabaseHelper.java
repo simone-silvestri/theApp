@@ -832,28 +832,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return totals;
     }
 
-    /** Returns rows of (meal, kcal) for the export. Dates are appended in parallel into the {@code dates} list. */
-    public java.util.List<int[]> dumpCaloriesAsTriples(java.util.List<String> dates) {
-        java.util.List<int[]> rows = new java.util.ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = null;
-        try {
-            cursor = db.rawQuery(
-                    "SELECT " + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + ", " + KEY_CAL_KCAL
-                            + " FROM " + TABLE_CALORIES,
-                    null);
-            while (cursor.moveToNext()) {
-                dates.add(cursor.getString(0));
-                rows.add(new int[]{cursor.getInt(1), cursor.getInt(2)});
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "Error dumping calories");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) cursor.close();
-        }
-        return rows;
-    }
-
     private static int daysSinceMonday(String mondayIso, String otherIso) {
         try {
             java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US);

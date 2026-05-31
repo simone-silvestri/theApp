@@ -125,6 +125,8 @@ public class Calendar extends AppCompatActivity {
                 hideKeyboard(field);
                 int newGoal = parseOr(field.getText().toString(), DEFAULT_MONTHLY_GOAL);
                 prefs.edit().putInt(PREF_MONTHLY_GOAL, newGoal).apply();
+                int daily = prefs.getInt(HealthActivity.PREF_GOAL, HealthActivity.DEFAULT_GOAL);
+                SyncManager.get(getApplicationContext()).notifyGoalsChanged(daily, newGoal);
                 pw.dismiss();
                 refreshDetails();
             }
@@ -178,7 +180,9 @@ public class Calendar extends AppCompatActivity {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     hideKeyboard(v);
-                    db.addWorkoutOnDate(currentIsoDate(), w.getID());
+                    String iso = currentIsoDate();
+                    long rowId = db.addWorkoutOnDate(iso, w.getID());
+                    SyncManager.get(getApplicationContext()).notifyCalendarAdd(rowId, iso, w.getID());
                     pw.dismiss();
                     refresh();
                 }
@@ -350,6 +354,7 @@ public class Calendar extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 db.removeCalendarEntry(calendarRowId);
+                SyncManager.get(getApplicationContext()).notifyCalendarRemove(calendarRowId);
                 pw.dismiss();
                 refresh();
             }

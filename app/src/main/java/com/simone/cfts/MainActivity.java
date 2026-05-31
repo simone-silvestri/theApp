@@ -1,13 +1,9 @@
 package com.simone.cfts;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,22 +17,11 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Random;
-
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.simone.cfts.MESSAGE";
-    private static final int CREATE_FILE = 1;
-    private static final int OPEN_REQUEST_CODE = 41;
-    private static final int WRITE_REQUEST_CODE = 101;
 
     TextView titlepage,subtitlepage,btexercise;
     ImageView picstatistic;
@@ -46,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SyncManager sync = SyncManager.get(getApplicationContext());
+        if (sync.isSignedIn()) sync.onSignedIn(this);
 
         // load animation
         imgpage = AnimationUtils.loadAnimation(this, R.anim.imgpage);
@@ -95,33 +83,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton pubtnwrite = findViewById(R.id.buttonwrite);
-        pubtnwrite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                showSingleActionPopup(arg0, "Write database to file?", null, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        writeDataBase(v);
-                        Toast.makeText(MainActivity.this, "written database to file", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        final ImageButton pubtnread = findViewById(R.id.buttonread);
-        pubtnread.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                showSingleActionPopup(arg0, null, "READ", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        readDataBase(v);
-                        Toast.makeText(MainActivity.this, "read database from file", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
     }
 
     private void showConfirmPopup(View anchor, String message,
@@ -200,168 +161,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showSingleActionPopup(View anchor, String message, String buttonText,
-                                       final View.OnClickListener action) {
-        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View puView = layoutInflater.inflate(R.layout.popup_read_write, null);
-        puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
-
-        if (message != null) {
-            TextView text = puView.findViewById(R.id.text_id);
-            text.setText(message);
-        }
-
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
-        puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
-        puWindow.setAnimationStyle(R.style.Animation);
-
-        Button btn = puView.findViewById(R.id.button_write);
-        if (buttonText != null) btn.setText(buttonText);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (action != null) action.onClick(v);
-                puWindow.dismiss();
-            }
-        });
-    }
-
-    public void writeDataBase(View view) {
-        // when you create document, you need to add Intent.ACTION_CREATE_DOCUMENT
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        // filter to only show openable items.
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        // Create a file with the requested Mime type
-        intent.setType("text/plain");
-        startActivityForResult(intent, WRITE_REQUEST_CODE);
-    }
-
-    public void readDataBase(View view) {
-        // when you create document, you need to add Intent.ACTION_CREATE_DOCUMENT
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        // filter to only show openable items.
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        // Create a file with the requested Mime type
-        intent.setType("text/plain");
-        startActivityForResult(intent, OPEN_REQUEST_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == WRITE_REQUEST_CODE) {
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-                    if (data != null
-                            && data.getData() != null) {
-                        writeInFile(data.getData());
-                    }
-                    break;
-                case Activity.RESULT_CANCELED:
-                    break;
-            }
-        } else if (requestCode == OPEN_REQUEST_CODE) {
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-                if (data != null
-                        && data.getData() != null) {
-                    readFromFile(data.getData());
-                }
-                break;
-                case Activity.RESULT_CANCELED:
-                    break;
-            }
-        }
-    }
-
-    private void readFromFile(@NonNull Uri uri) {
-        StringFormatter stringFormatter = new StringFormatter();
-        InputStream inputStream = null;
-        BufferedReader reader = null;
-        try {
-            inputStream = getContentResolver().openInputStream(uri);
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String toRead = reader.readLine();
-            stringFormatter.setWodList(toRead);
-            ArrayList<Workout> wodList = stringFormatter.getWodList();
-            DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-            for (int i=0; i<wodList.size(); i++) {
-                int id = (int) dbhandler.addOrUpdateWorkout(wodList.get(i));
-                wodList.get(i).setID(id);
-                dbhandler.removeExercises(wodList.get(i));
-                ArrayList<Exercise> exeList = wodList.get(i).getExercises();
-                for (int j=0; j<exeList.size(); j++) {
-                    dbhandler.addExerciseInWorkout(exeList.get(j),wodList.get(i));
-                    ExerciseDetail exedet = new ExerciseDetail(exeList.get(j).getName(),1);
-                    dbhandler.addOrUpdateExercise(exedet);
-                }
-            }
-
-            StringFormatter sf2 = new StringFormatter();
-            sf2.parseCaloriesAndGoal(toRead);
-            for (StringFormatter.CalorieRow row : sf2.getCalorieRows()) {
-                dbhandler.setMealKcal(row.date, row.meal, row.kcal);
-            }
-            if (sf2.getGoal() != null) {
-                android.content.SharedPreferences prefs =
-                        android.preference.PreferenceManager.getDefaultSharedPreferences(this);
-                prefs.edit().putInt(HealthActivity.PREF_GOAL, sf2.getGoal()).apply();
-            }
-        } catch (IOException e) {
-            Log.e("MainActivity", "Error reading database from file", e);
-        } finally {
-            try {
-                if (reader != null) reader.close();
-                if (inputStream != null) inputStream.close();
-            } catch (IOException e) {
-                Log.e("MainActivity", "Error closing streams", e);
-            }
-        }
-    }
-
-    private void writeInFile(@NonNull Uri uri) {
-        OutputStream outputStream = null;
-        BufferedWriter bw = null;
-        try {
-            StringBuilder toWrite = new StringBuilder();
-            DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-            ArrayList<Workout> wodList = dbhandler.loadDatabase();
-
-            StringFormatter stringFormatter = new StringFormatter();
-            for (int i = 0; i < wodList.size(); i++) {
-                stringFormatter.setContent(wodList.get(i));
-                toWrite.append(stringFormatter.getContent());
-            }
-
-            StringFormatter sf2 = new StringFormatter();
-            java.util.List<String> dates = new java.util.ArrayList<>();
-            java.util.List<int[]> rows = dbhandler.dumpCaloriesAsTriples(dates);
-            for (int i = 0; i < rows.size(); i++) {
-                toWrite.append(sf2.appendCalorieRow(dates.get(i), rows.get(i)[0], rows.get(i)[1]));
-            }
-            android.content.SharedPreferences prefs =
-                    android.preference.PreferenceManager.getDefaultSharedPreferences(this);
-            int goal = prefs.getInt(HealthActivity.PREF_GOAL, HealthActivity.DEFAULT_GOAL);
-            toWrite.append(sf2.appendGoalRow(goal));
-
-            outputStream = getContentResolver().openOutputStream(uri);
-            bw = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bw.write(toWrite.toString());
-            bw.flush();
-        } catch (IOException e) {
-            Log.e("MainActivity", "Error writing database to file", e);
-        } finally {
-            try {
-                if (bw != null) bw.close();
-                if (outputStream != null) outputStream.close();
-            } catch (IOException e) {
-                Log.e("MainActivity", "Error closing streams", e);
-            }
-        }
-    }
-
     public void openStringEditor(View view) {
         Intent intent = new Intent(this, StringActivity.class);
         startActivity(intent);
@@ -374,6 +173,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openHealth(View view) {
         Intent intent = new Intent(this, HealthActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSignIn(View view) {
+        Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
 
@@ -421,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Workout> wodList = defaultWorkouts.getWodList();
 
+        SyncManager sync = SyncManager.get(getApplicationContext());
         for (int i=0; i<wodList.size(); i++) {
             ArrayList<Exercise> exeList = new ArrayList<>();
             int id = (int) dbhandler.addOrUpdateWorkout(wodList.get(i));
@@ -430,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
             for (int j=0; j<exeList.size(); j++) {
                 dbhandler.addExerciseInWorkout(exeList.get(j),wodList.get(i));
             }
+            sync.notifyWorkoutUpsert(wodList.get(i));
         }
     }
 }
