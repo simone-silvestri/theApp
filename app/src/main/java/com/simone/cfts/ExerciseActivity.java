@@ -7,25 +7,21 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AlertDialog;
 
 public class ExerciseActivity extends AppCompatActivity {
 
-    private TextView title, difficulty, description;
-    private TextView txtdifficulty, txtdescription, btnendpage, difftext;
-    private EditText editdescription;
+    private TextView title, difftext;
+    private EditText editdescription, editcategory;
+    private ImageView easy, intermediate, advanced;
     private ExerciseDetail exe;
-    private LinearLayout difflayout;
-    private ImageView easy,intermediate,advanced,initdiff;
-    private Button btnaddorupdate;
-    private View dividerView;
-    private int currentDiff, addorupdate;
+    private int currentDiff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,147 +29,99 @@ public class ExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise);
 
         title = findViewById(R.id.title_tv);
-        difficulty = findViewById(R.id.text_diff);
-        description = findViewById(R.id.Description);
-
-        initdiff = findViewById(R.id.imginitialdiff);
-
-        txtdifficulty = findViewById(R.id.textdifficulty); txtdifficulty.setVisibility(View.INVISIBLE);
-        txtdescription = findViewById(R.id.textdescription);txtdescription.setVisibility(View.INVISIBLE);
-        editdescription = findViewById(R.id.editdescription);editdescription.setVisibility(View.INVISIBLE);
-
+        difftext = findViewById(R.id.difftext);
+        editdescription = findViewById(R.id.editdescription);
+        editcategory = findViewById(R.id.editcategory);
         easy = findViewById(R.id.imgeasy);
         intermediate = findViewById(R.id.imgintermediate);
         advanced = findViewById(R.id.imgadvanced);
 
-        difflayout = findViewById(R.id.linearlayout); difflayout.setVisibility(View.INVISIBLE);
-        difftext = findViewById(R.id.difftext); difftext.setVisibility(View.INVISIBLE);
-        dividerView = findViewById(R.id.dividerview); dividerView.setVisibility(View.INVISIBLE);
-        btnendpage = findViewById(R.id.btnendofpage); btnendpage.setVisibility(View.INVISIBLE);
-
-        btnaddorupdate = findViewById(R.id.addorupdatebutton);
-
-        Bundle extra = getIntent().getExtras();
-        String name = "";
-        String buttontxt = "Update";
-        DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-
-        addorupdate = 0;
-
-        if (extra != null) {
-            name = extra.getString("EXTRA_NAME");
-
-            exe = dbhandler.loadOneExercise(name);
-            if (exe.getName()==null) {
-                exe = new ExerciseDetail(name, -1);
-                exe.setDescription("Sorry no exercise with that name, if you want you can add details for it below");
-                exe.setMuscle("Not found");
-                buttontxt = "Add details";
-                addorupdate = 1;
-            }
+        String name = getIntent().getStringExtra("EXTRA_NAME");
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
+        exe = db.loadOneExercise(name);
+        if (exe.getName() == null) {
+            exe = new ExerciseDetail(name, -1);
+            exe.setDescription("");
+            exe.setMuscle("");
         }
 
-        btnaddorupdate.setText(buttontxt);
         title.setText(exe.getName());
 
-        if (exe.getDifficulty() == 1) {
-            difficulty.setText("Easy");
-            difficulty.setTextColor(getResources().getColor(R.color.beginner));
-            initdiff.setImageResource(R.drawable.easy);
-        } else if (exe.getDifficulty() == 2) {
-            difficulty.setText("Intermediate");
-            difficulty.setTextColor(getResources().getColor(R.color.skilled));
-            initdiff.setImageResource(R.drawable.intermediate);
-        } else if (exe.getDifficulty() == -1) {
-            difficulty.setText("Not found");
-            initdiff.setVisibility(View.GONE);
-            difficulty.setTextColor(getResources().getColor(R.color.gray));
-        } else {
-            difficulty.setText("Advanced");
-            difficulty.setTextColor(getResources().getColor(R.color.spartan));
-            initdiff.setImageResource(R.drawable.advanced);
-        }
-        description.setText(exe.getDescription());
-    }
+        String desc = exe.getDescription();
+        if (desc != null) editdescription.setText(desc);
 
-    public void openViews(View view) {
-        txtdifficulty.setVisibility(View.VISIBLE);
-        txtdescription.setVisibility(View.VISIBLE);
-        difftext.setVisibility(View.VISIBLE);
-        editdescription.setVisibility(View.VISIBLE);
-        dividerView.setVisibility(View.VISIBLE);
-        btnendpage.setVisibility(View.VISIBLE);
-        difflayout.setVisibility(View.VISIBLE);
-        view.setVisibility(View.GONE);
+        currentDiff = exe.getDifficulty() >= 1 && exe.getDifficulty() <= 3 ? exe.getDifficulty() : 1;
+        applyDifficultySelection(currentDiff);
 
         editdescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
+                if (!hasFocus) hideKeyboard(v);
             }
         });
 
-        TextView olddiff = findViewById(R.id.olddiff);
-        olddiff.setText("Old difficuty:");
-        if(exe.getDifficulty()==-1) {
-            btnendpage.setText("Add exercise");
-        } else {
-            btnendpage.setText("Update exercise");
+        String currentCategory = exe.getMuscle();
+        if (currentCategory != null && !currentCategory.isEmpty()
+                && !currentCategory.equals("Not found")) {
+            editcategory.setText(currentCategory);
         }
-        currentDiff = 1;
+    }
+
+    public void closeExercise(View v) { finish(); }
+
+    public void pickCategory(View v) {
+        final String[] categories = getResources().getStringArray(R.array.muscle_categories);
+        new AlertDialog.Builder(this)
+                .setTitle("Choose a category")
+                .setItems(categories, (dialog, which) -> editcategory.setText(categories[which]))
+                .show();
     }
 
     public void setCurrentDifficulty(View v) {
         LinearLayout r = (LinearLayout) v.getParent();
         int idx = r.indexOfChild(v);
-        TextView diffname = (TextView) findViewById(R.id.difftext);
         currentDiff = idx + 1;
-        LinearLayout.LayoutParams small = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.small_exe), getResources().getDimensionPixelSize(R.dimen.small_exe),1.0f);
-        LinearLayout.LayoutParams large = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.large_exe), getResources().getDimensionPixelSize(R.dimen.large_exe),1.0f);
-        small.gravity= Gravity.CENTER;
-        large.gravity= Gravity.CENTER;
-        easy.setLayoutParams(small);
-        intermediate.setLayoutParams(small);
-        advanced.setLayoutParams(small);
-        v.setLayoutParams(large);
+        applyDifficultySelection(currentDiff);
+    }
 
-        if(currentDiff==1) {
-            diffname.setText("Easy");
-            diffname.setTextColor(getResources().getColor(R.color.beginner));
-        } else if (currentDiff==2) {
-            diffname.setText("Intermediate");
-            diffname.setTextColor(getResources().getColor(R.color.skilled));
+    private void applyDifficultySelection(int diff) {
+        int largeDim = getResources().getDimensionPixelSize(R.dimen.large_exe);
+        int smallDim = getResources().getDimensionPixelSize(R.dimen.small_exe);
+        LinearLayout.LayoutParams small = new LinearLayout.LayoutParams(smallDim, smallDim, 1.0f);
+        LinearLayout.LayoutParams large = new LinearLayout.LayoutParams(largeDim, largeDim, 1.0f);
+        small.gravity = Gravity.CENTER;
+        large.gravity = Gravity.CENTER;
+
+        easy.setLayoutParams(diff == 1 ? large : small);
+        intermediate.setLayoutParams(diff == 2 ? large : small);
+        advanced.setLayoutParams(diff == 3 ? large : small);
+
+        if (diff == 1) {
+            difftext.setText("Easy");
+            difftext.setTextColor(getResources().getColor(R.color.beginner));
+        } else if (diff == 2) {
+            difftext.setText("Intermediate");
+            difftext.setTextColor(getResources().getColor(R.color.skilled));
         } else {
-            diffname.setText("Advanced");
-            diffname.setTextColor(getResources().getColor(R.color.spartan));
+            difftext.setText("Advanced");
+            difftext.setTextColor(getResources().getColor(R.color.spartan));
         }
-
     }
 
     public void addExerciseToDatabase(View v) {
-        DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-
-        if (currentDiff != -1) {
-            exe.setDifficulty(currentDiff);
-            exe.setMuscle("");
-            if (!editdescription.getText().toString().isEmpty()) {
-                exe.setDescription(editdescription.getText().toString());
-                int exeID = (int) dbhandler.addOrUpdateExercise(exe);
-                SyncManager.get(getApplicationContext()).notifyExerciseCatalogUpsert(exe);
-                if (addorupdate == 0) {
-                    btnendpage.setText("Updated!");
-                } else {
-                    btnendpage.setText("Added!");
-                    addorupdate = 0;
-                }
-            }
-        }
+        DatabaseHelper db = DatabaseHelper.getInstance(this);
+        exe.setDifficulty(currentDiff);
+        exe.setMuscle(editcategory.getText().toString());
+        exe.setDescription(editdescription.getText().toString());
+        db.addOrUpdateExercise(exe);
+        SyncManager.get(getApplicationContext()).notifyExerciseCatalogUpsert(exe);
+        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+        hideKeyboard(v);
+        finish();
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
