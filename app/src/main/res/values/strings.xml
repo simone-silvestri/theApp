@@ -14,6 +14,27 @@
     <string name="type_3">Reps in time</string>
     <string name="info_add_workout_type">There are three different types of workout you can choose. (1) TIME: every exercise has a working time and a pause time. Do your max! (2) REPS: every exercise is defined by a number of repetitions, you also have to specify a total time to finish the workout in. (3) REPTIME: every exercise is defined by a number of repetitions to do in a certain amount of seconds to specify </string>
     <string name="info_add_workout_sets"> How many time do you want to repeat a round? Remember to also set the seconds of pause in between sets. If you chose the REPS type you have to choose a total time instead because the pauses are up to you! </string>
+
+    <!-- Health section -->
+    <string name="health_title">HEALTH</string>
+    <string name="meal_breakfast">BREAKFAST</string>
+    <string name="meal_lunch">LUNCH</string>
+    <string name="meal_dinner">DINNER</string>
+    <string name="meal_extra">EXTRA</string>
+    <string name="meal_breakfast_short">B</string>
+    <string name="meal_lunch_short">L</string>
+    <string name="meal_dinner_short">D</string>
+    <string name="meal_extra_short">E</string>
+    <string name="daily_kcal_goal">DAILY KCAL GOAL</string>
+    <string name="kcal_label">kcal</string>
+    <string name="kcal_format">%1$d / %2$d kcal</string>
+    <string name="clear">CLEAR</string>
+    <string name="save">SAVE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="ok">OK</string>
+    <string name="goal_axis_label">goal</string>
+    <string name="week_avg_format">avg %1$,d kcal / day</string>
+    <string name="week_avg_empty">no entries this week</string>
 </resources>
 
 

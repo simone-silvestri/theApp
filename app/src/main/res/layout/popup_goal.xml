@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="320dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/mmedium"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="@string/daily_kcal_goal" />
+
+    <EditText
+        android:id="@+id/goalField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/mlight"
+        android:gravity="center"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="32sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/goalCancel"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/cancel"
+            android:textColor="@color/colorPrimaryDark6"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/goalOk"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/ok"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -74,35 +74,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton pubtnload = findViewById(R.id.btnloaddatabase);
-        pubtnload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                showConfirmPopup(arg0, "Load the original corona workout routines?", null, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        populateDatabase(v);
-                        Toast.makeText(MainActivity.this, "Original database loaded", Toast.LENGTH_SHORT).show();
-                    }
-                }, null, null);
-            }
-        });
-
         final ImageButton pubtnadd = findViewById(R.id.buttonaddworkout);
         pubtnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                showConfirmPopup(arg0, "Add workout to list", "new", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openEditor(v);
-                    }
-                }, "copy", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openStringEditor(v);
-                    }
-                });
+                showThreeActionPopup(arg0, "Add workout to list",
+                        "new", new View.OnClickListener() {
+                            @Override public void onClick(View v) { openEditor(v); }
+                        },
+                        "copy", new View.OnClickListener() {
+                            @Override public void onClick(View v) { openStringEditor(v); }
+                        },
+                        "OG WODs", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                populateDatabase(v);
+                                Toast.makeText(MainActivity.this, "Original database loaded", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
 
@@ -170,6 +159,43 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (noAction != null) noAction.onClick(v);
                 puWindow.dismiss();
+            }
+        });
+    }
+
+    private void showThreeActionPopup(View anchor, String message,
+                                      String oneText, final View.OnClickListener oneAction,
+                                      String twoText, final View.OnClickListener twoAction,
+                                      String threeText, final View.OnClickListener threeAction) {
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View puView = layoutInflater.inflate(R.layout.popup_three_actions, null);
+        puView.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup_show));
+
+        if (message != null) {
+            TextView text = puView.findViewById(R.id.text_id);
+            text.setText(message);
+        }
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow puWindow = new PopupWindow(puView, height, width, true);
+        puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
+        puWindow.setAnimationStyle(R.style.Animation);
+
+        wireThreeButton(puView, R.id.button_one,   oneText,   oneAction,   puWindow);
+        wireThreeButton(puView, R.id.button_two,   twoText,   twoAction,   puWindow);
+        wireThreeButton(puView, R.id.button_three, threeText, threeAction, puWindow);
+    }
+
+    private void wireThreeButton(View puView, int id, String label,
+                                 final View.OnClickListener action, final PopupWindow pw) {
+        Button btn = puView.findViewById(id);
+        if (label != null) btn.setText(label);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (action != null) action.onClick(v);
+                pw.dismiss();
             }
         });
     }
@@ -272,6 +298,17 @@ public class MainActivity extends AppCompatActivity {
                     dbhandler.addOrUpdateExercise(exedet);
                 }
             }
+
+            StringFormatter sf2 = new StringFormatter();
+            sf2.parseCaloriesAndGoal(toRead);
+            for (StringFormatter.CalorieRow row : sf2.getCalorieRows()) {
+                dbhandler.setMealKcal(row.date, row.meal, row.kcal);
+            }
+            if (sf2.getGoal() != null) {
+                android.content.SharedPreferences prefs =
+                        android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+                prefs.edit().putInt(HealthActivity.PREF_GOAL, sf2.getGoal()).apply();
+            }
         } catch (IOException e) {
             Log.e("MainActivity", "Error reading database from file", e);
         } finally {
@@ -297,6 +334,18 @@ public class MainActivity extends AppCompatActivity {
                 stringFormatter.setContent(wodList.get(i));
                 toWrite.append(stringFormatter.getContent());
             }
+
+            StringFormatter sf2 = new StringFormatter();
+            java.util.List<String> dates = new java.util.ArrayList<>();
+            java.util.List<int[]> rows = dbhandler.dumpCaloriesAsTriples(dates);
+            for (int i = 0; i < rows.size(); i++) {
+                toWrite.append(sf2.appendCalorieRow(dates.get(i), rows.get(i)[0], rows.get(i)[1]));
+            }
+            android.content.SharedPreferences prefs =
+                    android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+            int goal = prefs.getInt(HealthActivity.PREF_GOAL, HealthActivity.DEFAULT_GOAL);
+            toWrite.append(sf2.appendGoalRow(goal));
+
             outputStream = getContentResolver().openOutputStream(uri);
             bw = new BufferedWriter(new OutputStreamWriter(outputStream));
             bw.write(toWrite.toString());
@@ -320,6 +369,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openCalendar(View view) {
         Intent intent = new Intent(this, Calendar.class);
+        startActivity(intent);
+    }
+
+    public void openHealth(View view) {
+        Intent intent = new Intent(this, HealthActivity.class);
         startActivity(intent);
     }
 
