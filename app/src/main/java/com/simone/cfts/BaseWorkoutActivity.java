@@ -190,6 +190,7 @@ public abstract class BaseWorkoutActivity extends AppCompatActivity {
         int workoutId = dbhandler.loadWorkoutId(work.getTitle());
         String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
                 .format(new java.util.Date());
-        dbhandler.addWorkoutOnDate(today, workoutId);
+        long rowId = dbhandler.addWorkoutOnDate(today, workoutId);
+        SyncManager.get(getApplicationContext()).notifyCalendarAdd(rowId, today, workoutId);
     }
 }

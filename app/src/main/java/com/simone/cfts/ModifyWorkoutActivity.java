@@ -640,6 +640,7 @@ public class ModifyWorkoutActivity extends AppCompatActivity {
                                     dbhandler.addOrUpdateExercise(exe);
                                 }
                             }
+                            SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(workoutToBeAdded);
                         }
                         btnexercise.setText("Updated!");
                     }

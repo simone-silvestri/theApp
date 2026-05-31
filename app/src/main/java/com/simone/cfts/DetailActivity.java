@@ -201,6 +201,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 for (int j = 0; j < exeList.size(); j++) {
                     dbhandler.addExerciseInWorkout(exeList.get(j), work);
                 }
+                SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(work);
                 btnexercise.setText("Added!");
             } else {
                 btnexercise.setText("Workout already exists");

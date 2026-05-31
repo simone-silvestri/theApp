@@ -171,7 +171,9 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
             public void onClick(View v) {
                 DatabaseHelper dbhandler = DatabaseHelper.getInstance(WorkoutActivity.this);
                 Workout work = wodList.get(deletePosition);
+                int delId = work.getID();
                 dbhandler.deleteWorkout(work);
+                SyncManager.get(getApplicationContext()).notifyWorkoutDelete(delId);
                 rowData.remove(deletePosition);
                 adapter.notifyDataSetChanged();
                 Toast.makeText(WorkoutActivity.this, "Workout Deleted", Toast.LENGTH_SHORT).show();
