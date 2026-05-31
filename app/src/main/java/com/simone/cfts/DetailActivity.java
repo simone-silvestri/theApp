@@ -70,6 +70,18 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             btnexercise.setText("Add to Library");
             ImageView sendbutton = findViewById(R.id.sendbutton);
             sendbutton.setVisibility(View.INVISIBLE);
+        } else if (workoradd==2) {
+            btnexercise.setVisibility(View.GONE);
+            View importRow = findViewById(R.id.importButtonRow);
+            importRow.setVisibility(View.VISIBLE);
+            ImageView sendbutton = findViewById(R.id.sendbutton);
+            sendbutton.setVisibility(View.INVISIBLE);
+            findViewById(R.id.importDiscard).setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) { finish(); }
+            });
+            findViewById(R.id.importConfirm).setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) { confirmImport(); }
+            });
         }
 
 
@@ -209,17 +221,50 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
-    public void sendWorkout(View view) {
+    private void confirmImport() {
+        DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
+        int id = (int) dbhandler.addOrUpdateWorkout(work);
+        work.setID(id);
+        dbhandler.removeExercises(work);
+        for (Exercise e : work.getExercises()) dbhandler.addExerciseInWorkout(e, work);
+        SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(work);
+        Toast.makeText(this, "Workout imported", Toast.LENGTH_SHORT).show();
+        Intent open = new Intent(this, WorkoutActivity.class);
+        open.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(open);
+        finish();
+    }
 
+    public void sendWorkout(View view) {
         StringFormatter stringFormatter = new StringFormatter();
         stringFormatter.setContent(work);
 
-        Intent waIntent = new Intent(Intent.ACTION_SEND);
-        waIntent.setType("text/plain");
+        try {
+            java.io.File shareDir = new java.io.File(getCacheDir(), "share");
+            if (!shareDir.exists()) shareDir.mkdirs();
 
-        waIntent.putExtra(Intent.EXTRA_TEXT, stringFormatter.getContent());
-        startActivity(Intent.createChooser(waIntent, "Share with"));
+            String safeTitle = work.getTitle() == null
+                    ? "workout"
+                    : work.getTitle().replaceAll("[^A-Za-z0-9 _\\-]", "_");
+            java.io.File outFile = new java.io.File(shareDir, safeTitle + ".cfts");
 
+            java.io.FileOutputStream fos = new java.io.FileOutputStream(outFile);
+            fos.write(stringFormatter.getContent().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            fos.close();
+
+            android.net.Uri uri = androidx.core.content.FileProvider.getUriForFile(
+                    this, "com.simone.cfts.fileprovider", outFile);
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("application/octet-stream");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(shareIntent, "Share workout"));
+        } catch (Exception e) {
+            android.util.Log.e("DetailActivity", "Failed to share workout", e);
+            android.widget.Toast.makeText(this, "Could not share workout",
+                    android.widget.Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -50,8 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="280sp"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
+        android:layout_marginStart="30sp"
+        android:layout_marginEnd="30sp"
         android:fontFamily="@font/mlight"
         android:gravity="center"
         android:lineSpacingExtra="4sp"
@@ -125,13 +127,13 @@
         android:id="@+id/buttonAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="24sp"
         android:background="@color/trans"
         android:src="@drawable/ic_baseline_person_24"
         android:onClick="openSignIn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttoncalendar"/>
 
     <ImageButton
         android:id="@+id/buttoncalendar"
