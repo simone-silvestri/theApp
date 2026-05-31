@@ -161,6 +161,7 @@ public class ExerciseActivity extends AppCompatActivity {
             if (!editdescription.getText().toString().isEmpty()) {
                 exe.setDescription(editdescription.getText().toString());
                 int exeID = (int) dbhandler.addOrUpdateExercise(exe);
+                SyncManager.get(getApplicationContext()).notifyExerciseCatalogUpsert(exe);
                 if (addorupdate == 0) {
                     btnendpage.setText("Updated!");
                 } else {

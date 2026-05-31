@@ -209,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Workout> wodList = defaultWorkouts.getWodList();
 
         SyncManager sync = SyncManager.get(getApplicationContext());
+        for (ExerciseDetail exe : defaultWorkouts.getExerciseDetails()) {
+            sync.notifyExerciseCatalogUpsert(exe);
+        }
         for (int i=0; i<wodList.size(); i++) {
             ArrayList<Exercise> exeList = new ArrayList<>();
             int id = (int) dbhandler.addOrUpdateWorkout(wodList.get(i));
@@ -216,7 +219,16 @@ public class MainActivity extends AppCompatActivity {
             dbhandler.removeExercises(wodList.get(i));
             exeList = wodList.get(i).getExercises();
             for (int j=0; j<exeList.size(); j++) {
-                dbhandler.addExerciseInWorkout(exeList.get(j),wodList.get(i));
+                dbhandler.addExerciseInWorkout(exeList.get(j), wodList.get(i));
+                ExerciseDetail exe = dbhandler.loadOneExercise(exeList.get(j).getName());
+                if (exe.getName() == null) {
+                    exe.setName(exeList.get(j).getName());
+                    exe.setDifficulty(-1);
+                    exe.setDescription("Sorry no exercise with that name, if you want you can add details for it below");
+                    exe.setMuscle("Not found");
+                    dbhandler.addOrUpdateExercise(exe);
+                    sync.notifyExerciseCatalogUpsert(exe);
+                }
             }
             sync.notifyWorkoutUpsert(wodList.get(i));
         }

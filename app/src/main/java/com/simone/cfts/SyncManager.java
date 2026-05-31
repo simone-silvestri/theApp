@@ -19,6 +19,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -49,7 +50,7 @@ public class SyncManager {
     public static final String ACTION_DATA_CHANGED = "com.simone.cfts.DATA_CHANGED";
 
     private static final String PREF_MERGE_DONE = "sync.merge_done";
-    private static final String PREF_BACKFILL_DONE = "sync.backfill_calendar_calories_v1";
+    private static final String PREF_BACKFILL_DONE = "sync.backfill_calendar_calories_v2";
 
     private static SyncManager instance;
 
@@ -129,6 +130,7 @@ public class SyncManager {
         if (prefs.getBoolean(PREF_BACKFILL_DONE, false)) return;
         uploadAllCalendar();
         uploadAllCalories();
+        uploadAllExerciseCatalog();
         prefs.edit().putBoolean(PREF_BACKFILL_DONE, true).apply();
     }
 
@@ -237,6 +239,24 @@ public class SyncManager {
                 .addOnFailureListener(e -> Log.e(TAG, "meal delete failed", e));
     }
 
+    public void notifyExerciseCatalogUpsert(ExerciseDetail exe) {
+        if (!isSignedIn()) return;
+        if (exe == null || exe.getName() == null || exe.getName().isEmpty()) return;
+        Map<String, Object> doc = new HashMap<>();
+        doc.put("name", exe.getName());
+        doc.put("difficulty", exe.getDifficulty());
+        doc.put("description", exe.getDescription());
+        doc.put("muscle", exe.getMuscle());
+        doc.put("updatedAt", FieldValue.serverTimestamp());
+        userDoc("exerciseCatalog").document(sanitizeDocId(exe.getName()))
+                .set(doc, SetOptions.merge())
+                .addOnFailureListener(e -> Log.e(TAG, "exercise catalog upsert failed", e));
+    }
+
+    private static String sanitizeDocId(String s) {
+        return s.replace("/", "_").replace(".", "_");
+    }
+
     public void notifyGoalsChanged(int dailyKcalGoal, int monthlyWorkoutGoal) {
         if (!isSignedIn()) return;
         Map<String, Object> doc = new HashMap<>();
@@ -329,6 +349,12 @@ public class SyncManager {
         }
     }
 
+    private void uploadAllExerciseCatalog() {
+        for (ExerciseDetail exe : db.loadAllExercises()) {
+            notifyExerciseCatalogUpsert(exe);
+        }
+    }
+
     private void clearCloudThenUpload() {
         // Delete all docs under users/{uid}/workouts, calendar, calories, settings — then upload local.
         deleteSubcollection("workouts", () -> {
@@ -365,17 +391,58 @@ public class SyncManager {
 
         listeners.add(userDoc("workouts").addSnapshotListener((snap, err) -> {
             if (err != null || snap == null) return;
-            for (DocumentSnapshot d : snap.getDocuments()) applyRemoteWorkout(d);
+            for (DocumentChange c : snap.getDocumentChanges()) {
+                if (c.getType() == DocumentChange.Type.REMOVED) {
+                    try {
+                        int id = Integer.parseInt(c.getDocument().getId());
+                        db.deleteWorkoutById(id);
+                    } catch (Exception e) { Log.e(TAG, "delete workout local failed", e); }
+                } else {
+                    applyRemoteWorkout(c.getDocument());
+                }
+            }
             broadcastChanged();
         }));
         listeners.add(userDoc("calendar").addSnapshotListener((snap, err) -> {
             if (err != null || snap == null) return;
-            for (DocumentSnapshot d : snap.getDocuments()) applyRemoteCalendar(d);
+            for (DocumentChange c : snap.getDocumentChanges()) {
+                if (c.getType() == DocumentChange.Type.REMOVED) {
+                    try { db.removeCalendarEntry(Integer.parseInt(c.getDocument().getId())); }
+                    catch (Exception e) { Log.e(TAG, "delete calendar local failed", e); }
+                } else {
+                    applyRemoteCalendar(c.getDocument());
+                }
+            }
+            broadcastChanged();
+        }));
+        listeners.add(userDoc("exerciseCatalog").addSnapshotListener((snap, err) -> {
+            if (err != null || snap == null) return;
+            for (DocumentChange c : snap.getDocumentChanges()) {
+                if (c.getType() == DocumentChange.Type.REMOVED) {
+                    String name = c.getDocument().getString("name");
+                    if (name != null) {
+                        try { db.removeExerciseFromCatalog(name); }
+                        catch (Exception e) { Log.e(TAG, "delete catalog local failed", e); }
+                    }
+                } else {
+                    applyRemoteExerciseCatalog(c.getDocument());
+                }
+            }
             broadcastChanged();
         }));
         listeners.add(userDoc("calories").addSnapshotListener((snap, err) -> {
             if (err != null || snap == null) return;
-            for (DocumentSnapshot d : snap.getDocuments()) applyRemoteCalorie(d);
+            for (DocumentChange c : snap.getDocumentChanges()) {
+                if (c.getType() == DocumentChange.Type.REMOVED) {
+                    String[] parts = c.getDocument().getId().split("_");
+                    if (parts.length == 2) {
+                        try { db.clearMealKcal(parts[0], Integer.parseInt(parts[1])); }
+                        catch (Exception e) { Log.e(TAG, "delete calorie local failed", e); }
+                    }
+                } else {
+                    applyRemoteCalorie(c.getDocument());
+                }
+            }
             broadcastChanged();
         }));
         listeners.add(userDoc("settings").document("main").addSnapshotListener((snap, err) -> {
@@ -427,6 +494,22 @@ public class SyncManager {
             });
         } catch (Exception e) {
             Log.e(TAG, "applyRemoteWorkout", e);
+        }
+    }
+
+    private void applyRemoteExerciseCatalog(DocumentSnapshot d) {
+        try {
+            String name = d.getString("name");
+            if (name == null || name.isEmpty()) return;
+            ExerciseDetail exe = new ExerciseDetail();
+            exe.setName(name);
+            Long diff = d.getLong("difficulty");
+            exe.setDifficulty(diff != null ? diff.intValue() : -1);
+            exe.setDescription(d.getString("description"));
+            exe.setMuscle(d.getString("muscle"));
+            db.addOrUpdateExercise(exe);
+        } catch (Exception e) {
+            Log.e(TAG, "applyRemoteExerciseCatalog", e);
         }
     }
 

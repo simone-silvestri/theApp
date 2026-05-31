@@ -665,6 +665,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                                         exe.setDescription("Sorry no exercise with that name, if you want you can add details for it below");
                                         exe.setMuscle("Not found");
                                         dbhandler.addOrUpdateExercise(exe);
+                                        SyncManager.get(getApplicationContext()).notifyExerciseCatalogUpsert(exe);
                                     }
                                 }
                                 SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(workoutToBeAdded);

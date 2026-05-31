@@ -354,6 +354,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return out;
     }
 
+    /** Delete a workout (and its exercise relation rows) by its primary key id. */
+    public void deleteWorkoutById(int workoutId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_REL, KEY_REL_WORK_ID + " = ?", new String[]{String.valueOf(workoutId)});
+            db.delete(TABLE_WORK, KEY_WORK_ID + " = ?", new String[]{String.valueOf(workoutId)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error deleting workout by id");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void removeExerciseFromCatalog(String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_EXE, KEY_EXE_NAME + " = ?", new String[]{name});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error deleting catalog entry");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     public void removeCalendarEntry(int rowId) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
