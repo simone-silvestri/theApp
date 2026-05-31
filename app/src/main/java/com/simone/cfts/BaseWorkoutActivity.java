@@ -187,6 +187,9 @@ public abstract class BaseWorkoutActivity extends AppCompatActivity {
 
     protected void markWorkoutComplete() {
         DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
-        dbhandler.addDateToCalendar(work.getTitle());
+        int workoutId = dbhandler.loadWorkoutId(work.getTitle());
+        String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
+                .format(new java.util.Date());
+        dbhandler.addWorkoutOnDate(today, workoutId);
     }
 }

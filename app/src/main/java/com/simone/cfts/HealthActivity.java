@@ -92,9 +92,11 @@ public class HealthActivity extends AppCompatActivity {
 
     public void openGoalSettings(View view) {
         View content = LayoutInflater.from(this).inflate(R.layout.popup_goal, null);
+        TextView title  = content.findViewById(R.id.goalTitle);
         final EditText field = content.findViewById(R.id.goalField);
         TextView cancel = content.findViewById(R.id.goalCancel);
         TextView ok     = content.findViewById(R.id.goalOk);
+        title.setText(R.string.daily_kcal_goal);
         int currentGoal = prefs.getInt(PREF_GOAL, DEFAULT_GOAL);
         field.setText(String.valueOf(currentGoal));
         final PopupWindow pw = showPopup(content);

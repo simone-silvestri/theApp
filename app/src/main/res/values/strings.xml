@@ -16,7 +16,7 @@
     <string name="info_add_workout_sets"> How many time do you want to repeat a round? Remember to also set the seconds of pause in between sets. If you chose the REPS type you have to choose a total time instead because the pauses are up to you! </string>
 
     <!-- Health section -->
-    <string name="health_title">HEALTH</string>
+    <string name="health_title">Health</string>
     <string name="meal_breakfast">BREAKFAST</string>
     <string name="meal_lunch">LUNCH</string>
     <string name="meal_dinner">DINNER</string>
@@ -35,6 +35,15 @@
     <string name="goal_axis_label">goal</string>
     <string name="week_avg_format">avg %1$,d kcal / day</string>
     <string name="week_avg_empty">no entries this week</string>
+
+    <!-- Calendar section -->
+    <string name="calendar_title">Calendar</string>
+    <string name="monthly_workout_goal">MONTHLY WORKOUT GOAL</string>
+    <string name="add_workout_to_day">+ ADD WORKOUT TO THIS DAY</string>
+    <string name="add_to_day_format">Add to %1$s</string>
+    <string name="remove_workout_confirm">Remove %1$s?</string>
+    <string name="monthly_count_format">%1$d of %2$d monthly workouts</string>
+    <string name="picker_empty">No workouts yet. Create one from the landing page first.</string>
 </resources>
 
 

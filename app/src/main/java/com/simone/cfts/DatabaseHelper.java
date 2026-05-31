@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
     private static final String DATABASE_NAME = "workexeDatabase.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Table Names
     private static final String TABLE_WORK = "Workouts";
@@ -151,6 +151,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + KEY_CAL_KCAL + " INTEGER NOT NULL, "
                     + "PRIMARY KEY (" + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + "))");
         }
+        if (oldVersion < 3) {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAL);
+            db.execSQL(" CREATE TABLE " + TABLE_CAL + "("
+                    + KEY_CAL_ID    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + KEY_CAL_DAY   + " TEXT, "
+                    + KEY_CAL_WORK_ID + " INTEGER)");
+        }
     }
 
     // Insert or update a workout in the database
@@ -192,30 +199,91 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dateWod;
     }
 
-    public long addDateToCalendar(String workname) {
-        // The database connection is cached so it's not expensive to call getWriteableDatabase() multiple times.
+    public long addWorkoutOnDate(String isoDate, int workoutId) {
         SQLiteDatabase db = getWritableDatabase();
-        int workoutId = loadWorkoutId(workname);
         long calendarId = -1;
         db.beginTransaction();
         try {
-            Calendar currentDay = Calendar.getInstance();
-            int currDate = currentDay.get(Calendar.DATE);
-            int currMonth = currentDay.get(Calendar.MONTH)+1;
-            int currYear = currentDay.get(Calendar.YEAR);
-            String date = new String(currDate + "-" + currMonth + "-" + currYear);
             ContentValues values = new ContentValues();
-            values.put(KEY_CAL_DAY, date);
+            values.put(KEY_CAL_DAY, isoDate);
             values.put(KEY_CAL_WORK_ID, workoutId);
-            // Just add the WoD to the calendar without trying to update
-            db.insert(TABLE_CAL, null, values);
+            calendarId = db.insert(TABLE_CAL, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to add or update user");
+            Log.d(TAG, "Error while writing calendar row");
         } finally {
             db.endTransaction();
         }
         return calendarId;
+    }
+
+    public void removeCalendarEntry(int rowId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_CAL, KEY_CAL_ID + " = ?", new String[]{String.valueOf(rowId)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error removing calendar entry");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /** Returns day-of-month -> list of (calendar row id, workout id) for the given month (1-based monthIndex). */
+    public java.util.Map<Integer, java.util.List<int[]>> loadMonth(int year, int monthIndex) {
+        java.util.Map<Integer, java.util.List<int[]>> out = new java.util.HashMap<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            String prefix = String.format(java.util.Locale.US, "%04d-%02d-", year, monthIndex);
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_CAL_ID + ", " + KEY_CAL_DAY + ", " + KEY_CAL_WORK_ID
+                            + " FROM " + TABLE_CAL
+                            + " WHERE " + KEY_CAL_DAY + " LIKE ?",
+                    new String[]{prefix + "%"});
+            while (cursor.moveToNext()) {
+                int rowId = cursor.getInt(0);
+                String day = cursor.getString(1);
+                int workId = cursor.getInt(2);
+                int dayOfMonth;
+                try {
+                    dayOfMonth = Integer.parseInt(day.substring(8, 10));
+                } catch (Exception e) {
+                    continue;
+                }
+                java.util.List<int[]> list = out.get(dayOfMonth);
+                if (list == null) {
+                    list = new java.util.ArrayList<>();
+                    out.put(dayOfMonth, list);
+                }
+                list.add(new int[]{rowId, workId});
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error loading month");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return out;
+    }
+
+    public int monthlyCount(int year, int monthIndex) {
+        int count = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            String prefix = String.format(java.util.Locale.US, "%04d-%02d-", year, monthIndex);
+            cursor = db.rawQuery(
+                    "SELECT COUNT(*) FROM " + TABLE_CAL
+                            + " WHERE " + KEY_CAL_DAY + " LIKE ?",
+                    new String[]{prefix + "%"});
+            if (cursor.moveToFirst()) count = cursor.getInt(0);
+        } catch (Exception e) {
+            Log.d(TAG, "Error counting month");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return count;
     }
 
     private Workout workoutFromCursor(Cursor cursor) {
