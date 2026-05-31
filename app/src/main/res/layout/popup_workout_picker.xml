@@ -5,40 +5,74 @@
     android:layout_height="wrap_content"
     android:minWidth="320dp"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="20dp">
+    android:background="#F8F4EC"
+    android:paddingTop="26dp"
+    android:paddingBottom="0dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/pickerTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/mmedium"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
         android:gravity="center"
-        tools:text="Add to Saturday, May 30" />
+        android:textColor="#0D122C"
+        android:textSize="15sp"
+        android:letterSpacing="0.04"
+        tools:text="ADD TO SATURDAY — 30 MAY" />
 
+    <!-- Orange accent bar -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:background="#E58E26" />
+
+    <!-- Italic kicker -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/mlight"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:text="— pick a workout to schedule"
+        android:textColor="#7A8FB0"
+        android:textSize="12sp" />
+
+    <!-- Search input -->
     <EditText
         android:id="@+id/pickerSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Search workout"
-        android:textColorHint="#909090"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp"
+        android:layout_marginTop="20dp"
+        android:hint="search"
+        android:textColorHint="#7A8FB0"
+        android:textColor="#0D122C"
+        android:textSize="16sp"
         android:fontFamily="@font/mlight"
         android:inputType="text"
         android:imeOptions="actionSearch"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:background="@color/trans"
+        android:paddingBottom="6dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#1A0D122C" />
+
+    <!-- Workout list -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp"
-        android:maxHeight="360dp">
+        android:maxHeight="360dp"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/pickerList"
@@ -47,16 +81,27 @@
             android:orientation="vertical" />
     </ScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#1A0D122C" />
+
     <TextView
         android:id="@+id/pickerCancel"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:fontFamily="@font/mmedium"
         android:gravity="center"
         android:maxLines="1"
-        android:singleLine="true"
-        android:text="@string/cancel"
-        android:textColor="@color/colorPrimaryDark6"
-        android:textSize="16sp" />
+        android:ellipsize="end"
+        android:text="CANCEL"
+        android:textColor="#998A6D"
+        android:textSize="14sp"
+        android:letterSpacing="0.22"
+        android:textAllCaps="false"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/trans" />
 </LinearLayout>

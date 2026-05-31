@@ -3,65 +3,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F8F4EC"
+    android:paddingTop="22dp"
+    android:paddingBottom="14dp"
+    android:paddingStart="22dp"
+    android:paddingEnd="22dp">
 
+    <!-- Title -->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Exercise"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/mmedium"
+        android:gravity="center"
+        android:text="SELECT EXERCISE"
+        android:textColor="#0D122C"
+        android:textSize="15sp"
+        android:letterSpacing="0.04" />
 
+    <!-- Orange accent bar -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:background="#E58E26" />
+
+    <!-- Italic kicker -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/mlight"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:text="— pick from the catalog —"
+        android:textColor="#7A8FB0"
+        android:textSize="12sp" />
+
+    <!-- Search row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
 
         <EditText
             android:id="@+id/edit_search_exercise"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="3"
-            android:background="@android:drawable/editbox_background"
-            android:padding="12dp"
-            android:singleLine="true" />
-
-        <Spinner
-            android:id="@+id/spinner_menu"
-            android:entries="@array/muscle_categories"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1.5"
-            android:background="@android:drawable/editbox_background"
-            android:padding="12dp"
-            android:singleLine="true" />
+            android:layout_weight="1"
+            android:fontFamily="@font/mlight"
+            android:textSize="16sp"
+            android:textColor="#0D122C"
+            android:textColorHint="#7A8FB0"
+            android:hint="search"
+            android:singleLine="true"
+            android:background="@color/trans"
+            android:paddingBottom="6dp" />
 
         <ImageButton
             android:id="@+id/btnadd"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="0.5"
+            android:layout_marginStart="6dp"
             android:background="@color/trans"
-            android:gravity="center|bottom"
-            android:onClick="deleteExerciseFromList"
-            android:src="@drawable/ic_add_gray" />
-
+            android:padding="4dp"
+            android:src="@drawable/ic_menu_add"
+            android:tint="#0D122C" />
     </LinearLayout>
 
+    <!-- Hairline under search -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#1A0D122C" />
+
+    <!-- Filter row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mmedium"
+            android:text="FILTER BY GROUP"
+            android:textColor="#7A8FB0"
+            android:textSize="11sp"
+            android:letterSpacing="0.28" />
+
+        <Spinner
+            android:id="@+id/spinner_menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="@color/trans"
+            android:popupBackground="#F8F4EC" />
+    </LinearLayout>
+
+    <!-- Hairline under filter -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#1A0D122C" />
+
+    <!-- List -->
     <ListView
         android:id="@+id/list_search_exercise"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fontFamily="@font/mlight"
-        android:textSize="20sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:divider="#1A0D122C"
+        android:dividerHeight="1px"
+        android:scrollbars="none" />
 
 </LinearLayout>

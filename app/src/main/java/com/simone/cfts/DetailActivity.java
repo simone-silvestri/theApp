@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         Bundle extra = getIntent().getExtras();
         workoradd = getIntent().getIntExtra("EXTRA_WORK_OR_ADD",0);
         if(workoradd==1) {
-            btnexercise.setText("Add to Library");
+            btnexercise.setText("ADD TO LIBRARY");
             ImageView sendbutton = findViewById(R.id.sendbutton);
             sendbutton.setVisibility(View.INVISIBLE);
         } else if (workoradd==2) {
@@ -181,6 +181,8 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         startActivity(intent);
     }
 
+    public void closeDetail(View view) { finish(); }
+
     public void openTimer(View view) {
         if(workoradd==0) {
             if (!work.getExercises().isEmpty()) {
@@ -198,7 +200,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     startActivity(intent);
                 }
             } else {
-                btnexercise.setText("no exercises in workout");
+                btnexercise.setText("NO EXERCISES IN WORKOUT");
             }
         } else {
             DatabaseHelper dbhandler = DatabaseHelper.getInstance(this);
@@ -214,9 +216,9 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     dbhandler.addExerciseInWorkout(exeList.get(j), work);
                 }
                 SyncManager.get(getApplicationContext()).notifyWorkoutUpsert(work);
-                btnexercise.setText("Added!");
+                btnexercise.setText("ADDED");
             } else {
-                btnexercise.setText("Workout already exists");
+                btnexercise.setText("ALREADY IN LIBRARY");
             }
         }
     }

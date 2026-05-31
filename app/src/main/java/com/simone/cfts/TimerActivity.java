@@ -2,7 +2,6 @@ package com.simone.cfts;
 
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.speech.tts.TextToSpeech;
 
 public class TimerActivity extends BaseWorkoutActivity {
 
@@ -22,9 +21,10 @@ public class TimerActivity extends BaseWorkoutActivity {
     @Override
     protected void onExercisesReady() {
         pauseOrNot = true;
-        command.setText("Get Ready!");
+        setPhase(Phase.READY);
         if (!exercises.isEmpty()) {
-            nextExercise.setText("Next: " + exercises.get(0).getName());
+            setExerciseHero(exercises.get(0).getName());
+            setNextHint(exercises.size() > 1 ? exercises.get(1).getName() : "");
             startStop();
         }
     }
@@ -43,21 +43,26 @@ public class TimerActivity extends BaseWorkoutActivity {
             if (pauseOrNot) {
                 currentExercise += 1;
                 timeLeftInMilliseconds = exercises.get(currentExercise).getTimeInSeconds() * 1000;
-                command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
-                nextExercise.setText(exercises.get(currentExercise).getName());
+                setPhase(Phase.WORK);
+                setExerciseHero(exercises.get(currentExercise).getName());
+                setNextHint(currentExercise + 1 < exercises.size()
+                        ? exercises.get(currentExercise + 1).getName() : "");
                 pauseOrNot = false;
             } else {
                 timeLeftInMilliseconds = exercises.get(currentExercise).getPauseInSeconds() * 1000;
-                command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Pause");
-                nextExercise.setText("Next: " + exercises.get(currentExercise + 1).getName());
+                setPhase(Phase.PAUSE);
+                setExerciseHero(exercises.get(currentExercise + 1).getName());
+                setNextHint(currentExercise + 2 < exercises.size()
+                        ? exercises.get(currentExercise + 2).getName() : "");
                 pauseOrNot = true;
             }
             timerRunning = false;
             startStop();
         } else {
             if (currentSet == numberOfSets) {
-                command.setText("Finished!!");
-                nextExercise.setText("Well Done");
+                setPhase(Phase.DONE);
+                setExerciseHero("Well done");
+                setNextHint("");
                 countdownText.setText("Ole!");
                 markWorkoutComplete();
             } else {
@@ -65,9 +70,10 @@ public class TimerActivity extends BaseWorkoutActivity {
                 currentExercise = -1;
                 pauseOrNot = true;
                 timeLeftInMilliseconds = work.getSetPause() * 1000;
-                command.setText("Break");
-                nextExercise.setText("Next: " + exercises.get(currentExercise + 1).getName());
-                setnumber.setText("set " + currentSet + " of " + numberOfSets);
+                setPhase(Phase.BREAK);
+                setExerciseHero(exercises.get(0).getName());
+                setNextHint(exercises.size() > 1 ? exercises.get(1).getName() : "");
+                setnumber.setText("SET " + currentSet + " OF " + numberOfSets);
                 timerRunning = false;
                 startStop();
             }
@@ -104,7 +110,7 @@ public class TimerActivity extends BaseWorkoutActivity {
             }
             if (seconds == 0) {
                 if (pauseOrNot) {
-                    countdownText.setText("GO!!");
+                    countdownText.setText("GO");
                     if (currentExercise == exercises.size() - 1) {
                         speak("Last round");
                     } else {

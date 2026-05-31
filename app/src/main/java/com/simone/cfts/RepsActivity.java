@@ -24,10 +24,11 @@ public class RepsActivity extends BaseWorkoutActivity {
 
     @Override
     protected void onExercisesReady() {
-        command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
+        setPhase(Phase.WORK);
         if (!exercises.isEmpty()) {
-            nextExercise.setText(exercises.get(0).getName());
-            nextRepNumber.setText("X " + exercises.get(0).getReps());
+            setExerciseHero(exercises.get(0).getName());
+            nextRepNumber.setText("× " + exercises.get(0).getReps() + " reps");
+            setNextHint(exercises.size() > 1 ? exercises.get(1).getName() : "");
             startStop();
         }
     }
@@ -35,7 +36,7 @@ public class RepsActivity extends BaseWorkoutActivity {
     @Override
     public void startStop() {
         if (finished) {
-            countdownButton.setText("Finished!");
+            countdownButton.setText("FINISHED");
         } else {
             super.startStop();
         }
@@ -43,24 +44,29 @@ public class RepsActivity extends BaseWorkoutActivity {
 
     public void switchExercise(View view) {
         if (finished) {
-            doneButton.setText("finished!");
+            doneButton.setText("FINISHED");
         } else {
             if (currentExercise < exercises.size() - 1) {
                 currentExercise += 1;
-                nextExercise.setText(exercises.get(currentExercise).getName());
-                nextRepNumber.setText("X " + exercises.get(currentExercise).getReps());
-                command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
+                setExerciseHero(exercises.get(currentExercise).getName());
+                nextRepNumber.setText("× " + exercises.get(currentExercise).getReps() + " reps");
+                setNextHint(currentExercise + 1 < exercises.size()
+                        ? exercises.get(currentExercise + 1).getName() : "");
+                setPhase(Phase.WORK);
             } else {
                 if (currentSet < numberOfSets) {
                     currentSet += 1;
                     currentExercise = 0;
-                    nextExercise.setText(exercises.get(currentExercise).getName());
-                    nextRepNumber.setText("X " + exercises.get(currentExercise).getReps());
-                    command.setText((currentExercise + 1) + "/" + exercises.size() + " - " + "Work!");
-                    setnumber.setText("set " + currentSet + " of " + numberOfSets);
+                    setExerciseHero(exercises.get(currentExercise).getName());
+                    nextRepNumber.setText("× " + exercises.get(currentExercise).getReps() + " reps");
+                    setNextHint(exercises.size() > 1 ? exercises.get(1).getName() : "");
+                    setnumber.setText("SET " + currentSet + " OF " + numberOfSets);
+                    setPhase(Phase.WORK);
                 } else {
                     nextRepNumber.setText("");
-                    command.setText("Finished!!");
+                    setPhase(Phase.DONE);
+                    setExerciseHero("Well done");
+                    setNextHint("");
                     markWorkoutComplete();
                     finished = true;
                     if (timerRunning) {
@@ -72,9 +78,9 @@ public class RepsActivity extends BaseWorkoutActivity {
                         String timeLeftText = "" + minutes + ":";
                         if (seconds < 10) timeLeftText += "0";
                         timeLeftText += seconds;
-                        nextExercise.setText("Time required: " + timeLeftText);
+                        countdownText.setText(timeLeftText);
                     } else {
-                        nextExercise.setText("Time required: more than " + work.getTotalTime() + ":00");
+                        countdownText.setText("> " + work.getTotalTime() + ":00");
                     }
                 }
             }
@@ -83,7 +89,7 @@ public class RepsActivity extends BaseWorkoutActivity {
 
     @Override
     protected void onTimerFinish() {
-        // Reps timer just counts down total time - no action on finish
+        // Reps timer just counts down total time — no action on finish
     }
 
     @Override
@@ -95,7 +101,7 @@ public class RepsActivity extends BaseWorkoutActivity {
             countdownText.setText(formatTime(timeLeftInMilliseconds));
         } else {
             if (seconds == 0) {
-                countdownText.setText("Time Finished!");
+                countdownText.setText("TIME UP");
             } else {
                 countdownText.setText("" + seconds);
             }

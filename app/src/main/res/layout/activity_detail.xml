@@ -1,258 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/gradient1"
     tools:context=".DetailActivity">
 
+    <!-- Header: back + title + share -->
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48sp"
+        android:gravity="center"
+        android:text="WORKOUT"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:fontFamily="@font/mmedium"
+        android:letterSpacing="0.18"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3">
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:background="@color/trans"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:onClick="closeDetail"
+        android:layout_marginStart="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/headerTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/headerTitle" />
 
     <ImageView
-        android:id="@+id/difficultyicon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="@drawable/expert"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"/>
+        android:id="@+id/sendbutton"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="22dp"
+        android:src="@drawable/ic_baseline_share_24"
+        android:onClick="sendWorkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/headerTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/headerTitle" />
 
-        <TextView
-        android:id="@+id/title_tv"
-        android:layout_width="0dp"
-        android:layout_weight="2.8"
-        android:layout_height="80dp"
+    <!-- Orange accent bar -->
+    <View
+        android:id="@+id/accentBar"
+        android:layout_width="48dp"
+        android:layout_height="3dp"
+        android:background="#E58E26"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:fontFamily="@font/mmedium"
-        android:gravity="center|center"
-        android:layout_gravity="start|top"
-        android:text="Title"
-        android:textColor="@color/white"
-        android:textSize="24sp"/>
+        app:layout_constraintTop_toBottomOf="@+id/headerTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.1" />
+    <!-- Difficulty badge — the existing art as hero -->
+    <ImageView
+        android:id="@+id/difficultyicon"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="22dp"
+        android:src="@drawable/beginner"
+        android:contentDescription="@drawable/beginner"
+        app:layout_constraintTop_toBottomOf="@+id/accentBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/sendbutton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:onClick="sendWorkout"
-            android:gravity="start|center"
-            android:layout_gravity="right|center"
-            android:layout_weight="0.1"
-            android:src="@drawable/ic_baseline_share_24" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <!-- Workout title — italic editorial pull-quote -->
+    <TextView
+        android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/mlight"
+        android:gravity="center"
+        android:text="Title"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="italic"
+        android:letterSpacing="0.01"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyicon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Type kicker line -->
+    <LinearLayout
+        android:id="@+id/typeRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp">
+        android:gravity="center_vertical"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/type"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/time"
-            android:paddingTop="3dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:contentDescription="@drawable/time" />
 
         <TextView
             android:id="@+id/text_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/mlight"
-            android:gravity="start|center"
-            android:layout_gravity="start|center"
-            android:text="Type"
+            android:text="H.I.I.T. workout"
             android:textColor="@color/type"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="italic" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/Description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/mlight"
-        android:gravity="start"
-        android:text="Type"
-        android:textColor="@color/white"
-        android:textSize="12sp"/>
+    <!-- Stats row: SETS · PAUSE · TIME, all caps letterspaced -->
+    <View
+        android:id="@+id/statsTopRule"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="#33FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/typeRow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
+        android:id="@+id/statsRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="start"
-            android:text="Sets:"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
+        android:gravity="center"
+        android:layout_marginTop="14dp"
+        app:layout_constraintTop_toBottomOf="@+id/statsTopRule"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/text_sets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="start"
-            android:text="Type"
+            android:fontFamily="@font/mmedium"
+            android:text="3"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:letterSpacing="0.06" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="start"
-            android:text="Pause:"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/mlight"
+            android:text="SETS"
+            android:textColor="#A3B0CC"
+            android:textSize="11sp"
+            android:letterSpacing="0.22" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/mlight"
+            android:text="·"
+            android:textColor="#7A8FB0"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/text_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="start"
-            android:text="Type"
+            android:fontFamily="@font/mmedium"
+            android:text="60"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:letterSpacing="0.06" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="start"
-            android:text="Total time:"
-            android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/mlight"
+            android:text="PAUSE"
+            android:textColor="#A3B0CC"
+            android:textSize="11sp"
+            android:letterSpacing="0.22" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/mlight"
+            android:text="·"
+            android:textColor="#7A8FB0"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/text_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/mlight"
-            android:gravity="start"
-            android:text="Type"
+            android:fontFamily="@font/mmedium"
+            tools:text="30 min"
+            android:text="30 min"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:letterSpacing="0.06" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/mlight"
+            android:text="TOTAL"
+            android:textColor="#A3B0CC"
+            android:textSize="11sp"
+            android:letterSpacing="0.22" />
     </LinearLayout>
 
-    <ListView
-        android:id = "@+id/lvexe"
-        android:gravity="center"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:divider="@color/trans"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <View
+        android:id="@+id/statsBottomRule"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="#33FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/statsRow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wod_tv"
-        app:layout_constraintBottom_toTopOf="@id/btexercise"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Section label -->
+    <TextView
+        android:id="@+id/sectionWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="22dp"
+        android:fontFamily="@font/mmedium"
+        android:text="THE WORK"
+        android:textColor="#909090"
+        android:textSize="11sp"
+        android:letterSpacing="0.22"
+        app:layout_constraintTop_toBottomOf="@+id/statsBottomRule"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Exercise list -->
+    <ListView
+        android:id="@+id/lvexe"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="8dp"
+        android:divider="@color/trans"
+        android:scrollbars="vertical"
+        android:scrollbarSize="3dp"
+        app:layout_constraintTop_toBottomOf="@+id/sectionWork"
+        app:layout_constraintBottom_toTopOf="@+id/btexercise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Hidden description placeholder — kept for DetailActivity.setText calls -->
+    <TextView
+        android:id="@+id/Description"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Bottom CTA — START NOW (or Add to Library / Added!) -->
     <TextView
         android:id="@+id/btexercise"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="56dp"
         android:gravity="center"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="0dp"
         android:fontFamily="@font/mmedium"
-        android:onClick="openTimer"
-        android:text="@string/butt_exercise"
-        android:background="@color/white"
-        android:textAlignment="center"
+        android:text="START NOW"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="22sp"
+        android:textSize="20sp"
+        android:letterSpacing="0.22"
+        android:background="@color/white"
+        android:onClick="openTimer"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Import mode row (workoradd == 2): swaps in via DetailActivity -->
     <LinearLayout
         android:id="@+id/importButtonRow"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="56dp"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/importDiscard"
@@ -265,7 +318,8 @@
             android:gravity="center"
             android:text="DISCARD"
             android:textColor="@color/colorPrimaryDark6"
-            android:textSize="22sp" />
+            android:textSize="20sp"
+            android:letterSpacing="0.22" />
 
         <TextView
             android:id="@+id/importConfirm"
@@ -278,6 +332,8 @@
             android:gravity="center"
             android:text="IMPORT"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp" />
+            android:textSize="20sp"
+            android:letterSpacing="0.22" />
     </LinearLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

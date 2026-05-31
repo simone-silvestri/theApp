@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="9dp"
+    android:paddingBottom="9dp"
+    android:paddingStart="6dp"
+    android:paddingEnd="6dp">
 
-    <TextView
-        android:id="@+id/txttitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:fontFamily="@font/mlight"
-        android:background="@color/trans"
-        android:text="Pushup toe touch"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/txttime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/txtpause"
-        android:fontFamily="@font/mmedium"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="bottom"
-        android:textColor="@color/gray"
-        android:background="@color/trans"
-        android:textSize="17sp"
-        android:text="X20" />
-    <TextView
-        android:id="@+id/txtpause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:fontFamily="@font/mmedium"
-        android:layout_marginTop="7dp"
-        android:gravity="bottom"
-        android:textColor="@color/gray"
-        android:background="@color/trans"
-        android:textSize="17sp"
-        android:layout_alignParentRight="true"
-        android:text="in 50 s"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txttitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/mlight"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:letterSpacing="0.02"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Pushup toe touch" />
+
+        <TextView
+            android:id="@+id/txttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/mlight"
+            android:textStyle="italic"
+            android:textColor="#A3B0CC"
+            android:textSize="13sp"
+            tools:text="X20" />
+
+        <TextView
+            android:id="@+id/txtpause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mlight"
+            android:textStyle="italic"
+            android:textColor="#A3B0CC"
+            android:textSize="13sp"
+            tools:text="in 50 s" />
+    </LinearLayout>
+
+</LinearLayout>

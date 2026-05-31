@@ -164,8 +164,8 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
         puWindow.setAnimationStyle(R.style.Animation);
 
-        Button btnYes = puView.findViewById(R.id.button_yes);
-        btnYes.setText("Delete");
+        TextView btnYes = puView.findViewById(R.id.button_yes);
+        btnYes.setText("DELETE");
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,8 +180,8 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
                 puWindow.dismiss();
             }
         });
-        Button btnNo = puView.findViewById(R.id.button_no);
-        btnNo.setText("Modify");
+        TextView btnNo = puView.findViewById(R.id.button_no);
+        btnNo.setText("MODIFY");
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,8 +233,14 @@ public class WorkoutActivity extends AppCompatActivity implements AdapterView.On
         btn4.setImageResource(R.drawable.star_white);
         btn5.setImageResource(R.drawable.star_white);
 
-        LinearLayout r = (LinearLayout) view.getParent();
-        int idx = r.indexOfChild(view);
+        int id = view.getId();
+        int idx;
+        if      (id == R.id.btn1) idx = 1;
+        else if (id == R.id.btn2) idx = 2;
+        else if (id == R.id.btn3) idx = 3;
+        else if (id == R.id.btn4) idx = 4;
+        else if (id == R.id.btn5) idx = 5;
+        else                      idx = 6; // btnall
 
         currentDiff = idx;
         if (currentDiff == 1) {

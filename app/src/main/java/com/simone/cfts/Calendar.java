@@ -2,6 +2,7 @@ package com.simone.cfts;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,8 +40,8 @@ public class Calendar extends AppCompatActivity {
     };
 
     private final SimpleDateFormat iso = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-    private final SimpleDateFormat monthOfYear = new SimpleDateFormat("MMMM yyyy", Locale.US);
-    private final SimpleDateFormat fullDay = new SimpleDateFormat("EEEE, MMMM d", Locale.US);
+    private final SimpleDateFormat monthOnly = new SimpleDateFormat("MMMM", Locale.US);
+    private final SimpleDateFormat fullDay = new SimpleDateFormat("EEEE — d MMMM", Locale.US);
 
     private DatabaseHelper db;
     private SharedPreferences prefs;
@@ -141,7 +143,8 @@ public class Calendar extends AppCompatActivity {
         TextView cancel = content.findViewById(R.id.pickerCancel);
         final LinearLayout list = content.findViewById(R.id.pickerList);
 
-        title.setText(getString(R.string.add_to_day_format, fullDay.format(currentDayDate())));
+        title.setText(getString(R.string.add_to_day_format,
+                fullDay.format(currentDayDate()).toUpperCase(Locale.US)));
 
         final PopupWindow pw = showPopup(content);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -152,9 +155,11 @@ public class Calendar extends AppCompatActivity {
             search.setVisibility(View.GONE);
             TextView empty = new TextView(this);
             empty.setText(R.string.picker_empty);
-            empty.setTextColor(0xFF606060);
-            empty.setTextSize(14);
-            empty.setPadding((int) dp(8), (int) dp(16), (int) dp(8), (int) dp(16));
+            empty.setTextColor(0xFF7A8FB0);
+            empty.setTextSize(13);
+            empty.setTypeface(ResourcesCompat.getFont(this, R.font.mlight), Typeface.ITALIC);
+            empty.setGravity(Gravity.CENTER);
+            empty.setPadding((int) dp(8), (int) dp(20), (int) dp(8), (int) dp(20));
             list.addView(empty);
             return;
         }
@@ -192,33 +197,64 @@ public class Calendar extends AppCompatActivity {
     }
 
     private View buildPickerRow(Workout w) {
+        Typeface mlight = ResourcesCompat.getFont(this, R.font.mlight);
+
+        // Outer container: row + hairline divider
+        LinearLayout outer = new LinearLayout(this);
+        outer.setOrientation(LinearLayout.VERTICAL);
+
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setPadding((int) dp(6), (int) dp(10), (int) dp(6), (int) dp(10));
+
+        // Colored difficulty stripe (left)
+        View stripe = new View(this);
+        stripe.setBackgroundColor(diffColor(w.getDifficulty()));
+        row.addView(stripe, new LinearLayout.LayoutParams((int) dp(4), (int) dp(40)));
+
+        // Title (navy) + italic colored difficulty label
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        body.setPadding(0, (int) dp(10), 0, (int) dp(10));
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        blp.setMarginStart((int) dp(12));
+        row.addView(body, blp);
 
         TextView name = new TextView(this);
         name.setText(w.getTitle());
         name.setTextColor(0xFF0D122C);
         name.setTextSize(16);
-        LinearLayout.LayoutParams nlp = new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-        row.addView(name, nlp);
+        if (mlight != null) name.setTypeface(mlight);
+        name.setMaxLines(1);
+        name.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        body.addView(name);
 
-        TextView stars = new TextView(this);
-        stars.setText(diffStars(w.getDifficulty()));
-        stars.setTextColor(diffColor(w.getDifficulty()));
-        stars.setTextSize(14);
-        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(
+        TextView label = new TextView(this);
+        label.setText(diffLabel(w.getDifficulty()));
+        label.setTextColor(diffColor(w.getDifficulty()));
+        label.setTextSize(12);
+        if (mlight != null) label.setTypeface(mlight, Typeface.ITALIC);
+        else label.setTypeface(null, Typeface.ITALIC);
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        slp.setMarginStart((int) dp(8));
-        row.addView(stars, slp);
+        llp.topMargin = (int) dp(1);
+        body.addView(label, llp);
 
-        return row;
+        outer.addView(row);
+
+        // Hairline divider (navy at 10% on cream)
+        View hairline = new View(this);
+        hairline.setBackgroundColor(0x1A0D122C);
+        outer.addView(hairline, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 1));
+
+        return outer;
     }
 
     private void refresh() {
-        monthLabel.setText(monthOfYear.format(currentMonthFirstDate()));
+        String monthCaps = monthOnly.format(currentMonthFirstDate()).toUpperCase(Locale.US);
+        monthLabel.setText(monthCaps + " · " + year);
         monthData = db.loadMonth(year, monthIndex);
 
         int[] maxDiffPerDay = new int[32];
@@ -257,67 +293,93 @@ public class Calendar extends AppCompatActivity {
     }
 
     private View buildCard(final Workout w, final int calendarRowId) {
-        LinearLayout card = new LinearLayout(this);
-        card.setOrientation(LinearLayout.VERTICAL);
-        card.setBackgroundColor(0xFFFFFFFF);
-        card.setPadding((int) dp(14), (int) dp(12), (int) dp(14), (int) dp(12));
-        LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        clp.setMargins(0, 0, 0, (int) dp(8));
-        card.setLayoutParams(clp);
+        Typeface mlight = ResourcesCompat.getFont(this, R.font.mlight);
 
-        LinearLayout topRow = new LinearLayout(this);
-        topRow.setOrientation(LinearLayout.HORIZONTAL);
-        topRow.setGravity(Gravity.CENTER_VERTICAL);
+        // Outer container: row + hairline
+        LinearLayout outer = new LinearLayout(this);
+        outer.setOrientation(LinearLayout.VERTICAL);
+        outer.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        // Clickable row
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setClickable(true);
+        row.setFocusable(true);
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { openWorkoutDetail(w); }
+        });
+
+        // Colored difficulty stripe on the left
+        View stripe = new View(this);
+        stripe.setBackgroundColor(diffColor(w.getDifficulty()));
+        LinearLayout.LayoutParams stlp = new LinearLayout.LayoutParams((int) dp(4), (int) dp(46));
+        row.addView(stripe, stlp);
+
+        // Body: title + subtitle
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        body.setPadding(0, (int) dp(12), 0, (int) dp(12));
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        blp.setMarginStart((int) dp(14));
+        row.addView(body, blp);
 
         TextView title = new TextView(this);
         title.setText(w.getTitle());
-        title.setTextColor(0xFF0D122C);
+        title.setTextColor(0xFFFFFFFF);
         title.setTextSize(18);
-        LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        topRow.addView(title, tlp);
-
-        TextView stars = new TextView(this);
-        stars.setText(diffStars(w.getDifficulty()));
-        stars.setTextColor(diffColor(w.getDifficulty()));
-        stars.setTextSize(15);
-        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-        slp.setMarginStart((int) dp(8));
-        topRow.addView(stars, slp);
-
-        TextView remove = new TextView(this);
-        remove.setText("✕");
-        remove.setTextColor(0xFF707070);
-        remove.setTextSize(18);
-        remove.setPadding((int) dp(10), (int) dp(2), (int) dp(2), (int) dp(2));
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { confirmRemove(w, calendarRowId); }
-        });
-        LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        topRow.addView(remove, rlp);
-
-        card.addView(topRow);
+        if (mlight != null) title.setTypeface(mlight);
+        title.setMaxLines(1);
+        title.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        body.addView(title);
 
         TextView subtitle = new TextView(this);
-        String typeStr = TextUtils.isEmpty(w.getType()) ? "" : w.getType();
+        String typeStr = TextUtils.isEmpty(w.getType()) ? "" : friendlyType(w.getType());
         int totalSec = w.getTotalTime();
         String timeStr = totalSec > 0 ? (totalSec / 60) + " min" : "";
-        String mid = (typeStr.isEmpty() || timeStr.isEmpty()) ? (typeStr + timeStr) : (typeStr + " · " + timeStr);
+        String mid = (typeStr.isEmpty() || timeStr.isEmpty())
+                ? (typeStr + timeStr)
+                : (typeStr + " · " + timeStr);
         subtitle.setText(mid);
-        subtitle.setTextColor(0xFF707070);
+        subtitle.setTextColor(0xFF7A8FB0);
         subtitle.setTextSize(13);
+        if (mlight != null) subtitle.setTypeface(mlight, Typeface.ITALIC);
+        else subtitle.setTypeface(null, Typeface.ITALIC);
         LinearLayout.LayoutParams sublp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         sublp.topMargin = (int) dp(2);
-        card.addView(subtitle, sublp);
+        body.addView(subtitle, sublp);
 
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { openWorkoutDetail(w); }
+        // Remove ✕
+        TextView remove = new TextView(this);
+        remove.setText("✕");
+        remove.setTextColor(0xFF7A8FB0);
+        remove.setTextSize(18);
+        remove.setPadding((int) dp(12), (int) dp(8), (int) dp(4), (int) dp(8));
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { confirmRemove(w, calendarRowId); }
         });
-        return card;
+        row.addView(remove, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        outer.addView(row);
+
+        // 1px hairline divider beneath the row
+        View hairline = new View(this);
+        hairline.setBackgroundColor(0x33FFFFFF);
+        outer.addView(hairline, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 1));
+
+        return outer;
+    }
+
+    private static String friendlyType(String type) {
+        if ("TIME".equals(type)) return "H.I.I.T. workout";
+        if ("REPS".equals(type)) return "Reps workout";
+        if ("REPTIME".equals(type)) return "Reps in time";
+        return type;
     }
 
     private static String diffStars(int diff) {
@@ -347,10 +409,10 @@ public class Calendar extends AppCompatActivity {
         pw.setAnimationStyle(0);
         pw.showAtLocation(findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
 
-        Button yes = content.findViewById(R.id.button_yes);
-        Button no  = content.findViewById(R.id.button_no);
-        yes.setText("Yes");
-        no.setText("No");
+        TextView yes = content.findViewById(R.id.button_yes);
+        TextView no  = content.findViewById(R.id.button_no);
+        yes.setText("YES");
+        no.setText("NO");
         yes.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 db.removeCalendarEntry(calendarRowId);

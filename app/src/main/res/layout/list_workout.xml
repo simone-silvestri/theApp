@@ -1,75 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp">
+
+    <!-- Difficulty badge — the existing custom art is the visual anchor -->
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="@drawable/fire"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:src="@drawable/beginner"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:background="@color/trans"/>
+        android:contentDescription="@drawable/beginner"
+        android:background="@color/trans"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Workout title — editorial typography -->
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/mmedium"
+        android:gravity="start"
+        android:text="Workout title"
         android:textColor="@color/white"
-        android:fontFamily="@font/mlight"
-        android:textSize="20dp"
-        android:text="Exercise test 1"/>
+        android:textSize="20sp"
+        android:letterSpacing="0.02"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/icon"
+        app:layout_constraintBottom_toTopOf="@+id/metaRow"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-    <TextView
-        android:id="@+id/subtitle"
-        android:layout_width="wrap_content"
+    <!-- Meta row: type icon + type · time, italic kicker style -->
+    <LinearLayout
+        android:id="@+id/metaRow"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/icon"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:fontFamily="@font/mmedium"
-        android:textColor="@color/gray"
-        android:textSize="14dp"
-        android:text="total time: 30 min"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/icon">
 
-    <ImageView
-        android:id="@+id/type"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:contentDescription="@drawable/time"
-        android:src="@drawable/time"
-        android:layout_toRightOf="@+id/subtitle"
-        android:layout_below="@+id/title"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:background="@color/trans"/>
+        <ImageView
+            android:id="@+id/type"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/time"
+            android:contentDescription="@drawable/time" />
 
-    <TextView
-        android:id="@+id/typetext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_toRightOf="@+id/type"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:fontFamily="@font/mmedium"
-        android:textStyle="italic"
-        android:textColor="@color/type"
-        android:textSize="14dp"
-        android:text="H.I.I.T. wokrout"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/typetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/mlight"
+            android:text="H.I.I.T. workout"
+            android:textColor="@color/type"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:fontFamily="@font/mlight"
+            android:text="·"
+            android:textColor="#7A8FB0"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mlight"
+            android:text="30 min"
+            android:textColor="#A3B0CC"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <!-- Thin separator at bottom -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="14dp"
+        android:background="#26FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,127 +1,114 @@
-<RelativeLayout
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginTop="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
     tools:context=".AddWorkoutActivity">
 
+    <!-- exercise name (flex, with dropdown arrow) -->
     <TextView
-        android:id='@+id/text_search'
-        android:layout_width="wrap_content"
+        android:id="@+id/text_search"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="15dp"
-        android:hint="Select Exercise"
-        android:textSize="20sp"
-        android:textColorHint="@color/gray"
+        android:layout_weight="1"
+        android:hint="select exercise"
+        android:textSize="16sp"
+        android:textColorHint="#5A6B85"
         android:textColor="@color/white"
-        android:gravity="start|bottom"
-        android:layout_gravity="bottom"
+        android:fontFamily="@font/mlight"
+        android:gravity="start|center_vertical"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
-        android:background="@color/trans"/>
+        android:drawablePadding="4dp"
+        android:background="@color/trans" />
 
+    <!-- additional prefix (e.g., "X" for reptime) -->
     <TextView
         android:id="@+id/txtadditional"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/btnaddwork"
-        android:background="@color/trans"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="2dp"
         android:fontFamily="@font/mmedium"
-        android:gravity="center|bottom"
-        android:text="text"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:background="@color/trans"
+        android:textSize="14sp" />
 
+    <!-- work value -->
     <EditText
         android:id="@+id/btnaddwork"
-        android:layout_width="wrap_content"
+        android:layout_width="52dp"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/txttime"
-        android:fontFamily="@font/mmedium"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center|bottom"
-        android:layout_gravity="bottom"
+        android:fontFamily="@font/mlight"
+        android:gravity="end"
         android:background="@color/trans"
-        android:textSize="15sp"
-        android:textColorHint="@color/gray"
+        android:textSize="14sp"
+        android:textColorHint="#5A6B85"
         android:hint="sec"
         android:autofillHints="sec"
-        android:textColor="@color/gray"
-        android:inputType="number"/>
+        android:textColor="@color/white"
+        android:inputType="number"
+        android:maxLines="1" />
 
+    <!-- work unit -->
     <TextView
         android:id="@+id/txttime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/btnaddpause"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="@font/mmedium"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center|bottom"
-        android:layout_gravity="bottom"
+        android:gravity="center"
         android:textColor="@color/white"
         android:background="@color/trans"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:text="s" />
 
+    <!-- pause value -->
     <EditText
         android:id="@+id/btnaddpause"
-        android:layout_width="wrap_content"
+        android:layout_width="52dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/mmedium"
-        android:layout_toLeftOf="@+id/txtpause"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center|bottom"
-        android:layout_gravity="bottom"
+        android:fontFamily="@font/mlight"
+        android:gravity="end"
         android:background="@color/trans"
-        android:textSize="15sp"
-        android:textColorHint="@color/gray"
+        android:textSize="14sp"
+        android:textColorHint="#5A6B85"
         android:hint="sec"
         android:autofillHints="sec"
-        android:textColor="@color/gray"
-        android:inputType="number"/>
+        android:textColor="@color/white"
+        android:inputType="number"
+        android:maxLines="1" />
 
+    <!-- pause unit -->
     <TextView
         android:id="@+id/txtpause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/btndeleteexercise"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginStart="3dp"
         android:fontFamily="@font/mmedium"
-        android:gravity="center|bottom"
-        android:layout_gravity="bottom"
+        android:gravity="center"
         android:textColor="@color/white"
         android:background="@color/trans"
-        android:textSize="15sp"
-        android:text="s"/>
+        android:textSize="14sp"
+        android:text="s" />
 
+    <!-- delete button (36dp footprint to match apply-to-all spacer) -->
     <ImageButton
         android:id="@+id/btndeleteexercise"
-        android:layout_width="wrap_content"
+        android:layout_width="36dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginStart="2dp"
         android:background="@color/trans"
-        android:gravity="center|bottom"
+        android:padding="4dp"
         android:onClick="deleteExerciseFromList"
         android:src="@drawable/ic_baseline_remove_circle_outline_24" />
 
-</RelativeLayout>
+</LinearLayout>

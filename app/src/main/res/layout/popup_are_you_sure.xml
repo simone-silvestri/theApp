@@ -1,67 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:minWidth="320dp"
+    android:background="#F8F4EC"
+    android:orientation="vertical"
+    android:paddingTop="26dp"
+    android:paddingBottom="14dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
 
     <TextView
         android:id="@+id/text_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:fontFamily="@font/mmedium"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:textSize="20sp"
-        android:text="Reset the List?\nIt will delete all your data!\n(you will want to cry)" />
+        android:textColor="#0D122C"
+        android:textSize="15sp"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="3sp"
+        tools:text="ARE YOU SURE?" />
 
+    <View
+        android:layout_width="36dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:background="#E58E26" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <Button
+        <TextView
             android:id="@+id/button_yes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:text="Yes" />
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:textColor="#0D122C"
+            android:textSize="14sp"
+            android:letterSpacing="0.22"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="YES"
+            tools:text="YES" />
 
-        <Button
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#1A0D122C" />
+
+        <TextView
             android:id="@+id/button_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:textSize="12sp"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@color/white"
-            android:text="No" />
-
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:fontFamily="@font/mmedium"
+            android:gravity="center"
+            android:textColor="#998A6D"
+            android:textSize="14sp"
+            android:letterSpacing="0.22"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/trans"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="NO"
+            tools:text="NO" />
     </LinearLayout>
-
 
 </LinearLayout>

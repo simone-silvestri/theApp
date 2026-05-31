@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         SyncManager sync = SyncManager.get(getApplicationContext());
         if (sync.isSignedIn()) sync.onSignedIn(this);
 
+        TextView dateLabel = findViewById(R.id.dateLabel);
+        if (dateLabel != null) {
+            java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("EEE · dd.MM.yy", java.util.Locale.US);
+            dateLabel.setText(fmt.format(new java.util.Date()).toUpperCase(java.util.Locale.US));
+        }
+
         final ImageButton pubtn = findViewById(R.id.buttonreset);
         pubtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,14 +55,14 @@ public class MainActivity extends AppCompatActivity {
         pubtnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                showThreeActionPopup(arg0, "Add workout to list",
-                        "new", new View.OnClickListener() {
+                showThreeActionPopup(arg0, "ADD WORKOUT",
+                        "BUILD from scratch", new View.OnClickListener() {
                             @Override public void onClick(View v) { openEditor(v); }
                         },
-                        "copy", new View.OnClickListener() {
+                        "COPY from string", new View.OnClickListener() {
                             @Override public void onClick(View v) { openStringEditor(v); }
                         },
-                        "OG WODs", new View.OnClickListener() {
+                        "LOAD the og wods", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 populateDatabase(v);
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         puWindow.showAtLocation(anchor, Gravity.CENTER, 0, 0);
         puWindow.setAnimationStyle(R.style.Animation);
 
-        Button btnYes = puView.findViewById(R.id.button_yes);
+        TextView btnYes = puView.findViewById(R.id.button_yes);
         if (yesText != null) btnYes.setText(yesText);
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btnNo = puView.findViewById(R.id.button_no);
+        TextView btnNo = puView.findViewById(R.id.button_no);
         if (noText != null) btnNo.setText(noText);
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void wireThreeButton(View puView, int id, String label,
                                  final View.OnClickListener action, final PopupWindow pw) {
-        Button btn = puView.findViewById(id);
+        TextView btn = puView.findViewById(id);
         if (label != null) btn.setText(label);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
