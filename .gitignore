@@ -45,10 +45,9 @@ hs_err_pid*
 
 docs/*
 
-# Firebase secrets — do NOT commit; download from Firebase Console per device
-app/google-services.json
-
-# Release signing — do NOT commit
+# Release signing — do NOT commit (keystore can sign builds claiming to be your app;
+# properties file holds the keystore password in plaintext)
 keystore.properties
 *.jks
 *.keystore
+*.pem

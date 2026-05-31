@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "825113104231",
+    "project_id": "theapp-721e7",
+    "storage_bucket": "theapp-721e7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825113104231:android:86a4087c068dc0b4ef69c2",
+        "android_client_info": {
+          "package_name": "com.simone.cfts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825113104231-2iu585ncm78iodg9mi5811mjbhamscob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simone.cfts",
+            "certificate_hash": "16e6e852e311f966020f7c84e205818b8106e1b6"
+          }
+        },
+        {
+          "client_id": "825113104231-e6e87lgbub7ie2tksai7c7k6tm5rhq2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simone.cfts",
+            "certificate_hash": "bc5c1776261ac1e48411557c32556a76ab526c12"
+          }
+        },
+        {
+          "client_id": "825113104231-ltd50ak5dmi5rak5mkahmt0a803svfra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simone.cfts",
+            "certificate_hash": "6c4c73a258acf2f1b16c71b0e81cdfe5b86a5d0c"
+          }
+        },
+        {
+          "client_id": "825113104231-l81pjn1kn5acicar6rdg3tbucth25toa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaYiFU5AliWNSdoOugtJR8GPwB959gRoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825113104231-l81pjn1kn5acicar6rdg3tbucth25toa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
