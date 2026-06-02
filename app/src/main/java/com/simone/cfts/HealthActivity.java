@@ -50,9 +50,20 @@ public class HealthActivity extends AppCompatActivity {
     private TextView totalKcal;
     private TextView weekOfTextView;
     private TextView weeklyAvg;
-    private TextView dayNameLabel;
     private TextView barCaption;
     private LinearLayout mealsContainer;
+
+    // Weight tab
+    private boolean weightTab = false;
+    private LinearLayout caloriesPane;
+    private LinearLayout weightPane;
+    private TextView tabCalories;
+    private TextView tabWeight;
+    private View tabCaloriesTick;
+    private View tabWeightTick;
+    private WeightChartView weightChart;
+    private TextView weightLatest;
+    private LinearLayout weighInContainer;
 
     private Typeface mlight;
 
@@ -71,9 +82,19 @@ public class HealthActivity extends AppCompatActivity {
         totalKcal      = findViewById(R.id.totalKcal);
         weekOfTextView = findViewById(R.id.weekOfLabel);
         weeklyAvg      = findViewById(R.id.weeklyAvg);
-        dayNameLabel   = findViewById(R.id.dayNameLabel);
         barCaption     = findViewById(R.id.barCaption);
         mealsContainer = findViewById(R.id.mealsContainer);
+
+        caloriesPane     = findViewById(R.id.caloriesPane);
+        weightPane       = findViewById(R.id.weightPane);
+        tabCalories      = findViewById(R.id.tabCalories);
+        tabWeight        = findViewById(R.id.tabWeight);
+        tabCaloriesTick  = findViewById(R.id.tabCaloriesTick);
+        tabWeightTick    = findViewById(R.id.tabWeightTick);
+        weightChart      = findViewById(R.id.weightChart);
+        weightLatest     = findViewById(R.id.weightLatest);
+        weighInContainer = findViewById(R.id.weighInContainer);
+        weightChart.setLabelTypeface(mlight);
 
         Calendar today = Calendar.getInstance();
         mondayIso = iso.format(mondayOfWeek(today).getTime());
@@ -90,6 +111,20 @@ public class HealthActivity extends AppCompatActivity {
     }
 
     public void closeHealth(View view) { finish(); }
+
+    public void selectCaloriesTab(View v) { setTab(false); }
+    public void selectWeightTab(View v)   { setTab(true); }
+
+    private void setTab(boolean weight) {
+        weightTab = weight;
+        caloriesPane.setVisibility(weight ? View.GONE : View.VISIBLE);
+        weightPane.setVisibility(weight ? View.VISIBLE : View.GONE);
+        tabCalories.setTextColor(weight ? 0xFF7A8FB0 : 0xFFFFFFFF);
+        tabWeight.setTextColor(weight ? 0xFFFFFFFF : 0xFF7A8FB0);
+        tabCaloriesTick.setBackgroundColor(weight ? 0x00000000 : 0xFFE58E26);
+        tabWeightTick.setBackgroundColor(weight ? 0xFFE58E26 : 0x00000000);
+        refresh();
+    }
 
     public void openPrevWeek(View view) {
         mondayIso = shiftWeek(mondayIso, -1);
@@ -196,18 +231,15 @@ public class HealthActivity extends AppCompatActivity {
         String[] dateNumbers = buildDateNumbers(mondayIso);
 
         int todayIndex = computeTodayIndexInWeek();
-        weeklyStrip.setData(week, dateNumbers, selectedIndex, goal, todayIndex);
+        float[] weekWeights = buildWeekWeights(mondayIso);
+        if (weightTab) {
+            weeklyStrip.setWeightData(weekWeights, dateNumbers, selectedIndex, todayIndex);
+        } else {
+            weeklyStrip.setData(week, dateNumbers, selectedIndex, goal, todayIndex);
+        }
         stackedBar.setData(day, goal);
 
         int dayTotal = day[0] + day[1] + day[2] + day[3];
-
-        // Day name (small caps)
-        try {
-            String name = dayName.format(iso.parse(selectedIsoDate())).toUpperCase(Locale.US);
-            dayNameLabel.setText(name);
-        } catch (Exception e) {
-            dayNameLabel.setText("");
-        }
 
         // Total kcal as Spannable: consumed white, "/ goal kcal" muted
         String consumed = String.format(Locale.US, "%,d", dayTotal);
@@ -237,19 +269,182 @@ public class HealthActivity extends AppCompatActivity {
             weekOfTextView.setText("");
         }
 
-        // Weekly avg
-        int sum = 0;
-        int activeDays = 0;
-        for (int v : week) {
-            if (v > 0) { sum += v; activeDays++; }
-        }
-        if (activeDays == 0) {
-            weeklyAvg.setText(getString(R.string.week_avg_empty));
+        // Weekly caption: median kg on the weight tab, avg kcal on the calories tab
+        if (weightTab) {
+            int loggedDays = 0;
+            java.util.List<Float> weekVals = new java.util.ArrayList<>();
+            for (float wv : weekWeights) {
+                if (wv > 0) { weekVals.add(wv); loggedDays++; }
+            }
+            if (loggedDays == 0) {
+                weeklyAvg.setText("no weigh-ins this week");
+            } else {
+                weeklyAvg.setText(String.format(Locale.US, "median %.1f kg / week", WeightStats.median(weekVals)));
+            }
         } else {
-            weeklyAvg.setText(getString(R.string.week_avg_format, sum / activeDays));
+            int sum = 0;
+            int activeDays = 0;
+            for (int v : week) {
+                if (v > 0) { sum += v; activeDays++; }
+            }
+            if (activeDays == 0) {
+                weeklyAvg.setText(getString(R.string.week_avg_empty));
+            } else {
+                weeklyAvg.setText(getString(R.string.week_avg_format, sum / activeDays));
+            }
         }
 
         rebuildMealRows(day);
+
+        // --- weight ---
+        java.util.List<DatabaseHelper.WeightRow> allWeights = db.loadAllWeightRows();
+        java.util.List<WeightStats.WeekMedian> medians = WeightStats.weeklyMedians(allWeights);
+        weightChart.setData(allWeights, medians, selectedIsoDate());
+
+        if (allWeights.isEmpty()) {
+            weightLatest.setText("no weigh-ins yet");
+        } else {
+            DatabaseHelper.WeightRow last = allWeights.get(allWeights.size() - 1);
+            String monday = WeightStats.mondayOf(selectedIsoDate());
+            Float wkMed = null;
+            for (WeightStats.WeekMedian m : medians) {
+                if (m.mondayIso.equals(monday)) { wkMed = m.median; break; }
+            }
+            if (wkMed != null) {
+                weightLatest.setText(String.format(Locale.US,
+                        "latest %.1f kg · week median %.1f kg", last.weight, wkMed));
+            } else {
+                weightLatest.setText(String.format(Locale.US, "latest %.1f kg", last.weight));
+            }
+        }
+        rebuildWeighInRow();
+    }
+
+    private void rebuildWeighInRow() {
+        weighInContainer.removeAllViews();
+        Float w = db.getDayWeight(selectedIsoDate());
+
+        LinearLayout outer = new LinearLayout(this);
+        outer.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setClickable(true);
+        row.setFocusable(true);
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { openWeightEntry(); }
+        });
+
+        View stripe = new View(this);
+        stripe.setBackgroundColor(0xFFE58E26);
+        row.addView(stripe, new LinearLayout.LayoutParams((int) dp(4), (int) dp(48)));
+
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        body.setPadding(0, (int) dp(14), 0, (int) dp(14));
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        blp.setMarginStart((int) dp(14));
+        row.addView(body, blp);
+
+        TextView name = new TextView(this);
+        try {
+            name.setText(dayName.format(iso.parse(selectedIsoDate())));
+        } catch (Exception e) {
+            name.setText("Weigh-in");
+        }
+        name.setTextColor(0xFFFFFFFF);
+        name.setTextSize(18);
+        if (mlight != null) name.setTypeface(mlight);
+        name.setMaxLines(1);
+        body.addView(name);
+
+        if (w == null) {
+            TextView kicker = new TextView(this);
+            kicker.setText("tap to log");
+            kicker.setTextColor(0xFF7A8FB0);
+            kicker.setTextSize(12);
+            if (mlight != null) kicker.setTypeface(mlight, Typeface.ITALIC);
+            else kicker.setTypeface(null, Typeface.ITALIC);
+            LinearLayout.LayoutParams klp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            klp.topMargin = (int) dp(1);
+            body.addView(kicker, klp);
+        }
+
+        TextView value = new TextView(this);
+        if (w != null) {
+            value.setText(String.format(Locale.US, "%.1f kg", w));
+            value.setTextColor(0xFFFFFFFF);
+        } else {
+            value.setText("—");
+            value.setTextColor(0xFF5A6B85);
+        }
+        value.setTextSize(18);
+        if (mlight != null) value.setTypeface(mlight, Typeface.ITALIC);
+        else value.setTypeface(null, Typeface.ITALIC);
+        value.setPadding((int) dp(8), 0, 0, 0);
+        row.addView(value, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        outer.addView(row);
+
+        View hairline = new View(this);
+        hairline.setBackgroundColor(0x33FFFFFF);
+        outer.addView(hairline, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 1));
+
+        weighInContainer.addView(outer);
+    }
+
+    private void openWeightEntry() {
+        View content = LayoutInflater.from(this).inflate(R.layout.popup_meal_entry, null);
+        TextView name = content.findViewById(R.id.popupMealName);
+        final EditText field = content.findViewById(R.id.popupKcalField);
+        TextView clear = content.findViewById(R.id.popupClear);
+        TextView save  = content.findViewById(R.id.popupSave);
+
+        field.setInputType(android.text.InputType.TYPE_CLASS_NUMBER
+                | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        try {
+            name.setText(dayName.format(iso.parse(selectedIsoDate())).toUpperCase(Locale.US));
+        } catch (Exception e) {
+            name.setText("WEIGH-IN");
+        }
+
+        final String d = selectedIsoDate();
+        Float existing = db.getDayWeight(d);
+        if (existing != null) field.setText(String.format(Locale.US, "%.1f", existing));
+        field.requestFocus();
+
+        final PopupWindow pw = showPopup(content);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                hideKeyboard(field);
+                db.clearWeight(d);
+                SyncManager.get(getApplicationContext()).notifyWeightClear(d);
+                pw.dismiss();
+                refresh();
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                hideKeyboard(field);
+                float kg = WeightStats.parseKg(field.getText().toString(), -1f);
+                if (kg > 0f) {
+                    db.setWeight(d, kg);
+                    SyncManager.get(getApplicationContext()).notifyWeight(d, kg);
+                } else {
+                    db.clearWeight(d);
+                    SyncManager.get(getApplicationContext()).notifyWeightClear(d);
+                }
+                pw.dismiss();
+                refresh();
+            }
+        });
     }
 
     private void rebuildMealRows(int[] dayKcal) {
@@ -348,6 +543,21 @@ public class HealthActivity extends AppCompatActivity {
             }
         } catch (Exception ignored) {}
         return -1;
+    }
+
+    /** 7 daily weights (kg) for the week starting {@code mondayDate}; 0 where no weigh-in. */
+    private float[] buildWeekWeights(String mondayDate) {
+        float[] out = new float[7];
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(iso.parse(mondayDate));
+            for (int i = 0; i < 7; i++) {
+                Float w = db.getDayWeight(iso.format(c.getTime()));
+                out[i] = (w != null) ? w : 0f;
+                c.add(Calendar.DAY_OF_MONTH, 1);
+            }
+        } catch (Exception ignored) {}
+        return out;
     }
 
     private String[] buildDateNumbers(String mondayDate) {

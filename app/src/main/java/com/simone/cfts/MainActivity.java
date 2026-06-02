@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         pubtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                showConfirmPopup(arg0, null, null, new View.OnClickListener() {
+                showConfirmPopup(arg0, "ERASE THE ENTIRE DATABASE?", null, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         resetDatabase(v);

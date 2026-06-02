@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
     private static final String DATABASE_NAME = "workexeDatabase.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Table Names
     private static final String TABLE_WORK = "Workouts";
@@ -31,6 +31,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_CAL_DATE = "date";
     private static final String KEY_CAL_MEAL = "meal";
     private static final String KEY_CAL_KCAL = "kcal";
+
+    // Weight Table
+    private static final String TABLE_WEIGHT = "Weight";
+    private static final String KEY_W_DATE   = "date";
+    private static final String KEY_W_KG     = "weight";
 
     // Meal indices
     public static final int MEAL_BREAKFAST = 0;
@@ -137,6 +142,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + KEY_CAL_KCAL + " INTEGER NOT NULL, "
                 + "PRIMARY KEY (" + KEY_CAL_DATE + ", " + KEY_CAL_MEAL + "))";
         db.execSQL(CREATE_CALORIES_TABLE);
+
+        String CREATE_WEIGHT_TABLE = " CREATE TABLE " + TABLE_WEIGHT + "("
+                + KEY_W_DATE + " TEXT NOT NULL, "
+                + KEY_W_KG   + " REAL NOT NULL, "
+                + "PRIMARY KEY (" + KEY_W_DATE + "))";
+        db.execSQL(CREATE_WEIGHT_TABLE);
     }
 
     // Called when the database needs to be upgraded.
@@ -157,6 +168,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + KEY_CAL_ID    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + KEY_CAL_DAY   + " TEXT, "
                     + KEY_CAL_WORK_ID + " INTEGER)");
+        }
+        if (oldVersion < 4) {
+            db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_WEIGHT + "("
+                    + KEY_W_DATE + " TEXT NOT NULL, "
+                    + KEY_W_KG   + " REAL NOT NULL, "
+                    + "PRIMARY KEY (" + KEY_W_DATE + "))");
         }
     }
 
@@ -311,6 +328,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             this.date = date;
             this.meal = meal;
             this.kcal = kcal;
+        }
+    }
+
+    public static class WeightRow {
+        public final String date;
+        public final float weight;
+        public WeightRow(String date, float weight) {
+            this.date = date;
+            this.weight = weight;
         }
     }
 
@@ -1006,6 +1032,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    // ---------- Weight ----------
+
+    public void setWeight(String date, float weight) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_W_DATE, date);
+            values.put(KEY_W_KG, weight);
+            db.insertWithOnConflict(TABLE_WEIGHT, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error writing weight");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void clearWeight(String date) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_WEIGHT, KEY_W_DATE + " = ?", new String[]{date});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error clearing weight");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /** Weight for a single day, or null when there is no entry. */
+    public Float getDayWeight(String date) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_W_KG + " FROM " + TABLE_WEIGHT + " WHERE " + KEY_W_DATE + " = ?",
+                    new String[]{date});
+            if (cursor.moveToFirst()) return (float) cursor.getDouble(0);
+        } catch (Exception e) {
+            Log.d(TAG, "Error reading day weight");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return null;
+    }
+
+    /** All weigh-ins ordered ascending by date. */
+    public java.util.List<WeightRow> loadAllWeightRows() {
+        java.util.List<WeightRow> out = new java.util.ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(
+                    "SELECT " + KEY_W_DATE + ", " + KEY_W_KG + " FROM " + TABLE_WEIGHT
+                            + " ORDER BY " + KEY_W_DATE + " ASC", null);
+            while (cursor.moveToNext()) {
+                out.add(new WeightRow(cursor.getString(0), (float) cursor.getDouble(1)));
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error loading all weight rows");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
+        }
+        return out;
     }
 
 }

@@ -25,6 +25,10 @@ public class WeeklyStripView extends View {
     private int todayIndex = -1;
     private OnDayTapListener listener;
 
+    // Weight mode: presence + kg value per day instead of goal-scaled bars
+    private boolean weightMode = false;
+    private float[] weightValues = new float[7]; // 0 = no weigh-in
+
     private final String[] day = new String[]{"M", "T", "W", "T", "F", "S", "S"};
 
     private final Paint barPaint     = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -95,10 +99,22 @@ public class WeeklyStripView extends View {
 
     public void setData(int[] perDayKcal, String[] dayDateNumbers,
                         int selectedIndex, int goalKcal, int todayIndex) {
+        this.weightMode = false;
         if (perDayKcal != null && perDayKcal.length == 7) this.values = perDayKcal;
         if (dayDateNumbers != null && dayDateNumbers.length == 7) this.dateNumbers = dayDateNumbers;
         if (selectedIndex >= 0 && selectedIndex < 7) this.selected = selectedIndex;
         this.goal = Math.max(1, goalKcal);
+        this.todayIndex = todayIndex;
+        invalidate();
+    }
+
+    /** Weight mode: each day shows a logged marker (or "—") plus its kg value. 0 = no weigh-in. */
+    public void setWeightData(float[] perDayWeight, String[] dayDateNumbers,
+                              int selectedIndex, int todayIndex) {
+        this.weightMode = true;
+        if (perDayWeight != null && perDayWeight.length == 7) this.weightValues = perDayWeight;
+        if (dayDateNumbers != null && dayDateNumbers.length == 7) this.dateNumbers = dayDateNumbers;
+        if (selectedIndex >= 0 && selectedIndex < 7) this.selected = selectedIndex;
         this.todayIndex = todayIndex;
         invalidate();
     }
@@ -154,14 +170,25 @@ public class WeeklyStripView extends View {
             String dateText = dateNumbers[i] != null ? dateNumbers[i] : "";
             canvas.drawText(dateText, cx, dateY, datePaint);
 
-            // Bar fill / empty placeholder
-            float ratio = Math.min(1.0f, values[i] / (float) goal);
-            float fillH = ratio * barAreaH;
-            if (values[i] <= 0) {
-                canvas.drawText("—", cx, barBottom - barAreaH / 2f + sp(5), emptyPaint);
+            boolean logged = weightMode ? weightValues[i] > 0 : values[i] > 0;
+
+            // Bar fill / weight marker / empty placeholder
+            if (weightMode) {
+                if (logged) {
+                    // Centered filled dot signalling a logged weigh-in
+                    canvas.drawCircle(cx, (barTop + barBottom) / 2f, dp(6), barPaint);
+                } else {
+                    canvas.drawText("—", cx, barBottom - barAreaH / 2f + sp(5), emptyPaint);
+                }
             } else {
-                canvas.drawRoundRect(left, barBottom - fillH, right, barBottom,
-                        dp(3), dp(3), barPaint);
+                float ratio = Math.min(1.0f, values[i] / (float) goal);
+                float fillH = ratio * barAreaH;
+                if (logged) {
+                    canvas.drawRoundRect(left, barBottom - fillH, right, barBottom,
+                            dp(3), dp(3), barPaint);
+                } else {
+                    canvas.drawText("—", cx, barBottom - barAreaH / 2f + sp(5), emptyPaint);
+                }
             }
 
             // Selected outline (orange, around the bar area)
@@ -172,7 +199,12 @@ public class WeeklyStripView extends View {
             }
 
             // Value text beneath the column
-            String v = values[i] > 0 ? formatKcal(values[i]) : "—";
+            String v;
+            if (weightMode) {
+                v = logged ? String.format(java.util.Locale.US, "%.1f", weightValues[i]) : "—";
+            } else {
+                v = logged ? formatKcal(values[i]) : "—";
+            }
             canvas.drawText(v, cx, h - dp(6), valuePaint);
         }
     }

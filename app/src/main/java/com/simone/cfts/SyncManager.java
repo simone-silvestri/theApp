@@ -238,6 +238,24 @@ public class SyncManager {
                 .addOnFailureListener(e -> Log.e(TAG, "meal delete failed", e));
     }
 
+    public void notifyWeight(String isoDate, float weight) {
+        if (!isSignedIn()) return;
+        Map<String, Object> doc = new HashMap<>();
+        doc.put("date", isoDate);
+        doc.put("weight", weight);
+        doc.put("updatedAt", FieldValue.serverTimestamp());
+        userDoc("weight").document(isoDate)
+                .set(doc, SetOptions.merge())
+                .addOnFailureListener(e -> Log.e(TAG, "weight upsert failed", e));
+    }
+
+    public void notifyWeightClear(String isoDate) {
+        if (!isSignedIn()) return;
+        userDoc("weight").document(isoDate)
+                .delete()
+                .addOnFailureListener(e -> Log.e(TAG, "weight delete failed", e));
+    }
+
     public void notifyExerciseCatalogUpsert(ExerciseDetail exe) {
         if (!isSignedIn()) return;
         if (exe == null || exe.getName() == null || exe.getName().isEmpty()) return;
@@ -334,6 +352,7 @@ public class SyncManager {
         // we sweep them too.
         uploadAllCalendar();
         uploadAllCalories();
+        uploadAllWeight();
     }
 
     private void uploadAllCalendar() {
@@ -348,6 +367,12 @@ public class SyncManager {
         }
     }
 
+    private void uploadAllWeight() {
+        for (DatabaseHelper.WeightRow row : db.loadAllWeightRows()) {
+            notifyWeight(row.date, row.weight);
+        }
+    }
+
     private void uploadAllExerciseCatalog() {
         for (ExerciseDetail exe : db.loadAllExercises()) {
             notifyExerciseCatalogUpsert(exe);
@@ -359,7 +384,9 @@ public class SyncManager {
         deleteSubcollection("workouts", () -> {
             deleteSubcollection("calendar", () -> {
                 deleteSubcollection("calories", () -> {
-                    deleteSubcollection("settings", () -> uploadAllToCloud());
+                    deleteSubcollection("weight", () -> {
+                        deleteSubcollection("settings", () -> uploadAllToCloud());
+                    });
                 });
             });
         });
@@ -440,6 +467,18 @@ public class SyncManager {
                     }
                 } else {
                     applyRemoteCalorie(c.getDocument());
+                }
+            }
+            broadcastChanged();
+        }));
+        listeners.add(userDoc("weight").addSnapshotListener((snap, err) -> {
+            if (err != null || snap == null) return;
+            for (DocumentChange c : snap.getDocumentChanges()) {
+                if (c.getType() == DocumentChange.Type.REMOVED) {
+                    try { db.clearWeight(c.getDocument().getId()); }
+                    catch (Exception e) { Log.e(TAG, "delete weight local failed", e); }
+                } else {
+                    applyRemoteWeight(c.getDocument());
                 }
             }
             broadcastChanged();
@@ -535,6 +574,18 @@ public class SyncManager {
             }
         } catch (Exception e) {
             Log.e(TAG, "applyRemoteCalorie", e);
+        }
+    }
+
+    private void applyRemoteWeight(DocumentSnapshot d) {
+        try {
+            String date = d.getString("date");
+            Double weight = d.getDouble("weight");
+            if (date != null && weight != null) {
+                db.setWeight(date, weight.floatValue());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "applyRemoteWeight", e);
         }
     }
 

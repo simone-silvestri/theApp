@@ -161,58 +161,156 @@
         android:paddingEnd="22dp"
         android:paddingTop="18dp">
 
-        <!-- Selected day name (small caps) -->
-        <TextView
-            android:id="@+id/dayNameLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mmedium"
-            android:gravity="center"
-            android:textColor="#7A8FB0"
-            android:textSize="11sp"
-            android:letterSpacing="0.32"
-            tools:text="SATURDAY" />
-
-        <!-- Total kcal (italic mlight hero) -->
-        <TextView
-            android:id="@+id/totalKcal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/mlight"
-            android:textStyle="italic"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            tools:text="1,420 / 2,000 kcal" />
-
-        <!-- Slim stacked progress bar -->
-        <com.simone.cfts.KcalStackedBarView
-            android:id="@+id/stackedBar"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_marginTop="14dp" />
-
-        <!-- Bar caption -->
-        <TextView
-            android:id="@+id/barCaption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:fontFamily="@font/mlight"
-            android:textStyle="italic"
-            android:gravity="center"
-            android:textColor="#7A8FB0"
-            android:textSize="11sp"
-            tools:text="580 to go" />
-
-        <!-- Meal rows container -->
+        <!-- CALORIES · WEIGHT toggle -->
         <LinearLayout
-            android:id="@+id/mealsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/tabCaloriesGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:onClick="selectCaloriesTab"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:id="@+id/tabCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/mmedium"
+                    android:text="CALORIES"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.22" />
+
+                <View
+                    android:id="@+id/tabCaloriesTick"
+                    android:layout_width="20dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:background="#E58E26" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tabWeightGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:onClick="selectWeightTab"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:id="@+id/tabWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/mmedium"
+                    android:text="WEIGHT"
+                    android:textColor="#7A8FB0"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.22" />
+
+                <View
+                    android:id="@+id/tabWeightTick"
+                    android:layout_width="20dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== CALORIES PANE ===== -->
+        <LinearLayout
+            android:id="@+id/caloriesPane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Total kcal (italic mlight hero) -->
+            <TextView
+                android:id="@+id/totalKcal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/mlight"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                tools:text="1,420 / 2,000 kcal" />
+
+            <!-- Slim stacked progress bar -->
+            <com.simone.cfts.KcalStackedBarView
+                android:id="@+id/stackedBar"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="14dp" />
+
+            <!-- Bar caption -->
+            <TextView
+                android:id="@+id/barCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/mlight"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:textColor="#7A8FB0"
+                android:textSize="11sp"
+                tools:text="580 to go" />
+
+            <!-- Meal rows container -->
+            <LinearLayout
+                android:id="@+id/mealsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="22dp" />
+        </LinearLayout>
+
+        <!-- ===== WEIGHT PANE ===== -->
+        <LinearLayout
+            android:id="@+id/weightPane"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="22dp" />
+            android:visibility="gone">
+
+            <com.simone.cfts.WeightChartView
+                android:id="@+id/weightChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="14dp" />
+
+            <TextView
+                android:id="@+id/weightLatest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/mlight"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:textColor="#7A8FB0"
+                android:textSize="12sp"
+                tools:text="latest 72.4 kg · week median 72.6 kg" />
+
+            <!-- weigh-in row (built in code to reuse the meal-row look) -->
+            <LinearLayout
+                android:id="@+id/weighInContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="18dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
